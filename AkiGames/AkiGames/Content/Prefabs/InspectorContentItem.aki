@@ -1,0 +1,125 @@
+{
+  "name": "InspectorContentItem",
+  "Components": [
+    {
+      "type": "UITransform",
+      "VerticalAlignment": "Top"
+    },
+    {
+      "type": "InspectorItemController"
+    }
+  ],
+  "Children": [
+    {
+      "name": "TopBorder",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Top",
+          "Height": 1
+        },
+        {
+          "type": "Image",
+          "fillColor": { "r": 40, "g": 40, "b": 40, "a": 255 }
+        }
+      ]
+    },
+    {
+      "name": "BottomBorder",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Bottom",
+          "Height": 1,
+          "origin": { "x": 0, "y": 1 }
+        },
+        {
+          "type": "Image",
+          "fillColor": { "r": 40, "g": 40, "b": 40, "a": 255 }
+        }
+      ]
+    },
+    {
+      "name": "LeftBorder",
+      "Components": [
+        {
+          "type": "UITransform",
+          "HorizontalAlignment": "Left",
+          "Width": 1
+        },
+        {
+          "type": "Image",
+          "fillColor": { "r": 40, "g": 40, "b": 40, "a": 255 }
+        }
+      ]
+    },
+    {
+      "name": "RightBorder",
+      "Components": [
+        {
+          "type": "UITransform",
+          "HorizontalAlignment": "Right",
+          "Width": 1,
+          "origin": { "x": 1, "y": 0 }
+        },
+        {
+          "type": "Image",
+          "fillColor": { "r": 40, "g": 40, "b": 40, "a": 255 }
+        }
+      ]
+    },
+    {
+      "name": "InspectorItemTitle",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Top",
+          "Height": 30
+        }
+      ],
+      "Children": [
+        {
+          "name": "Icon",
+          "Components": [
+            {
+              "type": "UITransform",
+              "HorizontalAlignment": "Left",
+              "VerticalAlignment": "Top",
+              "OffsetMin": { "x": 10, "y": 4 },
+              "Height": 17,
+              "Width": 17
+            },
+            {
+              "type": "Image"
+            }
+          ]
+        },
+        {
+          "name": "Title",
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": { "x": 40 },
+              "OffsetMax": { "x": 10 }
+            },
+            {
+              "type": "Text",
+              "HorizontalAlignment": "Left",
+              "HorizontalWrap": "DotsAfter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Content",
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": { "x": 5, "y": 5 },
+          "OffsetMax": { "x": 5, "y": 5 }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "InspectorBoolDescriptor",
+  "Components": [
+    {
+      "type": "UITransform",
+      "VerticalAlignment": "Top",
+      "Height": 30
+    }
+  ],
+  "Children": [
+    {
+      "name": "Title",
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Middle",
+          "OffsetMin": { "x": 40 },
+          "OffsetMax": { "x": 25 }
+        },
+        {
+          "type": "Text",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Left",
+          "HorizontalWrap": "DotsAfter"
+        }
+      ]
+    },
+    {
+      "name": "ValueContainer",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Right",
+          "Height": 15,
+          "Width": 15,
+          "origin": { "x": 1, "y": 0.5 },
+          "OffsetMax": { "x": 10 }
+        },
+        {
+          "type": "Image"
+        }
+      ]
+    }
+  ]
+}

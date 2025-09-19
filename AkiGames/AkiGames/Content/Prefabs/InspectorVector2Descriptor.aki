@@ -1,0 +1,91 @@
+{
+  "name": "InspectorVector2Descriptor",
+  "Components": [
+    {
+      "type": "UITransform",
+      "VerticalAlignment": "Top",
+      "Height": 30
+    }
+  ],
+  "Children": [
+    {
+      "name": "Title",
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Middle",
+          "OffsetMin": { "x": 40 },
+          "OffsetMax": { "x": 135 }
+        },
+        {
+          "type": "Text",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Left",
+          "HorizontalWrap": "DotsAfter"
+        }
+      ]
+    },
+    {
+      "name": "XValueContainer",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Right",
+          "Height": 20,
+          "Width": 60,
+          "origin": { "x": 1, "y": 0.5 },
+          "OffsetMax": { "x": 75 }
+        },
+        {
+          "type": "Image"
+        }
+      ],
+      "Children": [
+        {
+          "name": "XValueText",
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {"x": 5},
+              "OffsetMax": {"x": 5}
+            },
+            {
+              "type": "Text",
+              "HorizontalWrap": "DotsAfter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "YValueContainer",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Right",
+          "Height": 20,
+          "Width": 60,
+          "origin": { "x": 1, "y": 0.5 },
+          "OffsetMax": { "x": 10 }
+        },
+        {
+          "type": "Image"
+        }
+      ],
+      "Children": [
+        {
+          "name": "YValueText",
+          "Components": [
+            {
+              "type": "Text",
+              "HorizontalWrap": "DotsAfter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

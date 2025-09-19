@@ -1,0 +1,51 @@
+{
+  "name": "HierarchyContentItem",
+  "Components": [
+    {
+      "type": "UITransform",
+      "VerticalAlignment": "Top"
+    },
+    {
+      "type": "Image",
+      "fillColor": {"a": 0}
+    }
+  ],
+  "Children": [
+    {
+      "name": "OpenButton",
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Left",
+          "OffsetMin": { "x": 10 },
+          "Height": 17,
+          "Width": 17,
+          "origin": { "x": 0.5, "y": 0.5 }
+        },
+        {
+          "type": "Image"
+        },
+        {
+          "type": "HierarchyExpander"
+        }
+      ]
+    },
+    {
+      "name": "Title",
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": { "x": 40 },
+          "OffsetMax": { "x": 10 }
+        },
+        {
+          "type": "Text",
+          "HorizontalAlignment": "Left",
+          "HorizontalWrap": "DotsAfter"
+        }
+      ]
+    }
+  ]
+}

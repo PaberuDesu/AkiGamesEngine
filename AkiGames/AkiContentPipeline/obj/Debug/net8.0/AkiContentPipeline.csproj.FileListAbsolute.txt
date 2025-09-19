@@ -1,0 +1,12 @@
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\bin\Debug\net8.0\AkiContentPipeline.deps.json
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\bin\Debug\net8.0\AkiContentPipeline.dll
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\bin\Debug\net8.0\AkiContentPipeline.pdb
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.csproj.AssemblyReference.cache
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.AssemblyInfoInputs.cache
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.AssemblyInfo.cs
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.csproj.CoreCompileInputs.cache
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.dll
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\refint\AkiContentPipeline.dll
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\AkiContentPipeline.pdb
+C:\Users\wintake\GameEngine\AkiGames\AkiContentPipeline\obj\Debug\net8.0\ref\AkiContentPipeline.dll

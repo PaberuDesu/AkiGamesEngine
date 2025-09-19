@@ -1,0 +1,126 @@
+{
+  "name": "InspectorStringDescriptor",
+  "Components": [
+    {
+      "type": "UITransform",
+      "VerticalAlignment": "Top",
+      "Height": 200
+    }
+  ],
+  "Children": [
+    {
+      "name": "Title",
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "VerticalAlignment": "Top",
+          "OffsetMin": { "x": 40 },
+          "OffsetMax": { "x": 35 },
+          "Height": 30
+        },
+        {
+          "type": "Text",
+          "VerticalAlignment": "Middle",
+          "HorizontalAlignment": "Left",
+          "HorizontalWrap": "DotsAfter"
+        }
+      ]
+    },
+    {
+      "name": "Background",
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": { "x": 40, "y": 35 },
+          "OffsetMax": { "x": 5, "y": 5 }
+        },
+        {
+          "type": "Image",
+          "fillColor": { "r": 15, "g": 15, "b": 15, "a": 255 }
+        }
+      ]
+    },
+    {
+      "name": "ValueContainer (Mask)",
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": { "x": 40, "y": 35 },
+          "OffsetMax": { "x": 5, "y": 5 }
+        },
+        {
+          "type": "Image",
+          "IsMask": true
+        }
+      ],
+      "Children": [
+        {
+          "name": "ValueContainer",
+          "Components": [
+            {
+              "type": "ScrollableListController"
+            }
+          ],
+          "Children": [
+            {
+              "name": "Value",
+              "IsMouseTargetable": false,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": { "x": 5, "y": 5 },
+                  "OffsetMax": { "x": 5 }
+                },
+                {
+                  "type": "Text",
+                  "VerticalAlignment": "Top",
+                  "HorizontalAlignment": "Left",
+                  "HorizontalWrap": "NewLineControlsHeigth"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Scrollbar",
+          "IsActive": false,
+          "Components": [
+            {
+              "type": "UITransform",
+              "HorizontalAlignment": "Right",
+              "Width": 8,
+              "origin": { "x": 1, "y": 0 }
+            },
+            {
+              "type": "Image",
+              "fillColor": { "r": 40, "g": 40, "b": 40, "a": 255 }
+            },
+            {
+              "type": "Scrollbar"
+            }
+          ],
+          "Children": [
+            {
+              "name": "Thumb",
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "VerticalAlignment": "Top",
+                  "Height": 16
+                },
+                {
+                  "type": "Image",
+                  "fillColor": { "r": 128, "g": 128, "b": 128, "a": 255 }
+                },
+                {
+                  "type": "Thumb"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

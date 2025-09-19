@@ -1,0 +1,51 @@
+{
+  "name": "ExplorerContentItem",
+  "Components": [
+    {
+      "type": "UITransform",
+      "VerticalAlignment": "Top"
+    },
+    {
+      "type": "Image",
+      "fillColor": {"a": 0}
+    },
+    {
+      "type": "ContentItemController"
+    }
+  ],
+  "Children": [
+    {
+      "name": "Icon",
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "HorizontalAlignment": "Left",
+          "VerticalAlignment": "Top",
+          "OffsetMin": { "x": 10, "y": 4 },
+          "Height": 17,
+          "Width": 17
+        },
+        {
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "name": "Title",
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": { "x": 40 },
+          "OffsetMax": { "x": 10 }
+        },
+        {
+          "type": "Text",
+          "HorizontalAlignment": "Left",
+          "HorizontalWrap": "DotsAfter"
+        }
+      ]
+    }
+  ]
+}

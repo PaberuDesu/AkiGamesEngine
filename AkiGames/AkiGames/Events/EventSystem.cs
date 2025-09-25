@@ -18,9 +18,10 @@ namespace AkiGames.Events
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
 
-            // Ctrl, Z
+            // Ctrl, Z, S keys pressing
             Input.Ctrl.IsPressed = keyboardState.IsKeyDown(Keys.LeftControl);
             Input.Z.IsPressed = keyboardState.IsKeyDown(Keys.Z);
+            Input.S.IsPressed = keyboardState.IsKeyDown(Keys.S);
 
             //Hotkeys
             if (Input.Hotkey != null)
@@ -141,6 +142,7 @@ namespace AkiGames.Events
     {
         public static Key Ctrl { get; } = new();
         public static Key Z { get; } = new();
+        public static Key S { get; } = new();
         public static Key LMB { get; } = new();
 
         private static int _prevScroll = 0;
@@ -194,12 +196,15 @@ namespace AkiGames.Events
             {
                 if (Ctrl.IsPressed && Z.IsDown)
                     return HotKey.CtrlZ;
+                if (Ctrl.IsPressed && S.IsPressed)
+                    return HotKey.CtrlS;
                 return null;
             }
         }
         public enum HotKey
         {
-            CtrlZ
+            CtrlZ,
+            CtrlS
         }
     }
 

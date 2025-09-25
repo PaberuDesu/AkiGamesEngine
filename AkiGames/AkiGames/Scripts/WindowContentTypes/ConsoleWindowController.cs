@@ -13,7 +13,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         private ScrollableListController _contentList;
 
         private static int _lines = 0;
-        private const int _maxLines = 50;
+        private const int _maxLines = 70;
 
         public override void Awake()
         {

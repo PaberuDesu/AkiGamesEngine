@@ -5,16 +5,19 @@ using AkiGames.Core;
 using AkiGames.Scripts.Window;
 using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
+using AkiGames.Events;
 
 namespace AkiGames.Scripts.WindowContentTypes
 {
     public class HierarchyWindowController : WindowController
     {
         private ScrollableListController _contentList;
+        private static string _gamePath = null;
+        private static GameObject _gameMainObject = null;
 
-        
+
         GameObject contentObject;
-        
+
         public override void Awake()
         {
             contentObject = gameObject.Children[3];
@@ -25,7 +28,12 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public void RefreshContent(string fullPath)
         {
-            InspectorWindowController.LoadFor(null);
+            InspectorWindowController.LoadFor(null);// clearing obj description
+            _gamePath = fullPath;
+
+            // Получаем иерархию объектов
+            JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(File.ReadAllText(fullPath));
+            _gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
             // Десериализуем данные
             string jsonText = File.ReadAllText(fullPath);
             using JsonDocument document = JsonDocument.Parse(jsonText);
@@ -37,7 +45,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             {
                 ProcessChildrenRecursive(rootElement, null, 0);
             }
-            
+
             _contentList.Refresh();
         }
 
@@ -48,7 +56,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             {
                 foreach (JsonElement childElement in childrenElement.EnumerateArray())
                 {
-                    if (childElement.TryGetProperty("name", out JsonElement nameElement) &&
+                    if (childElement.TryGetProperty("ObjectName", out JsonElement nameElement) &&
                         nameElement.ValueKind == JsonValueKind.String)
                     {
                         GameObject prefabCopy = Game1.Prefabs["HierarchyContentItem"].Copy();
@@ -98,6 +106,21 @@ namespace AkiGames.Scripts.WindowContentTypes
             }
 
             _contentList.Refresh();
+        }
+
+        public override void ProcessHotkey(Input.HotKey hotkey)
+        {
+            if (Input.Hotkey == Input.HotKey.CtrlS)
+                SaveHierarchy();
+        }
+
+        public static void SaveHierarchy()
+        {
+            if (_gamePath != null)
+            {
+                string jsonString = JsonProjectSerializer.SerializeToJson(_gameMainObject);
+                File.WriteAllText(_gamePath, jsonString);
+            }
         }
     }
 }

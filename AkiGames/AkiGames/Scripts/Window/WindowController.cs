@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AkiGames.Events;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts.Window
@@ -27,6 +26,5 @@ namespace AkiGames.Scripts.Window
         }
 
         public override void OnScroll(int scrollValue) => scrollableContent?.OnScrollFromOutsideTheObject(scrollValue);
-        public override void ProcessHotkey(Input.HotKey hotkey) {}
     }
 }

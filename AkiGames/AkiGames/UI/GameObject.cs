@@ -92,7 +92,7 @@ namespace AkiGames.UI
             uiTransform.RefreshBounds(parentTransform);
             RefreshContentBounds();
         }
-
+        
         protected virtual void RefreshContentBounds()
         {
             foreach (var child in Children) child.RefreshBounds(uiTransform);
@@ -182,7 +182,7 @@ namespace AkiGames.UI
         public GameObject Copy()
         {
             // Создаем поверхностную копию через MemberwiseClone
-                var copy = (GameObject)MemberwiseClone();
+            var copy = (GameObject)MemberwiseClone();
 
             // Копируем элементы с глубоким копированием
             copy._components = [];

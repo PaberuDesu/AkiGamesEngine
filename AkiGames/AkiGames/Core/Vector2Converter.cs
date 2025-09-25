@@ -3,44 +3,47 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Xna.Framework;
 
-public class Vector2Converter : JsonConverter<Vector2>
+namespace AkiGames.Core
 {
-    public override Vector2 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public class Vector2Converter : JsonConverter<Vector2>
     {
-        if (reader.TokenType == JsonTokenType.StartObject)
+        public override Vector2 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            float x = 0, y = 0;
-            
-            while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+            if (reader.TokenType == JsonTokenType.StartObject)
             {
-                if (reader.TokenType == JsonTokenType.PropertyName)
+                float x = 0, y = 0;
+
+                while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
                 {
-                    string propertyName = reader.GetString();
-                    reader.Read();
-                    
-                    switch (propertyName.ToLowerInvariant())
+                    if (reader.TokenType == JsonTokenType.PropertyName)
                     {
-                        case "x":
-                            x = reader.GetSingle();
-                            break;
-                        case "y":
-                            y = reader.GetSingle();
-                            break;
+                        string propertyName = reader.GetString();
+                        reader.Read();
+
+                        switch (propertyName.ToLowerInvariant())
+                        {
+                            case "x":
+                                x = reader.GetSingle();
+                                break;
+                            case "y":
+                                y = reader.GetSingle();
+                                break;
+                        }
                     }
                 }
+
+                return new Vector2(x, y);
             }
-            
-            return new Vector2(x, y);
+
+            throw new JsonException("Invalid Vector2 format");
         }
-        
-        throw new JsonException("Invalid Vector2 format");
-    }
-    
-    public override void Write(Utf8JsonWriter writer, Vector2 value, JsonSerializerOptions options)
-    {
-        writer.WriteStartObject();
-        writer.WriteNumber("x", value.X);
-        writer.WriteNumber("y", value.Y);
-        writer.WriteEndObject();
+
+        public override void Write(Utf8JsonWriter writer, Vector2 value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WriteNumber("x", value.X);
+            writer.WriteNumber("y", value.Y);
+            writer.WriteEndObject();
+        }
     }
 }

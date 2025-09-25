@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using Microsoft.Xna.Framework;
 using AkiGames.UI;
 using AkiGames.Scripts.WindowContentTypes;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AkiGames.Core
 {
@@ -23,6 +24,15 @@ namespace AkiGames.Core
             WriteIndented = true
         };
 
+        // Черный список типов, которые нельзя сериализовать
+        private static readonly HashSet<Type> _blacklistedTypes =
+        [
+            typeof(IntPtr),
+            typeof(UIntPtr),
+            typeof(GraphicsDevice),
+            typeof(PresentationParameters)
+        ];
+
         public static string SerializeToJson(GameObject gameObject) =>
             JsonSerializer.Serialize(
                 ConvertGameObjectToJsonObject(gameObject),
@@ -33,7 +43,7 @@ namespace AkiGames.Core
         {
             return new
             {
-                name = gameObject.ObjectName,
+                gameObject.ObjectName,
                 gameObject.IsActive,
                 gameObject.IsMouseTargetable,
                 Components = gameObject.Components?.Select(ConvertComponentToJsonObject).ToArray(),
@@ -51,25 +61,62 @@ namespace AkiGames.Core
 
             // Сериализуем свойства
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-                .Where(p => p.CanRead && p.CanWrite);
+                .Where(p => p.CanRead && p.CanWrite && !IsBlacklisted(p.PropertyType));
 
             foreach (PropertyInfo property in properties)
             {
-                var value = property.GetValue(gameComponent);
-                if (value != null)
-                    dict[property.Name] = value;
+                try
+                {
+                    if (property.GetCustomAttribute<DontSerialize>() == null)
+                    {
+                        var value = property.GetValue(gameComponent);
+                        if (value != null)
+                            dict[property.Name] = value;
+                    }
+                } catch{}
             }
 
             // Сериализуем поля
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+                .Where(f => !IsBlacklisted(f.FieldType));
             foreach (var field in fields)
             {
-                var value = field.GetValue(gameComponent);
-                if (value != null)
-                    dict[field.Name] = value;
+                try
+                {
+                    if (field.GetCustomAttribute<DontSerialize>() == null)
+                    {
+                        var value = field.GetValue(gameComponent);
+                        if (value != null)
+                            dict[field.Name] = value;
+                    }
+                }
+                catch{}
             }
 
             return dict;
+        }
+
+        private static bool IsBlacklisted(Type type)
+        {
+            // Проверяем базовые типы
+            if (_blacklistedTypes.Contains(type))
+                return true;
+
+            // Проверяем generic-типы (например, Nullable<IntPtr>)
+            if (type.IsGenericType)
+            {
+                foreach (var genericArg in type.GetGenericArguments())
+                {
+                    if (_blacklistedTypes.Contains(genericArg))
+                        return true;
+                }
+            }
+
+            // Проверяем массивы
+            if (type.IsArray && _blacklistedTypes.Contains(type.GetElementType()))
+                return true;
+
+            return false;
         }
 
         public static GameObject LoadFromJson(JsonElement rootElement) => ParseGameObject(rootElement);//TODO: define scene or prefab
@@ -78,7 +125,7 @@ namespace AkiGames.Core
         {
             // Parse name
             GameObject obj =  new(
-                element.TryGetProperty("name", out JsonElement nameElement) ?
+                element.TryGetProperty("ObjectName", out JsonElement nameElement) ?
                     nameElement.GetString() : ""
             );
 
@@ -187,6 +234,11 @@ namespace AkiGames.Core
                     try
                     {
                         object value;
+
+                        if (
+                            (property?.GetCustomAttribute<DontSerialize>() ??
+                            field?.GetCustomAttribute<DontSerialize>()) != null
+                        ) continue;
 
                         // Особенная обработка для Enum
                         if (targetType.IsEnum)

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using AkiGames.Core;
 
 namespace AkiGames.UI
 {
@@ -7,7 +8,7 @@ namespace AkiGames.UI
     {
         public Vector2 anchorLeftTop = Vector2.Zero;
         public Vector2 anchorRightBottom = Vector2.One;
-        public Rectangle LocalBounds
+        [DontSerialize] public Rectangle LocalBounds
         {
             get => new(
                 (int)OffsetMin.X,
@@ -29,7 +30,7 @@ namespace AkiGames.UI
         public Vector2 OffsetMax { get; set; } = Vector2.Zero;
         public int Width { get; set; } = 0;
         public int Height { get; set; } = 0;
-        public Rectangle Bounds { get; private set; } = Rectangle.Empty;
+        [DontSerialize] public Rectangle Bounds { get; private set; } = Rectangle.Empty;
 
         public AlignmentH HorizontalAlignment
         {
@@ -131,9 +132,7 @@ namespace AkiGames.UI
         );
 
         public float LocalRotation = 0;
-        public float Rotation = 0;
-
-        private bool flag = false;
+        [DontSerialize] public float Rotation = 0;
 
         public override UITransform Copy()
         {
@@ -207,12 +206,6 @@ namespace AkiGames.UI
                 width,
                 height
             );
-
-            if (!flag)
-            {
-                Scripts.WindowContentTypes.ConsoleWindowController.Log($"{Bounds}---{HorizontalAlignment}---{VerticalAlignment}---{gameObject?.ObjectName} - son of {gameObject.Parent?.ObjectName}");//TODO: debug, delete later
-                flag = true;
-            }
         }
 
         public bool Contains(Point point) // Определение принадлежности с учетом поворота

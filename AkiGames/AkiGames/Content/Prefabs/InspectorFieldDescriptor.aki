@@ -1,61 +1,173 @@
 {
-  "name": "InspectorFieldDescriptor",
+  "ObjectName": "InspectorFieldDescriptor",
+  "IsActive": true,
+  "IsMouseTargetable": true,
   "Components": [
     {
       "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 0,
+      "Height": 30,
+      "HorizontalAlignment": "Stretch",
       "VerticalAlignment": "Top",
-      "Height": 30
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 1,
+        "y": 0
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
     }
   ],
   "Children": [
     {
-      "name": "Title",
+      "ObjectName": "Title",
+      "IsActive": true,
       "IsMouseTargetable": false,
       "Components": [
         {
           "type": "UITransform",
+          "OffsetMin": {
+            "x": 40,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 70,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 0,
+          "HorizontalAlignment": "Stretch",
           "VerticalAlignment": "Middle",
-          "OffsetMin": { "x": 40 },
-          "OffsetMax": { "x": 70 }
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
         },
         {
           "type": "Text",
-          "VerticalAlignment": "Middle",
+          "HorizontalWrap": "DotsAfter",
           "HorizontalAlignment": "Left",
-          "HorizontalWrap": "DotsAfter"
+          "VerticalAlignment": "Middle",
+          "text": "",
+          "TextColor": 4294967295,
+          "Enabled": true
         }
-      ]
+      ],
+      "Children": []
     },
     {
-      "name": "ValueContainer",
+      "ObjectName": "ValueContainer",
+      "IsActive": true,
+      "IsMouseTargetable": true,
       "Components": [
         {
           "type": "UITransform",
-          "VerticalAlignment": "Middle",
-          "HorizontalAlignment": "Right",
-          "Height": 20,
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 10,
+            "y": 0
+          },
           "Width": 60,
-          "origin": { "x": 1, "y": 0.5 },
-          "OffsetMax": { "x": 10 }
+          "Height": 20,
+          "HorizontalAlignment": "Right",
+          "VerticalAlignment": "Middle",
+          "anchorLeftTop": {
+            "x": 1,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 1,
+            "y": 0.5
+          },
+          "LocalRotation": 0,
+          "Enabled": true
         },
         {
-          "type": "Image"
+          "type": "Image",
+          "IsMask": false,
+          "fillColor": 4294967295,
+          "imageMode": "Stretch",
+          "Enabled": true
         }
       ],
       "Children": [
         {
-          "name": "ValueText",
+          "ObjectName": "ValueText",
+          "IsActive": true,
+          "IsMouseTargetable": true,
           "Components": [
             {
               "type": "UITransform",
-              "OffsetMin": {"x": 5},
-              "OffsetMax": {"x": 5}
+              "OffsetMin": {
+                "x": 5,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 5,
+                "y": 0
+              },
+              "Width": 0,
+              "Height": 0,
+              "HorizontalAlignment": "Stretch",
+              "VerticalAlignment": "Stretch",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 1,
+                "y": 1
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              },
+              "LocalRotation": 0,
+              "Enabled": true
             },
             {
               "type": "Text",
-              "HorizontalWrap": "DotsAfter"
+              "HorizontalWrap": "DotsAfter",
+              "HorizontalAlignment": "Center",
+              "VerticalAlignment": "Middle",
+              "text": "",
+              "TextColor": 4294967295,
+              "Enabled": true
             }
-          ]
+          ],
+          "Children": []
         }
       ]
     }

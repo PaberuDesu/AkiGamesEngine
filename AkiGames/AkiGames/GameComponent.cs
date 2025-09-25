@@ -6,8 +6,8 @@ namespace AkiGames
     public abstract class GameComponent : GameStructure
     {
         public bool Enabled = true;
-        [DontSerialize] public GameObject gameObject;
-        [DontSerialize] public UITransform uiTransform;
+        [DontSerialize, HideInInspector] public GameObject gameObject;
+        [DontSerialize, HideInInspector] public UITransform uiTransform;
         public override void Update() { if (Enabled) base.Update(); }
 
         public virtual GameComponent Copy()

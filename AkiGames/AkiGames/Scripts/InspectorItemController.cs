@@ -40,14 +40,15 @@ namespace AkiGames.Scripts
             height += 35;
             foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
-                if (field.Name == "gameObject" || field.Name == "uiTransform") continue;//TODO make field [HideInRedactor]
+                if (field.GetCustomAttribute<HideInInspector>() != null) continue;
                 GameObject fieldObj = CreateFieldDescription(field, height, component);
                 if (fieldObj != null) height += fieldObj.uiTransform.Height + 5;
             }
-            foreach (PropertyInfo field in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+            foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
-                GameObject fieldObj = CreateFieldDescription(field, height, component);
-                if (fieldObj != null) height += fieldObj.uiTransform.Height + 5;
+                if (property.GetCustomAttribute<HideInInspector>() != null) continue;
+                GameObject propertyObj = CreateFieldDescription(property, height, component);
+                if (propertyObj != null) height += propertyObj.uiTransform.Height + 5;
             }
             height += 8;
             gameObject.uiTransform.Height = height;

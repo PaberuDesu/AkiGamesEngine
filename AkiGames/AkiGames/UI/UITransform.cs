@@ -126,13 +126,13 @@ namespace AkiGames.UI
         }
 
         public Vector2 origin = Vector2.Zero;
-        public Vector2 OriginPosition => new(
+        [HideInInspector] public Vector2 OriginPosition => new(
             Bounds.X + (Bounds.Width * origin.X),
             Bounds.Y + (Bounds.Height * origin.Y)
         );
 
         public float LocalRotation = 0;
-        [DontSerialize] public float Rotation = 0;
+        [DontSerialize, HideInInspector] public float Rotation = 0;
 
         public override UITransform Copy()
         {

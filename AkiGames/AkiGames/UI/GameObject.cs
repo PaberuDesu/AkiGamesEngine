@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using AkiGames.Core;
 using static AkiGames.Events.Input;
 
 namespace AkiGames.UI
@@ -21,7 +22,7 @@ namespace AkiGames.UI
         }
         public bool IsMouseTargetable = true;
 
-        public UITransform uiTransform = new();
+        [DontSerialize, HideInInspector] public UITransform uiTransform = new();
 
         private double _lastClickTime = -DoubleClickThreshold;
         private const double DoubleClickThreshold = 500; // ms

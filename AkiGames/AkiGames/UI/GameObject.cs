@@ -76,7 +76,6 @@ namespace AkiGames.UI
             ChildAdded?.Invoke(child);
         }
 
-
         private bool _isAwakened = false;
         public override void AkiGamesAwakeTree()
         {

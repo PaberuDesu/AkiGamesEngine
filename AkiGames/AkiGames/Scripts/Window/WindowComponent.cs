@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Reflection;
 using AkiGames.Events;
-using AkiGames.Scripts.WindowContentTypes;
+using AkiGames.Scripts.WindowContentTypes;//TODO: delete
 using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
 

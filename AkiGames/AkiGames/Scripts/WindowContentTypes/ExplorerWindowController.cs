@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -36,6 +37,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         private UITransform _contentTransform;
 
         private HierarchyWindowController _hierarchyWindow;
+        private GameWindowController _gameWindow;
 
         public override void Awake()
         {
@@ -50,6 +52,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             _contentList = scrollableContent.GetComponent<ScrollableListController>();
 
             _hierarchyWindow = gameObject.Parent.Children[1].GetComponent<HierarchyWindowController>();
+            _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();
 
             base.Awake();
         }
@@ -79,7 +82,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
                 if (isRootHere)
                 {
-                    _hierarchyWindow.RefreshContent(mainAkiFiles[0]); // Загружаем первый найденный файл
+                    RefreshEditor(mainAkiFiles[0]); // Загружаем первый найденный файл
                 }
                 else
                 {
@@ -246,7 +249,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             {
                 if (fileName[^4..] == ".aki")
                 {
-                    _hierarchyWindow.RefreshContent(fullPath);
+                    RefreshEditor(fullPath);
                 }
                 else
                 {
@@ -261,6 +264,17 @@ namespace AkiGames.Scripts.WindowContentTypes
                     catch { }
                 }
             }
+        }
+
+        private void RefreshEditor(string fullPath)
+        {
+            InspectorWindowController.LoadFor(null);// чистим инспектор
+
+            JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(File.ReadAllText(fullPath));
+            GameObject gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
+            
+            _gameWindow.RefreshContent(gameMainObject);
+            _hierarchyWindow.RefreshContent(fullPath, gameMainObject);
         }
 
         internal void GoBack()

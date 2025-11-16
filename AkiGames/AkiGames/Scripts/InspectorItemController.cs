@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Core;
 using AkiGames.UI;
+using AkiGames.Scripts.InspectorRedactor;
 
 namespace AkiGames.Scripts
 {
@@ -127,9 +128,18 @@ namespace AkiGames.Scripts
                     fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
-                    image = fieldDescription.Children[1].GetComponent<Image>();
-                    if (!isSettable) image.fillColor = _inactiveColor;
+                    GameObject checkboxObject = fieldDescription.Children[1];
+
+                    image = checkboxObject.GetComponent<Image>();
                     image.texture = (bool)value ? Game1.UIImages["CheckboxApproved"] : Game1.UIImages["CheckboxEmpty"];
+                    
+                    InspectorCheckBox checkbox = checkboxObject.GetComponent<InspectorCheckBox>();
+                    checkbox.value = (bool)value;
+                    checkbox.Info = memberInfo;
+                    checkbox.Component = gameComponent;
+                    checkbox.isSettable = isSettable;
+                    
+                    if (!isSettable) image.fillColor = _inactiveColor;
                     break;
                 default:
                     fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();

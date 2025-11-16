@@ -26,52 +26,33 @@ namespace AkiGames.Scripts.WindowContentTypes
             base.Awake();
         }
 
-        public void RefreshContent(string fullPath)
+        public void RefreshContent(string fullPath, GameObject gameMainObject)
         {
-            InspectorWindowController.LoadFor(null);// clearing obj description
             _gamePath = fullPath;
-
-            // Получаем иерархию объектов
-            JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(File.ReadAllText(fullPath));
-            _gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
-            // Десериализуем данные
-            string jsonText = File.ReadAllText(fullPath);
-            using JsonDocument document = JsonDocument.Parse(jsonText);
-            JsonElement rootElement = document.RootElement;
-
-            _contentList.gameObject.Children = [];
-
-            if (rootElement.ValueKind == JsonValueKind.Object)
-            {
-                ProcessChildrenRecursive(rootElement, null, 0);
-            }
+            _gameMainObject = gameMainObject;
+            
+            ProcessChildrenRecursive(gameMainObject, null, 0);
 
             _contentList.Refresh();
         }
 
-        private void ProcessChildrenRecursive(JsonElement parentJsonElem, HierarchyListItem parentObject, int level)
+        private void ProcessChildrenRecursive(GameObject objectRealization, HierarchyListItem descriptingParentObject, int level)
         {
-            if (parentJsonElem.TryGetProperty("Children", out JsonElement childrenElement) &&
-                childrenElement.ValueKind == JsonValueKind.Array)
+            if (objectRealization.Children.Count > 0)
             {
-                foreach (JsonElement childElement in childrenElement.EnumerateArray())
+                foreach (GameObject childRealization in objectRealization.Children)
                 {
-                    if (childElement.TryGetProperty("ObjectName", out JsonElement nameElement) &&
-                        nameElement.ValueKind == JsonValueKind.String)
+                    GameObject descriptorPrefabCopy = Game1.Prefabs["HierarchyContentItem"].Copy();
+                    descriptorPrefabCopy.IsActive = level == 0;
+                    HierarchyListItem itemController = new()
                     {
-                        GameObject prefabCopy = Game1.Prefabs["HierarchyContentItem"].Copy();
-                        prefabCopy.IsActive = level == 0;
-                        HierarchyListItem itemController = new()
-                        {
-                            Name = new string(' ', level * 3) + nameElement.GetString()
-                        };
-                        GameObject describableObj = JsonProjectSerializer.ParseGameObject(childElement);
-                        itemController.SetActionOnDoubleClick((_) => { InspectorWindowController.LoadFor(describableObj); });
-                        prefabCopy.AddComponent(itemController);
-                        _contentList.gameObject.AddChild(prefabCopy);
-                        parentObject?.childItems.Add(itemController);
-                        ProcessChildrenRecursive(childElement, itemController, level + 1);
-                    }
+                        Name = new string(' ', level * 3) + childRealization.ObjectName
+                    };
+                    itemController.SetActionOnDoubleClick((_) => { InspectorWindowController.LoadFor(childRealization); });
+                    descriptorPrefabCopy.AddComponent(itemController);
+                    _contentList.gameObject.AddChild(descriptorPrefabCopy);
+                    descriptingParentObject?.childItems.Add(itemController);
+                    ProcessChildrenRecursive(childRealization, itemController, level + 1);
                 }
             }
         }
@@ -118,7 +99,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         {
             if (_gamePath != null)
             {
-                string jsonString = JsonProjectSerializer.SerializeToJson(_gameMainObject);
+                string jsonString = JsonProjectSerializer.SerializeToJson(Game1.gameMainObject.Children[0]);
                 File.WriteAllText(_gamePath, jsonString);
             }
         }

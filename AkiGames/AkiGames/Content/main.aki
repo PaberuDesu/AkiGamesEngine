@@ -119,7 +119,7 @@
               "Enabled": true
             },
             {
-              "type": "SomeWindowController",
+              "type": "GameWindowController",
               "Enabled": true
             }
           ],
@@ -291,7 +291,52 @@
                   "Enabled": true
                 }
               ],
-              "Children": []
+              "Children": [
+                {
+                  "ObjectName": "GameVisualizer",
+                  "IsActive": true,
+                  "IsMouseTargetable": true,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "OffsetMax": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "Width": 0,
+                      "Height": 0,
+                      "HorizontalAlignment": "Center",
+                      "VerticalAlignment": "Middle",
+                      "anchorLeftTop": {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      "anchorRightBottom": {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      "origin": {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      "LocalRotation": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Image",
+                      "IsMask": false,
+                      "fillColor": 4294967295,
+                      "imageMode": "Stretch",
+                      "Enabled": true
+                    }
+                  ],
+                  "Children": []
+                }
+              ]
             },
             {
               "ObjectName": "ResizeHandleLeft",

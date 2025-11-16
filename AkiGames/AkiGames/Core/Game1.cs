@@ -28,6 +28,11 @@ namespace AkiGames.Core
 
         public static GraphicsDevice AppGraphicsDevice { get; private set; }
 
+        // Для рендеринга игры
+        public static GameObject gameMainObject;
+        public static RenderTarget2D GameRenderTarget { get; private set; }
+        private static Color backgroundColor = new(45, 45, 45);
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this)
@@ -50,6 +55,17 @@ namespace AkiGames.Core
             SetWindowToMaximized();
 
             base.Initialize();
+
+            // Создаем рендер-таргет для игры
+            GameRenderTarget = new RenderTarget2D(
+                GraphicsDevice,
+                GraphicsDevice.Viewport.Width,
+                GraphicsDevice.Viewport.Height,
+                false,
+                GraphicsDevice.PresentationParameters.BackBufferFormat,
+                DepthFormat.Depth24
+            );
+    
             string jsonString = Content.Load<string>("main");
             JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(jsonString);
 
@@ -89,9 +105,6 @@ namespace AkiGames.Core
 
             // Обновляем размер контейнера при изменении окна
             SetMainObjectBounds();
-                
-            // Обновляем размеры окна игры
-    //TODO        _editorManager.GameView?.PrepareRenderTarget();
         }
 
         private void SetMainObjectBounds()
@@ -225,20 +238,22 @@ namespace AkiGames.Core
 
         protected override void Draw(GameTime gameTime)
         {
-            //        if (_editorManager?.GameView == null)
-            //        {
-            //            base.Draw(gameTime);
-            //            return;
-            //        }
-            //
-            //        // Рендер игры в текстуру
-            //        GraphicsDevice.SetRenderTarget(_editorManager.GameView.GetRenderTarget());
-            //        GraphicsDevice.Clear(Color.CornflowerBlue);
+            // Рендерим игру в текстуру, если контент загружен
+            if (gameMainObject != null)
+            {
+                GraphicsDevice.SetRenderTarget(GameRenderTarget);
+                GraphicsDevice.Clear(backgroundColor);
+
+                _spriteBatch.Begin();
+                gameMainObject.Draw(_spriteBatch);
+                _spriteBatch.End();
+
+                GraphicsDevice.SetRenderTarget(null);
+            }
 
             base.Draw(gameTime);
-            GraphicsDevice.SetRenderTarget(null);
 
-            // Рендер UI редактора
+            // Рендерим UI редактора
             GraphicsDevice.Clear(new Color(30, 30, 30));
 
             _spriteBatch.Begin();

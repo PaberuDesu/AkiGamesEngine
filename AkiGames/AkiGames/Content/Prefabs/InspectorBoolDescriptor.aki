@@ -120,6 +120,9 @@
           "fillColor": 4294967295,
           "imageMode": "Stretch",
           "Enabled": true
+        },
+        {
+          "type": "InspectorCheckBox"
         }
       ],
       "Children": []

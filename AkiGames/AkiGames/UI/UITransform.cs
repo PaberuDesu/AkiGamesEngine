@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using AkiGames.Core;
+using AkiGames.Scripts.WindowContentTypes;
 
 namespace AkiGames.UI
 {

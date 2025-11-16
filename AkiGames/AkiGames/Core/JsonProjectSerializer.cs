@@ -30,7 +30,22 @@ namespace AkiGames.Core
             typeof(IntPtr),
             typeof(UIntPtr),
             typeof(GraphicsDevice),
-            typeof(PresentationParameters)
+            typeof(PresentationParameters),
+            typeof(Texture2D),
+            typeof(RenderTarget2D),
+            typeof(SpriteBatch),
+            typeof(SpriteFont),
+            typeof(Effect),
+            typeof(VertexBuffer),
+            typeof(IndexBuffer),
+            typeof(Texture),
+            typeof(SurfaceFormat),
+            typeof(GraphicsAdapter),
+            typeof(DisplayMode),
+            typeof(RasterizerState),
+            typeof(DepthStencilState),
+            typeof(BlendState),
+            typeof(SamplerState)
         ];
 
         public static string SerializeToJson(GameObject gameObject) =>
@@ -146,7 +161,11 @@ namespace AkiGames.Core
 
                     if (component != null)
                     {
-                        if (component is UITransform uiTransform) obj.uiTransform = uiTransform.Copy();
+                        if (component is UITransform uiTransform)
+                        {
+                            obj.uiTransform = uiTransform.Copy();
+                            obj.uiTransform.gameObject = obj;
+                        }
                         obj.AddComponent(component);
                     }
                 }

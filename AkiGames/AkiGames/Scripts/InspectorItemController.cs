@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Core;
-using AkiGames.UI;
 using AkiGames.Scripts.InspectorRedactor;
+using AkiGames.UI;
 
 namespace AkiGames.Scripts
 {
@@ -102,8 +102,10 @@ namespace AkiGames.Scripts
 
                     Image imageX = fieldDescription.Children[1].GetComponent<Image>();
                     Image imageY = fieldDescription.Children[2].GetComponent<Image>();
+
                     imageX.texture = Game1.UIImages["InputField"];
                     imageY.texture = Game1.UIImages["InputField"];
+
                     if (!isSettable)
                     {
                         imageX.fillColor = _inactiveColor;
@@ -113,6 +115,15 @@ namespace AkiGames.Scripts
                     Vector2 valueV2 = (Vector2)value;
                     imageX.gameObject.Children[0].GetComponent<Text>().text = $"{valueV2.X}";
                     imageY.gameObject.Children[0].GetComponent<Text>().text = $"{valueV2.Y}";
+                    
+                    InspectorVector2InputField inputX = imageX.gameObject.GetComponent<InspectorVector2InputField>();
+                    inputX.Info = memberInfo;
+                    inputX.Component = gameComponent;
+                    inputX.coordinate = InspectorVector2InputField.Coordinate.X;
+                    InspectorVector2InputField inputY = imageY.gameObject.GetComponent<InspectorVector2InputField>();
+                    inputY.Info = memberInfo;
+                    inputY.Component = gameComponent;
+                    inputY.coordinate = InspectorVector2InputField.Coordinate.Y;
                     break;
                 case "Color":
                     fieldDescription = Game1.Prefabs["InspectorColorDescriptor"].Copy();

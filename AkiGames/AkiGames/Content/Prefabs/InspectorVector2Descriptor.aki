@@ -120,13 +120,16 @@
           "fillColor": 4294967295,
           "imageMode": "Stretch",
           "Enabled": true
+        },
+        {
+          "type": "InspectorVector2InputField"
         }
       ],
       "Children": [
         {
           "ObjectName": "XValueText",
           "IsActive": true,
-          "IsMouseTargetable": true,
+          "IsMouseTargetable": false,
           "Components": [
             {
               "type": "UITransform",
@@ -211,13 +214,16 @@
           "fillColor": 4294967295,
           "imageMode": "Stretch",
           "Enabled": true
+        },
+        {
+          "type": "InspectorVector2InputField"
         }
       ],
       "Children": [
         {
           "ObjectName": "YValueText",
           "IsActive": true,
-          "IsMouseTargetable": true,
+          "IsMouseTargetable": false,
           "Components": [
             {
               "type": "Text",

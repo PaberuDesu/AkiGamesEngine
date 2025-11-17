@@ -4074,6 +4074,7 @@
             },
             {
               "type": "MenuItemController",
+              "menuItems": [],
               "Enabled": true
             }
           ],
@@ -4296,6 +4297,7 @@
             },
             {
               "type": "MenuItemController",
+              "menuItems": [],
               "Enabled": true
             }
           ],
@@ -4399,7 +4401,7 @@
                       "Enabled": true
                     },
                     {
-                      "type": "SubmenuItemController",
+                      "type": "DropDownItem",
                       "Enabled": true
                     }
                   ],
@@ -4456,7 +4458,7 @@
                       "Enabled": true
                     },
                     {
-                      "type": "SubmenuItemController",
+                      "type": "DropDownItem",
                       "Enabled": true
                     }
                   ],
@@ -4513,7 +4515,7 @@
                       "Enabled": true
                     },
                     {
-                      "type": "SubmenuItemController",
+                      "type": "DropDownItem",
                       "Enabled": true
                     }
                   ],
@@ -4570,7 +4572,7 @@
                       "Enabled": true
                     },
                     {
-                      "type": "SubmenuItemController",
+                      "type": "DropDownItem",
                       "Enabled": true
                     }
                   ],
@@ -4627,7 +4629,7 @@
                       "Enabled": true
                     },
                     {
-                      "type": "SubmenuItemController",
+                      "type": "DropDownItem",
                       "Enabled": true
                     }
                   ],
@@ -4684,7 +4686,7 @@
                       "Enabled": true
                     },
                     {
-                      "type": "SubmenuItemController",
+                      "type": "DropDownItem",
                       "Enabled": true
                     }
                   ],

@@ -212,3 +212,5 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Debug\net8.0-wi
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Debug\net8.0-windows\AkiGames.genruntimeconfig.cache
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Debug\net8.0-windows\ref\AkiGames.dll
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Debug\net8.0-windows\AkiGames.sourcelink.json
+C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net8.0-windows\Content\Prefabs\DropDownSubmenu.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net8.0-windows\Content\Prefabs\DropDownSubmenuItem.xnb

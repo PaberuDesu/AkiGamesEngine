@@ -1,9 +1,10 @@
 using System.Windows.Forms;
 using AkiGames.Core;
+using AkiGames.UI.DropDown;
 
 namespace AkiGames.Scripts.Menu
 {
-    public class ProjectOpener : SubmenuItemController
+    public class ProjectOpener : DropDownItem
     {
         private WindowContentTypes.ExplorerWindowController explorerWindowController;
 

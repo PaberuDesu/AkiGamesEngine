@@ -126,7 +126,7 @@
         {
           "ObjectName": "ValueText",
           "IsActive": true,
-          "IsMouseTargetable": true,
+          "IsMouseTargetable": false,
           "Components": [
             {
               "type": "UITransform",

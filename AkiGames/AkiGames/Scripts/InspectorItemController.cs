@@ -68,18 +68,21 @@ namespace AkiGames.Scripts
             string type = "";
             object value = null;
             bool isSettable = false;
+            Array enumValuesArray = Array.Empty<object>();
 
             if (memberInfo is FieldInfo fieldInfo)
             {
                 type = fieldInfo.FieldType.Name;
                 value = fieldInfo.GetValue(gameComponent);
                 isSettable = !fieldInfo.IsInitOnly;
+                if (fieldInfo.FieldType.IsEnum) enumValuesArray = Enum.GetValues(fieldInfo.FieldType);
             }
             if (memberInfo is PropertyInfo propertyInfo)
             {
                 type = propertyInfo.PropertyType.Name;
                 value = propertyInfo.GetValue(gameComponent);
                 isSettable = propertyInfo.SetMethod != null && propertyInfo.SetMethod.IsPublic;
+                if (propertyInfo.PropertyType.IsEnum) enumValuesArray = Enum.GetValues(propertyInfo.PropertyType);
             }
 
             GameObject fieldDescription;
@@ -162,6 +165,19 @@ namespace AkiGames.Scripts
                     image.texture = Game1.UIImages["InputField"];
 
                     image.gameObject.Children[0].GetComponent<Text>().text = value is null ? "null" : $"{value}";
+                    
+                    if (enumValuesArray.Length > 0)
+                    {
+                        List<string> menuItemNames = [];
+                        foreach (object itemName in enumValuesArray)
+                        {
+                            menuItemNames.Add($"{itemName}");
+                        }
+                        fieldDescription.Children[1].AddComponent(new InspectorDropDown()
+                        {
+                            menuItems = menuItemNames
+                        });
+                    }
                     break;
             }
             content.AddChild(fieldDescription);

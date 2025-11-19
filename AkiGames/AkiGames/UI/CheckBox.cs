@@ -2,22 +2,22 @@ using AkiGames.Core;
 
 namespace AkiGames.UI
 {
-    public class CheckBox : GameComponent
+    public class CheckBox : InteractableComponent
     {
-        private Image _image;
         public bool value;
-        public bool isSettable = true;
 
-        public override void Awake() => _image = gameObject.GetComponent<Image>();
-        public override void OnMouseUp()
-        {
-            if (_image != null) ChangeValue();
-        }
+        public override void Awake() => image = gameObject.GetComponent<Image>();
 
         protected virtual void ChangeValue()
         {
             value = !value;
-            _image.texture = value ? Game1.UIImages["CheckboxApproved"] : Game1.UIImages["CheckboxEmpty"];
+            image.texture = value ? Game1.UIImages["CheckboxApproved"] : Game1.UIImages["CheckboxEmpty"];
+        }
+
+        public override void OnMouseUp()
+        {
+            if (image != null) ChangeValue();
+            StopInteracting();
         }
     }
 }

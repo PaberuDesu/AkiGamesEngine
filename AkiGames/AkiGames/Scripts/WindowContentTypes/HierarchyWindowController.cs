@@ -31,6 +31,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             _gamePath = fullPath;
             _gameMainObject = gameMainObject;
             
+            _contentList.gameObject.Children = [];
             ProcessChildrenRecursive(gameMainObject, null, 0);
 
             _contentList.Refresh();

@@ -1,6 +1,7 @@
 using System;
-using AkiGames.Events;
 using Microsoft.Xna.Framework;
+using AkiGames.Core;
+using AkiGames.Events;
 
 namespace AkiGames.UI.ScrollableList
 {
@@ -17,7 +18,7 @@ namespace AkiGames.UI.ScrollableList
         private int _prevListLength = 0;
         private UITransform _parentTransform;
 
-        public bool IsLimitReached => _scrollbar.IsLimitReached;
+        [DontSerialize, HideInInspector] public bool IsLimitReached => _scrollbar.IsLimitReached;
         public void ScrollToBottom() => _scrollbar.ScrollToBottom();
 
         public override void Awake()

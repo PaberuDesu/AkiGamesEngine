@@ -1,18 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using AkiGames.Core;
 using AkiGames.Events;
 
 namespace AkiGames.UI.DropDown
 {
-    public class DropDown : GameComponent
+    public class DropDown : InteractableComponent
     {
-        protected Image image;
-        protected Color idleColor = Color.White;
-        protected Color onHoverColor = new(200, 200, 200);
-        protected Color onOpenedColor = Color.White;
-
         public List<string> menuItems = [];
         public List<string> MenuItems
         {
@@ -34,7 +28,7 @@ namespace AkiGames.UI.DropDown
                         {
                             // Сохраняем itemName в локальную переменную для замыкания
                             string currentItem = itemName;
-                            eventHandler.OnMouseDownEvent += () => DefaultActionOnChoose?.Invoke(currentItem);
+                            eventHandler.OnMouseDownEvent += () => ActionOnChoose?.Invoke(currentItem);
                         }
                         submenu.AddChild(submenuItem);
                     }
@@ -47,7 +41,7 @@ namespace AkiGames.UI.DropDown
         private static GameObject _submenuPrefab;
         private static GameObject _submenuItemPrefab;
 
-        public Action<string> DefaultActionOnChoose { private get; set; } = (_) => {};
+        public Action<string> ActionOnChoose { private get; set; } = (_) => {};
 
         public override void Awake()
         {
@@ -69,16 +63,14 @@ namespace AkiGames.UI.DropDown
         internal void Hide()
         {
             submenu.IsActive = false;
+            isRedacting = false;
             image.fillColor = idleColor;
         }
-        public override void OnMouseEnter() =>
-            image.fillColor = submenu.IsActive ? onOpenedColor : onHoverColor;
-        public override void OnMouseExit() =>
-            image.fillColor = submenu.IsActive ? onOpenedColor : idleColor;
         public override void OnMouseDown()
         {
             // Открываем или закрываем меню
             submenu.IsActive = !submenu.IsActive;
+            isRedacting = !isRedacting;
             image.fillColor = submenu.IsActive ? onOpenedColor : onHoverColor;
         }
         public override void Deactivate()

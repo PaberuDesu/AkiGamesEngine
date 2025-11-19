@@ -75,12 +75,9 @@ namespace AkiGames.Events
                 else if (Input.LMB.IsUp)//OnUp
                 {
                     if (Input.MousePressTarget != currentTarget)
-                    {
                         Input.MousePressTarget?.OnMouseUpOutside(); // if pressed on something, dragged out of it and stopped pressing
-                    }
-                    ;
+                    else currentTarget.OnMouseUp();
                     Input.EndPressing();
-                    currentTarget.OnMouseUp();
                 }
                 else if (Input.LMB.IsReleased)
                 {

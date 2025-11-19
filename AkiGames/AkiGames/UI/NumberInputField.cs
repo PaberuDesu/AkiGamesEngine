@@ -3,14 +3,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace AkiGames.UI
 {
-    public class NumberInputField : GameComponent
+    public class NumberInputField : InteractableComponent
     {
-        private bool isRedacting = false;
         private KeyboardState _currentKeyboardState;
         private KeyboardState _previousKeyboardState;
 
         private string _inputString = "";
         protected float result = 0;
+        public bool isInteger = false;
         
         private Text textField;
 
@@ -47,21 +47,11 @@ namespace AkiGames.UI
             { Keys.OemPeriod, "." }
         };
 
-        public override void OnMouseUp()
+        public override void Awake()
         {
-            isRedacting = true;
-            _inputString = textField.text;
-            result = float.Parse(_inputString);
-        }
-        public override void Deactivate()
-        {
-            isRedacting = false;
-            CalculateResult();
-            EndRedacting();
-        }
-
-        public override void Awake() =>
+            image = gameObject.GetComponent<Image>();
             textField = gameObject.Children[0].GetComponent<Text>();
+        }
 
         public override void Update()
         {
@@ -144,8 +134,20 @@ namespace AkiGames.UI
 
         protected virtual void EndRedacting()
         {
-            isRedacting = false;
-            textField.text = $"{result}";
+            StopInteracting();
+            textField.text = isInteger ? $"{(int) result}" : $"{result}";
+        }
+
+        public override void OnMouseDown()
+        {
+            base.OnMouseDown();
+            _inputString = textField.text;
+            result = float.Parse(_inputString);
+        }
+        public override void Deactivate()
+        {
+            CalculateResult();
+            EndRedacting();
         }
     }
 }

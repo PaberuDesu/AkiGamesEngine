@@ -47,7 +47,10 @@ namespace AkiGames.Scripts
             }
             foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
-                if (property.GetCustomAttribute<HideInInspector>() != null) continue;
+                if (
+                    !property.CanRead || !property.GetMethod.IsPublic ||
+                    property.GetCustomAttribute<HideInInspector>() != null
+                ) continue;
                 GameObject propertyObj = CreateFieldDescription(property, height, component);
                 if (propertyObj != null) height += propertyObj.uiTransform.Height + 5;
             }
@@ -89,6 +92,7 @@ namespace AkiGames.Scripts
             switch (type)
             {
                 case "Rectangle": return null;
+                case "Nullable`1": return null;
                 case "String":
                     fieldDescription = Game1.Prefabs["InspectorStringDescriptor"].Copy();
                     fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
@@ -111,7 +115,9 @@ namespace AkiGames.Scripts
 
                     if (!isSettable)
                     {
+                        imageX.gameObject.IsMouseTargetable = false;
                         imageX.fillColor = _inactiveColor;
+                        imageY.gameObject.IsMouseTargetable = false;
                         imageY.fillColor = _inactiveColor;
                     }
 
@@ -151,7 +157,7 @@ namespace AkiGames.Scripts
                     checkbox.value = (bool)value;
                     checkbox.Info = memberInfo;
                     checkbox.Component = gameComponent;
-                    checkbox.isSettable = isSettable;
+                    checkbox.gameObject.IsMouseTargetable = isSettable;
                     
                     if (!isSettable) image.fillColor = _inactiveColor;
                     break;
@@ -161,7 +167,11 @@ namespace AkiGames.Scripts
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
                     image = fieldDescription.Children[1].GetComponent<Image>();
-                    if (!isSettable) image.fillColor = _inactiveColor;
+                    if (!isSettable)
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
                     image.texture = Game1.UIImages["InputField"];
 
                     image.gameObject.Children[0].GetComponent<Text>().text = value is null ? "null" : $"{value}";
@@ -175,7 +185,26 @@ namespace AkiGames.Scripts
                         }
                         fieldDescription.Children[1].AddComponent(new InspectorDropDown()
                         {
-                            menuItems = menuItemNames
+                            menuItems = menuItemNames,
+                            Info = memberInfo,
+                            Component = gameComponent
+                        });
+                    }
+                    else if (type == "Single")
+                    {
+                        fieldDescription.Children[1].AddComponent(new InspectorNumberInputField()
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent
+                        });
+                    }
+                    else if (type == "Int32")
+                    {
+                        fieldDescription.Children[1].AddComponent(new InspectorNumberInputField()
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            isInteger = true
                         });
                     }
                     break;

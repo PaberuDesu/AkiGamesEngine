@@ -168,14 +168,16 @@ namespace AkiGames.UI
 
         public override void ProcessHotkey(HotKey hotkey) =>
             HandleMouseEvent(component => component.ProcessHotkey(hotkey));
-
-        public virtual void Draw(SpriteBatch spriteBatch)
+        
+        public virtual void SortByLayers()
         {
-            GetComponent<Image>()?.Draw(spriteBatch);
-            GetComponent<Text>()?.Draw(spriteBatch);
+            Image image = GetComponent<Image>();
+            if (image != null && image.Enabled) image.AddToLayer();
+            Text text = GetComponent<Text>();
+            if (text != null && text.Enabled) text.AddToLayer();
             foreach (var child in Children)
             {
-                if (child.IsActive) child.Draw(spriteBatch);
+                if (child.IsActive) child.SortByLayers();
             }
         }
 

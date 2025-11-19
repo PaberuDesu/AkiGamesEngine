@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AkiGames.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -91,39 +92,38 @@ namespace AkiGames.Events
 
         private static GameObject FindTarget()
         {
-            // Проверяем объекты в обратном порядке (от верхних к нижним по z-index)
-            for (int i = MainObject.Children.Count - 1; i >= 0; i--)
-            {
-                GameObject obj = MainObject.Children[i];
-                GameObject target = FindTargetIn(obj);
-                if (target != null)
-                    return target;
-            }
-            return MainObject;
+            (GameObject obj, int zIndex) bestCandidate = (null, int.MinValue);
+            FindTargetInHierarchy(MainObject, ref bestCandidate);
+            return bestCandidate.obj;
         }
-
-        private static GameObject FindTargetIn(GameObject parent)
+        
+        private static void FindTargetInHierarchy(GameObject parent, ref (GameObject obj, int zIndex) bestCandidate)
         {
-            if (parent.IsActive)
+            if (!parent.IsActive) return;
+            
+            // Проверяем родителя
+            if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
             {
-                // Сначала проверяем дочерние объекты (в обратном порядке)
-                if (parent.Children != null && parent.Children.Count > 0)
+                Image image = parent.GetComponent<Image>();
+                if (image != null && image.Enabled && image.zIndex >= bestCandidate.zIndex)
                 {
-                    for (int i = parent.Children.Count - 1; i >= 0; i--)
-                    {
-                        GameObject child = parent.Children[i];
-                        GameObject target = FindTargetIn(child);
-                        if (target != null)
-                            return target;
-                    }
+                    bestCandidate = (parent, image.zIndex);
                 }
-
-                // Если ни один дочерний объект не содержит курсор, проверяем родителя
-                if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
-                    return parent;
+                Text text = parent.GetComponent<Text>();
+                if (text != null && text.Enabled && text.zIndex >= bestCandidate.zIndex)
+                {
+                    bestCandidate = (parent, text.zIndex);
+                }
             }
-
-            return null;
+            
+            // Проверяем детей
+            if (parent.Children != null)
+            {
+                foreach (var child in parent.Children)
+                {
+                    FindTargetInHierarchy(child, ref bestCandidate);
+                }
+            }
         }
 
         public static bool IsCursorInWindow()

@@ -29,7 +29,7 @@ namespace AkiGames.UI
             texture.SetData([Color.White]);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             CreateTexture(spriteBatch);
 

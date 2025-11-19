@@ -37,6 +37,7 @@
       "IsMask": false,
       "fillColor": 4281808695,
       "imageMode": "Stretch",
+      "zIndex": 1,
       "Enabled": true
     },
     {
@@ -46,6 +47,7 @@
       "VerticalAlignment": "Middle",
       "text": "",
       "TextColor": 4294967295,
+      "zIndex": 1,
       "Enabled": true
     },
     {

@@ -245,7 +245,8 @@ namespace AkiGames.Core
                 GraphicsDevice.Clear(backgroundColor);
 
                 _spriteBatch.Begin();
-                gameMainObject.Draw(_spriteBatch);
+                gameMainObject.SortByLayers();
+                DrawableComponent.DrawLayers(_spriteBatch);
                 _spriteBatch.End();
 
                 GraphicsDevice.SetRenderTarget(null);
@@ -257,7 +258,8 @@ namespace AkiGames.Core
             GraphicsDevice.Clear(new Color(30, 30, 30));
 
             _spriteBatch.Begin();
-            _mainObject.Draw(_spriteBatch);
+            _mainObject.SortByLayers();
+            DrawableComponent.DrawLayers(_spriteBatch);
             _spriteBatch.End();
         }
     }

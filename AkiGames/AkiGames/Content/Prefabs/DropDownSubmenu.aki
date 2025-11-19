@@ -37,6 +37,7 @@
       "IsMask": false,
       "fillColor": 4281808695,
       "imageMode": "Stretch",
+      "zIndex": 1,
       "Enabled": true
     },
     {

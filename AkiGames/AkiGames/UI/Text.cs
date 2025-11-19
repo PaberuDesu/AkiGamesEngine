@@ -138,7 +138,7 @@ namespace AkiGames.UI
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             // Находим ближайшую родительскую маску (изображение)
             Image parentMask = FindParentMask();

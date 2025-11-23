@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AkiGames.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,6 +32,7 @@ namespace AkiGames.Events
             if (IsCursorInWindow()) // mouse activity
             {
                 Input.LMB.IsPressed = mouseState.LeftButton == ButtonState.Pressed;
+                Input.RMB.IsPressed = mouseState.RightButton == ButtonState.Pressed;
                 Input.Scroll = mouseState.ScrollWheelValue;
                 Input.mousePosition = mouseState.Position;
 
@@ -83,6 +83,12 @@ namespace AkiGames.Events
                 {
                     if (Input.DeltaScroll != 0) currentTarget.OnScroll(Input.DeltaScroll);
                 }
+
+                if (Input.RMB.IsUp) //OmRMBUp
+                {
+                    currentTarget.OnRMBUp();
+                }
+
                 _previousPosition = Input.mousePosition;
             }
         }
@@ -141,6 +147,7 @@ namespace AkiGames.Events
         public static Key Z { get; } = new();
         public static Key S { get; } = new();
         public static Key LMB { get; } = new();
+        public static Key RMB { get; } = new();
 
         private static int _prevScroll = 0;
         private static int _scroll = 0;

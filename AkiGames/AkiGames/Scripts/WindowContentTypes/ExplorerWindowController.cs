@@ -279,7 +279,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         internal void GoBack()
         {
-            if (_pathHistory.Count > 0)
+            if (_pathHistory?.Count > 0)
             {
                 _currentPath = _pathHistory.Pop();
                 RefreshContent();

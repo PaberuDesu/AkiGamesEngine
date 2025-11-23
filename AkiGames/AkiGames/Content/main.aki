@@ -382,6 +382,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Left",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -423,6 +431,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "Right",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -466,6 +482,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Bottom",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -508,6 +532,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomLeft",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -549,6 +581,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomRight",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -1062,6 +1102,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Left",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -1103,6 +1151,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "Right",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -1146,6 +1202,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Bottom",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -1188,6 +1252,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomLeft",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -1229,6 +1301,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomRight",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -1561,6 +1641,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Left",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -1602,6 +1690,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "Right",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -1645,6 +1741,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Bottom",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -1687,6 +1791,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomLeft",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -1728,6 +1840,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomRight",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -2377,6 +2497,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Left",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -2418,6 +2546,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "Right",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -2461,6 +2597,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Bottom",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -2503,6 +2647,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomLeft",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -2544,6 +2696,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomRight",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -3105,6 +3265,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Left",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -3146,6 +3314,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "Right",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -3189,6 +3365,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Bottom",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -3231,6 +3415,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomLeft",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -3272,6 +3464,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomRight",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -3795,6 +3995,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Left",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -3836,6 +4044,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "Right",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -3879,6 +4095,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "Bottom",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -3921,6 +4145,14 @@
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomLeft",
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -3962,6 +4194,14 @@
                 {
                   "type": "ResizeHandleController",
                   "resizeDirection": "BottomRight",
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 0,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -4765,6 +5005,177 @@
                     },
                     {
                       "type": "DropDownItem",
+                      "Enabled": true
+                    }
+                  ],
+                  "Children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ObjectName": "CreateMenu",
+          "IsActive": true,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": 0
+              },
+              "Width": 0,
+              "Height": 0,
+              "HorizontalAlignment": "Stretch",
+              "VerticalAlignment": "Stretch",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 1,
+                "y": 1
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Image",
+              "IsMask": false,
+              "fillColor": 4281150765,
+              "imageMode": "Stretch",
+              "zIndex": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Text",
+              "HorizontalWrap": "None",
+              "HorizontalAlignment": "Center",
+              "VerticalAlignment": "Middle",
+              "text": "Create",
+              "TextColor": 4294967295,
+              "zIndex": 0,
+              "Enabled": true
+            },
+            {
+              "type": "MenuItemController",
+              "menuItems": [],
+              "Enabled": true
+            }
+          ],
+          "Children": [
+            {
+              "ObjectName": "submenu",
+              "IsActive": false,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 180,
+                  "Height": 0,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Bottom",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 1
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 1
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "fillColor": 4281808695,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Column",
+                  "Spacing": 0,
+                  "Enabled": true
+                }
+              ],
+              "Children": [
+                {
+                  "ObjectName": "GameObject",
+                  "IsActive": true,
+                  "IsMouseTargetable": true,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "OffsetMax": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "Width": 0,
+                      "Height": 0,
+                      "HorizontalAlignment": "Stretch",
+                      "VerticalAlignment": "Top",
+                      "anchorLeftTop": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "anchorRightBottom": {
+                        "x": 1,
+                        "y": 0
+                      },
+                      "origin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "LocalRotation": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Image",
+                      "IsMask": false,
+                      "fillColor": 4281808695,
+                      "imageMode": "Stretch",
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Text",
+                      "HorizontalWrap": "None",
+                      "HorizontalAlignment": "Center",
+                      "VerticalAlignment": "Middle",
+                      "text": "GameObject",
+                      "TextColor": 4294967295,
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "GameObjectCreator",
                       "Enabled": true
                     }
                   ],

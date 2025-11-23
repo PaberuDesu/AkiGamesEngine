@@ -36,6 +36,7 @@ namespace AkiGames
         public virtual void OnMouseUp(){}
         public virtual void OnDoubleClick(){}
         public virtual void OnMouseUpOutside(){} // if pressed on something, dragged out of it and stopped pressing
+        public virtual void OnRMBUp(){}
         public virtual void Deactivate(){}
         public virtual void Drag(
             Vector2 cursorPosOnObj

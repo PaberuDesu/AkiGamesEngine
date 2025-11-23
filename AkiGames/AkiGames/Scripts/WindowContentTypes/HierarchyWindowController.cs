@@ -1,5 +1,4 @@
 using System.IO;
-using System.Text.Json;
 using System.Collections.Generic;
 using AkiGames.Core;
 using AkiGames.Scripts.Window;
@@ -13,7 +12,6 @@ namespace AkiGames.Scripts.WindowContentTypes
     {
         private ScrollableListController _contentList;
         private static string _gamePath = null;
-        private static GameObject _gameMainObject = null;
 
 
         GameObject contentObject;
@@ -29,8 +27,15 @@ namespace AkiGames.Scripts.WindowContentTypes
         public void RefreshContent(string fullPath, GameObject gameMainObject)
         {
             _gamePath = fullPath;
-            _gameMainObject = gameMainObject;
             
+            _contentList.gameObject.Children = [];
+            ProcessChildrenRecursive(gameMainObject, null, 0);
+
+            _contentList.Refresh();
+        }
+
+        public void RefreshContent(GameObject gameMainObject)
+        {
             _contentList.gameObject.Children = [];
             ProcessChildrenRecursive(gameMainObject, null, 0);
 

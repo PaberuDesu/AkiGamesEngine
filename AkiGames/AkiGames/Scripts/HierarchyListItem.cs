@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AkiGames.Scripts.WindowContentTypes;
 
 namespace AkiGames.Scripts
 {
@@ -12,6 +13,11 @@ namespace AkiGames.Scripts
         {
             _opener = gameObject.Children[0].GetComponent<HierarchyExpander>();
             _opener.gameObject.IsActive = childItems.Count > 0;
+        }
+
+        public override void OnRMBUp()
+        {
+            //TODO: menu (rename, delete)
         }
     }
 }

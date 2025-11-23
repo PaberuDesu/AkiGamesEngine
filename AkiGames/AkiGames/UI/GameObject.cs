@@ -157,6 +157,8 @@ namespace AkiGames.UI
             HandleMouseEvent(component => component.OnDoubleClick());
         public override void OnMouseUpOutside() =>
             HandleMouseEvent(component => component.OnMouseUpOutside());
+        public override void OnRMBUp() =>
+            HandleMouseEvent(component => component.OnRMBUp());
         public override void Deactivate() =>
             HandleMouseEvent(component => component.Deactivate());
         public override void Drag(Vector2 cursorPosOnObj) =>

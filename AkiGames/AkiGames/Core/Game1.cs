@@ -17,7 +17,7 @@ namespace AkiGames.Core
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private GameObject _mainObject;
+        public static GameObject MainObject;
 
         public static event Action<GameTime> UpdateAction;
         public static IntPtr WindowHandle { get; private set; }
@@ -69,9 +69,9 @@ namespace AkiGames.Core
             string jsonString = Content.Load<string>("main");
             JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(jsonString);
 
-            _mainObject = JsonProjectSerializer.LoadFromJson(akiContent);
-            _mainObject.AkiGamesAwakeTree();
-            EventSystem.MainObject = _mainObject;
+            MainObject = JsonProjectSerializer.LoadFromJson(akiContent);
+            MainObject.AkiGamesAwakeTree();
+            EventSystem.MainObject = MainObject;
             SetMainObjectBounds();
         }
 
@@ -109,7 +109,7 @@ namespace AkiGames.Core
 
         private void SetMainObjectBounds()
         {
-            _mainObject.RefreshBounds(
+            MainObject.RefreshBounds(
                 UITransform.TransformOfBounds(new Rectangle(
                     0,
                     0,
@@ -258,7 +258,7 @@ namespace AkiGames.Core
             GraphicsDevice.Clear(new Color(30, 30, 30));
 
             _spriteBatch.Begin();
-            _mainObject.SortByLayers();
+            MainObject.SortByLayers();
             DrawableComponent.DrawLayers(_spriteBatch);
             _spriteBatch.End();
         }

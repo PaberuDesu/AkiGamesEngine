@@ -38,6 +38,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         private HierarchyWindowController _hierarchyWindow;
         private GameWindowController _gameWindow;
+        private SceneWindowController _sceneWindow;
 
         public override void Awake()
         {
@@ -53,6 +54,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
             _hierarchyWindow = gameObject.Parent.Children[1].GetComponent<HierarchyWindowController>();
             _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();
+            _sceneWindow = gameObject.Parent.Children[2].GetComponent<SceneWindowController>();
 
             base.Awake();
         }
@@ -275,6 +277,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             
             _gameWindow.RefreshContent(gameMainObject);
             _hierarchyWindow.RefreshContent(fullPath, gameMainObject);
+            _sceneWindow.RefreshContent(gameMainObject);
         }
 
         internal void GoBack()

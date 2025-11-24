@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AkiGames.Scripts.WindowContentTypes;
 
 namespace AkiGames.Scripts
 {

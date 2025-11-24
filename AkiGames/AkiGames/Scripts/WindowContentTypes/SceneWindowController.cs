@@ -12,7 +12,8 @@ namespace AkiGames.Scripts.WindowContentTypes
         private UITransform _container;
         private GameObject _content;
         private Rectangle _prevBounds;
-        private float scaleFactor = 1;
+        private float _scaleFactor = 1;
+
         public override void Awake()
         {
             GameObject parent  = gameObject.Children[3];
@@ -41,7 +42,10 @@ namespace AkiGames.Scripts.WindowContentTypes
                     _content.uiTransform.Height = (int)(_container.Bounds.Width * 1080.0f / 1920);
                 }
                 _prevBounds = _container.Bounds;
-                scaleFactor = _content.uiTransform.Width / 1920f;
+                _scaleFactor = _content.uiTransform.Width / 1920f;
+
+                if (_content.Children.Count > 0) RescaleObjectsRecursive(_content.Children[0]);
+
                 _content.RefreshBounds();
             }
 
@@ -52,7 +56,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         {
             _content.Children = [ProcessChildrenRecursive(gameObjectTree)];
             _content.Children[0].AkiGamesAwakeTree();
-            _content.Children[0].RefreshBounds();
+            _prevBounds = Rectangle.Empty; // чтобы перезагрузить Update
         }
         
 
@@ -61,18 +65,16 @@ namespace AkiGames.Scripts.WindowContentTypes
             GameObject objectConcept = new(objectRealization.ObjectName + " (concept)");
             UITransform tr = objectRealization.uiTransform.Copy();
 
-            tr.OffsetMin *= scaleFactor;
-            tr.OffsetMax *= scaleFactor;
-            tr.Width = (int)(tr.Width * scaleFactor);
-            tr.Height = (int)(tr.Height * scaleFactor);
-
             objectConcept.uiTransform = tr;
             objectConcept.AddComponent(tr);
             
             Image image = (Image) objectRealization.GetComponent<Image>()?.Copy();
             if (image != null) objectConcept.AddComponent(image);
 
-            SceneInteractableObject interactable = new();
+            SceneInteractableObject interactable = new()
+            {
+                source = objectRealization.uiTransform
+            };
             interactable.SetActionOnDoubleClick(() => { InspectorWindowController.LoadFor(objectRealization); });
             objectConcept.AddComponent(interactable);
 
@@ -81,6 +83,21 @@ namespace AkiGames.Scripts.WindowContentTypes
                 objectConcept.AddChild(ProcessChildrenRecursive(childRealization));
             }
             return objectConcept;
+        }
+
+        private void RescaleObjectsRecursive(GameObject objectConcept)
+        {
+            UITransform trConcept = objectConcept.uiTransform;
+            UITransform trRealization = objectConcept.GetComponent<SceneInteractableObject>().source;
+            trConcept.OffsetMin = trRealization.OffsetMin * _scaleFactor;
+            trConcept.OffsetMax = trRealization.OffsetMax * _scaleFactor;
+            trConcept.Width = (int)(trRealization.Width * _scaleFactor);
+            trConcept.Height = (int)(trRealization.Height * _scaleFactor);
+
+            foreach (GameObject child in objectConcept.Children)
+            {
+                RescaleObjectsRecursive(child);
+            }
         }
     }
 }

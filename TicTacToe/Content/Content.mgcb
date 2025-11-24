@@ -1,0 +1,21 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:Windows
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+/reference:..\libs\AkiContentPipeline.dll
+
+#---------------------------------- Content ---------------------------------#
+
+#begin main.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:main.aki
+

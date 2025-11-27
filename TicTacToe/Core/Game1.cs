@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Events;
 using AkiGames.UI;
-using System.Text.Json;
+using AkiGames.Scripts;
 
 namespace AkiGames.Core
 {
@@ -29,7 +30,6 @@ namespace AkiGames.Core
         // Для рендеринга игры
         public static GameObject gameMainObject;
         public static RenderTarget2D GameRenderTarget { get; private set; }
-        private static Color backgroundColor = new(45, 45, 45);
 
         public Game1()
         {
@@ -120,6 +120,11 @@ namespace AkiGames.Core
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            FieldController.LoadContent(Content);
+            CellController.LoadContent(Content);
+            Retry.LoadContent(Content);
+            EndGame.LoadContent(Content);
 
             // Путь к папке Prefabs
             string prefabsPath = Path.Combine(Content.RootDirectory, "Prefabs");

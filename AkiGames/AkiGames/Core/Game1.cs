@@ -142,13 +142,13 @@ namespace AkiGames.Core
             // Проверяем существование папки
             if (Directory.Exists(prefabsPath))
             {
-                string[] files = Directory.GetFiles(prefabsPath, "*.aki", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(prefabsPath, "*.xnb", SearchOption.AllDirectories);
 
                 foreach (var file in files)
                 {
                     // Получаем относительный путь без расширения
                     string assetName = file[(Content.RootDirectory.Length + 1)..].
-                                    Replace(".aki", "");
+                                    Replace(".xnb", "");
 
                     string jsonString = Content.Load<string>(assetName);
                     JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(jsonString);
@@ -158,6 +158,7 @@ namespace AkiGames.Core
                     string key = Path.GetFileName(assetName);
                     Prefabs.Add(key, gameObject);
                 }
+                Prefabs.Add("empty", MainObject);
             }
 
             // Путь к папке UI
@@ -166,13 +167,13 @@ namespace AkiGames.Core
             // Проверяем существование папки
             if (Directory.Exists(UIPath))
             {
-                string[] files = Directory.GetFiles(UIPath, "*.png", SearchOption.AllDirectories);
+                string[] files = Directory.GetFiles(UIPath, "*.xnb", SearchOption.AllDirectories);
 
                 foreach (var file in files)
                 {
                     // Получаем относительный путь без расширения
                     string assetName = file[(Content.RootDirectory.Length + 1)..].
-                                    Replace(".png", "");
+                                    Replace(".xnb", "");
 
                     Texture2D image = Content.Load<Texture2D>(assetName);
 

@@ -1,0 +1,50 @@
+{
+  "ObjectName": "submenu",
+  "IsActive": false,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 180,
+      "Height": 0,
+      "HorizontalAlignment": "Left",
+      "VerticalAlignment": "Bottom",
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 1
+      },
+      "anchorRightBottom": {
+        "x": 0,
+        "y": 1
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "fillColor": 4281808695,
+      "imageMode": "Stretch",
+      "zIndex": 1,
+      "Enabled": true
+    },
+    {
+      "type": "Column",
+      "Spacing": 0,
+      "Enabled": true
+    }
+  ],
+  "Children": []
+}

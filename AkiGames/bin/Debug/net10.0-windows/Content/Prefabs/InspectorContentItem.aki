@@ -1,0 +1,383 @@
+{
+  "ObjectName": "InspectorContentItem",
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 0,
+      "Height": 0,
+      "HorizontalAlignment": "Stretch",
+      "VerticalAlignment": "Top",
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 1,
+        "y": 0
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "InspectorItemController",
+      "Enabled": true
+    }
+  ],
+  "Children": [
+    {
+      "ObjectName": "TopBorder",
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 1,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Top",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 0
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": false,
+          "fillColor": 4280821800,
+          "imageMode": "Stretch",
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "ObjectName": "BottomBorder",
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 1,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Bottom",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 1
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 1
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": false,
+          "fillColor": 4280821800,
+          "imageMode": "Stretch",
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "ObjectName": "LeftBorder",
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 1,
+          "Height": 0,
+          "HorizontalAlignment": "Left",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 0,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": false,
+          "fillColor": 4280821800,
+          "imageMode": "Stretch",
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "ObjectName": "RightBorder",
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 1,
+          "Height": 0,
+          "HorizontalAlignment": "Right",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 1,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 1,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": false,
+          "fillColor": 4280821800,
+          "imageMode": "Stretch",
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "ObjectName": "InspectorItemTitle",
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 30,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Top",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 0
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": [
+        {
+          "ObjectName": "Icon",
+          "IsActive": true,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 10,
+                "y": 4
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": 0
+              },
+              "Width": 17,
+              "Height": 17,
+              "HorizontalAlignment": "Left",
+              "VerticalAlignment": "Top",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 0,
+                "y": 0
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Image",
+              "IsMask": false,
+              "fillColor": 4294967295,
+              "imageMode": "Stretch",
+              "Enabled": true
+            }
+          ],
+          "Children": []
+        },
+        {
+          "ObjectName": "Title",
+          "IsActive": true,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 40,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 10,
+                "y": 0
+              },
+              "Width": 0,
+              "Height": 0,
+              "HorizontalAlignment": "Stretch",
+              "VerticalAlignment": "Stretch",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 1,
+                "y": 1
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Text",
+              "HorizontalWrap": "DotsAfter",
+              "HorizontalAlignment": "Left",
+              "VerticalAlignment": "Middle",
+              "text": "",
+              "TextColor": 4294967295,
+              "Enabled": true
+            }
+          ],
+          "Children": []
+        }
+      ]
+    },
+    {
+      "ObjectName": "Content",
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 5,
+            "y": 5
+          },
+          "OffsetMax": {
+            "x": 5,
+            "y": 5
+          },
+          "Width": 0,
+          "Height": 0,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    }
+  ]
+}

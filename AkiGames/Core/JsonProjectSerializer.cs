@@ -92,6 +92,8 @@ namespace AkiGames.Core
         {
             if (_blacklistedTypes.Contains(type))
                 return true;
+            if (type.Namespace?.StartsWith("Veldrid") == true)
+                return true;
             if (type.IsGenericType)
             {
                 foreach (var genericArg in type.GetGenericArguments())

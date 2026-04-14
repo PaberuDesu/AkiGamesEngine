@@ -22,6 +22,7 @@ namespace AkiGames.Core
         private readonly SpriteBatch _spriteBatch;
         private Framebuffer _gameFramebuffer = null!;
         private Texture _gameDepthTexture = null!;
+        public static Texture WhiteTexture { get; private set; } = null!;
 
         private bool _isWindowActive = true;
         private bool _closed = false;
@@ -55,6 +56,11 @@ namespace AkiGames.Core
                 syncToVerticalBlank: true,
                 resourceBindingModel: ResourceBindingModel.Default);
             _graphicsDevice = VeldridStartup.CreateGraphicsDevice(_window, options, GraphicsBackend.Vulkan);
+            
+            var texDesc = TextureDescription.Texture2D(1, 1, 1, 1, PixelFormat.R8_G8_B8_A8_UNorm, TextureUsage.Sampled);
+            WhiteTexture = _graphicsDevice.ResourceFactory.CreateTexture(texDesc);
+            _graphicsDevice.UpdateTexture(WhiteTexture, new byte[] { 255, 255, 255, 255 }, 0, 0, 0, 1, 1, 1, 0, 0);
+            
             EventSystem.Initialize(_window, _graphicsDevice);
             _commandList = _graphicsDevice.ResourceFactory.CreateCommandList();
             _spriteBatch = new SpriteBatch(_graphicsDevice, _commandList);

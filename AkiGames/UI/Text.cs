@@ -8,21 +8,57 @@ namespace AkiGames.UI
 {
     public class Text : DrawableComponent, IAlignable
     {
-        public string text = "";
+        protected bool doesNeedRedraw = true;
+        public void Invalidate() => doesNeedRedraw = true;
+        
+        private string _text = "";
+        public string text
+        {
+            get => _text;
+            set
+            {
+                if (_text != value)
+                {
+                    _text = value;
+                    Invalidate();
+                }
+            }
+        }
         private string _wrappedText = "";
         private string TextWithCurrentWrapping => HorizontalWrap == WrapModeH.None ? text : _wrappedText;
-        public Color TextColor = Color.White;
+        private Color _textColor = Color.White;
+        public Color TextColor
+        {
+            get => _textColor;
+            set
+            {
+                if (!_textColor.Equals(value))
+                {
+                    _textColor = value;
+                    Invalidate();
+                }
+            }
+        }
 
         private Rectangle _prevBounds = new(0, 0, 0, 0);
         private string _prevText = "";
         private WrapModeH _prevWrap = WrapModeH.None;
 
-        private Texture _cachedTexture = null!;
-        private string _lastRenderedText = "";
-        private Color _lastColor;
-        private int _lastTextureWidth, _lastTextureHeight;
+        private Texture? _cachedTexture = null;
 
-        public WrapModeH HorizontalWrap { get; set; } = WrapModeH.None;
+        private WrapModeH _horizontalWrap = WrapModeH.None;
+        public WrapModeH HorizontalWrap
+        {
+            get => _horizontalWrap;
+            set
+            {
+                if (_horizontalWrap != value)
+                {
+                    _horizontalWrap = value;
+                    Invalidate();
+                }
+            }
+        }
         public enum WrapModeH
         {
             None,
@@ -30,17 +66,46 @@ namespace AkiGames.UI
             NewLineControlsHeigth
         }
 
-        public AlignmentH HorizontalAlignment { get; set; } = AlignmentH.Center;
-        public enum AlignmentH { Left, Center, Right }
-        public AlignmentV VerticalAlignment { get; set; } = AlignmentV.Middle;
-        public enum AlignmentV { Top, Middle, Bottom }
-
-        public override void Awake() => _wrappedText = text;
-
-        private Vector2 MeasureStringCached(string text)
+        private AlignmentH _horizontalAlignment = AlignmentH.Center;
+        public AlignmentH HorizontalAlignment
         {
-            return TextRenderer.MeasureString(text);
+            get => _horizontalAlignment;
+            set
+            {
+                if (_horizontalAlignment != value)
+                {
+                    _horizontalAlignment = value;
+                    Invalidate();
+                }
+            }
         }
+        public enum AlignmentH { Left, Center, Right }
+        private AlignmentV _verticalAlignment = AlignmentV.Middle;
+        public AlignmentV VerticalAlignment
+        {
+            get => _verticalAlignment;
+            set
+            {
+                if (_verticalAlignment != value)
+                {
+                    _verticalAlignment = value;
+                    Invalidate();
+                }
+            }
+        }
+        public enum AlignmentV { Top, Middle, Bottom }
+        
+
+        public override void Awake()
+        {
+            base.Awake();
+            _wrappedText = _text;
+            if (!string.IsNullOrEmpty(_text))
+                Invalidate();
+        }
+
+        private static Vector2 MeasureStringCached(string text) =>
+            TextRenderer.MeasureString(text);
 
         private string TruncateText()
         {
@@ -110,23 +175,19 @@ namespace AkiGames.UI
                 _prevBounds = uiTransform.Bounds;
                 _prevText = text;
                 _prevWrap = HorizontalWrap;
-                _cachedTexture = null!; // пометим для пересоздания
+                _cachedTexture = null; // пометим для пересоздания
             }
         }
 
         private void UpdateCachedTexture(GraphicsDevice gd)
         {
             string currentText = TextWithCurrentWrapping;
-            if (_cachedTexture != null && _lastRenderedText == currentText && _lastColor == TextColor)
+            if (!doesNeedRedraw && _cachedTexture != null)
                 return;
         
             _cachedTexture?.Dispose();
-            int width, height;
-            _cachedTexture = TextRenderer.RenderTextToTexture(gd, currentText, TextColor, out width, out height);
-            _lastRenderedText = currentText;
-            _lastColor = TextColor;
-            _lastTextureWidth = width;
-            _lastTextureHeight = height;
+            _cachedTexture = TextRenderer.RenderTextToTexture(gd, currentText, TextColor, out int width, out int height);
+            doesNeedRedraw = false;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -141,14 +202,17 @@ namespace AkiGames.UI
             int x = rect.X;
             int y = rect.Y;
 
+            int lastTextureWidth = (int)_cachedTexture.Width;
+            int lastTextureHeight = (int)_cachedTexture.Height;
+
             // Горизонтальное выравнивание
             switch (HorizontalAlignment)
             {
                 case AlignmentH.Center:
-                    x += (rect.Width - _lastTextureWidth) / 2;
+                    x += (rect.Width - lastTextureWidth) / 2;
                     break;
                 case AlignmentH.Right:
-                    x += rect.Width - _lastTextureWidth;
+                    x += rect.Width - lastTextureWidth;
                     break;
             }
 
@@ -156,14 +220,14 @@ namespace AkiGames.UI
             switch (VerticalAlignment)
             {
                 case AlignmentV.Middle:
-                    y += (rect.Height - _lastTextureHeight) / 2;
+                    y += (rect.Height - lastTextureHeight) / 2;
                     break;
                 case AlignmentV.Bottom:
-                    y += rect.Height - _lastTextureHeight;
+                    y += rect.Height - lastTextureHeight;
                     break;
             }
 
-            spriteBatch.Draw(_cachedTexture, new Rectangle(x, y, _lastTextureWidth, _lastTextureHeight), TextColor, 0, Vector2.Zero); // пока без возможности вращать
+            spriteBatch.Draw(_cachedTexture, new Rectangle(x, y, lastTextureWidth, lastTextureHeight), TextColor, 0, Vector2.Zero); // пока без возможности вращать
         }
     }
 }

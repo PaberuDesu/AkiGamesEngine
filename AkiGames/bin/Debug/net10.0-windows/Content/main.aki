@@ -70,9 +70,9 @@
         },
         {
           "type": "Image",
-          "IsMask": false,
           "fillColor": 4279834905,
           "imageMode": "Stretch",
+          "IsMask": false,
           "zIndex": 0,
           "Enabled": true
         }
@@ -114,9 +114,9 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4279505940,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
@@ -162,9 +162,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -207,9 +207,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -252,9 +252,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -333,9 +333,9 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4294967295,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     }
@@ -385,9 +385,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -435,9 +435,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -485,9 +485,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -535,9 +535,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -585,9 +585,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -630,19 +630,19 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4282137660,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
                 {
                   "type": "Text",
+                  "text": "Game View",
+                  "TextColor": 4294967295,
                   "HorizontalWrap": "None",
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
-                  "text": "Game View",
-                  "TextColor": 4294967295,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -691,9 +691,9 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4279505940,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
@@ -739,9 +739,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -784,9 +784,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -829,9 +829,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -910,9 +910,9 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": true,
                       "fillColor": 4278190180,
                       "imageMode": "Stretch",
+                      "IsMask": true,
                       "zIndex": 0,
                       "Enabled": true
                     }
@@ -996,9 +996,9 @@
                         },
                         {
                           "type": "Image",
-                          "IsMask": false,
                           "fillColor": 4280821800,
                           "imageMode": "Stretch",
+                          "IsMask": false,
                           "zIndex": 0,
                           "Enabled": true
                         },
@@ -1045,9 +1045,9 @@
                             },
                             {
                               "type": "Image",
-                              "IsMask": false,
                               "fillColor": 4286611584,
                               "imageMode": "Stretch",
+                              "IsMask": false,
                               "zIndex": 0,
                               "Enabled": true
                             },
@@ -1105,9 +1105,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1155,9 +1155,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1205,9 +1205,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1255,9 +1255,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1305,9 +1305,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1350,19 +1350,19 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4282137660,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
                 {
                   "type": "Text",
+                  "text": "Hierarchy",
+                  "TextColor": 4294967295,
                   "HorizontalWrap": "None",
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
-                  "text": "Hierarchy",
-                  "TextColor": 4294967295,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -1411,9 +1411,9 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4279505940,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
@@ -1459,9 +1459,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1504,9 +1504,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1549,9 +1549,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1630,9 +1630,9 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4294967295,
                       "imageMode": "Tile",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     }
@@ -1719,9 +1719,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1769,9 +1769,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1819,9 +1819,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1869,9 +1869,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1919,9 +1919,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -1964,19 +1964,19 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4282137660,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
                 {
                   "type": "Text",
+                  "text": "Scene View",
+                  "TextColor": 4294967295,
                   "HorizontalWrap": "None",
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
-                  "text": "Scene View",
-                  "TextColor": 4294967295,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -2025,9 +2025,9 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4279505940,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
@@ -2073,9 +2073,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2118,9 +2118,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2163,9 +2163,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2280,11 +2280,11 @@
                         },
                         {
                           "type": "Text",
+                          "text": "",
+                          "TextColor": 4292072403,
                           "HorizontalWrap": "None",
                           "HorizontalAlignment": "Left",
                           "VerticalAlignment": "Middle",
-                          "text": "",
-                          "TextColor": 4292072403,
                           "zIndex": 0,
                           "Enabled": true
                         }
@@ -2327,11 +2327,11 @@
                         },
                         {
                           "type": "Text",
+                          "text": "\u003C= Back",
+                          "TextColor": 4293318829,
                           "HorizontalWrap": "None",
                           "HorizontalAlignment": "Right",
                           "VerticalAlignment": "Middle",
-                          "text": "\u003C= Back",
-                          "TextColor": 4293318829,
                           "zIndex": 0,
                           "Enabled": true
                         },
@@ -2380,9 +2380,9 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": true,
                       "fillColor": 4294967295,
                       "imageMode": "Stretch",
+                      "IsMask": true,
                       "zIndex": 0,
                       "Enabled": true
                     }
@@ -2466,9 +2466,9 @@
                         },
                         {
                           "type": "Image",
-                          "IsMask": false,
                           "fillColor": 4280821800,
                           "imageMode": "Stretch",
+                          "IsMask": false,
                           "zIndex": 0,
                           "Enabled": true
                         },
@@ -2515,9 +2515,9 @@
                             },
                             {
                               "type": "Image",
-                              "IsMask": false,
                               "fillColor": 4286611584,
                               "imageMode": "Stretch",
+                              "IsMask": false,
                               "zIndex": 0,
                               "Enabled": true
                             },
@@ -2575,9 +2575,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2625,9 +2625,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2675,9 +2675,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2725,9 +2725,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2775,9 +2775,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2820,19 +2820,19 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4282137660,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
                 {
                   "type": "Text",
+                  "text": "Project Files",
+                  "TextColor": 4294967295,
                   "HorizontalWrap": "None",
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
-                  "text": "Project Files",
-                  "TextColor": 4294967295,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -2881,9 +2881,9 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4279505940,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
@@ -2929,9 +2929,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -2974,9 +2974,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3019,9 +3019,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3100,9 +3100,9 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": true,
                       "fillColor": 4294967295,
                       "imageMode": "Stretch",
+                      "IsMask": true,
                       "zIndex": 0,
                       "Enabled": true
                     }
@@ -3185,11 +3185,11 @@
                             },
                             {
                               "type": "Text",
+                              "text": "",
+                              "TextColor": 4294967295,
                               "HorizontalWrap": "NewLineControlsHeigth",
                               "HorizontalAlignment": "Left",
                               "VerticalAlignment": "Top",
-                              "text": "",
-                              "TextColor": 4294967295,
                               "zIndex": 0,
                               "Enabled": true
                             }
@@ -3234,9 +3234,9 @@
                         },
                         {
                           "type": "Image",
-                          "IsMask": false,
                           "fillColor": 4280821800,
                           "imageMode": "Stretch",
+                          "IsMask": false,
                           "zIndex": 0,
                           "Enabled": true
                         },
@@ -3283,9 +3283,9 @@
                             },
                             {
                               "type": "Image",
-                              "IsMask": false,
                               "fillColor": 4286611584,
                               "imageMode": "Stretch",
+                              "IsMask": false,
                               "zIndex": 0,
                               "Enabled": true
                             },
@@ -3343,9 +3343,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3393,9 +3393,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3443,9 +3443,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3493,9 +3493,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3543,9 +3543,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3588,19 +3588,19 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4282137660,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
                 {
                   "type": "Text",
+                  "text": "Console",
+                  "TextColor": 4294967295,
                   "HorizontalWrap": "None",
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
-                  "text": "Console",
-                  "TextColor": 4294967295,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -3649,9 +3649,9 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4279505940,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
@@ -3697,9 +3697,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3742,9 +3742,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3787,9 +3787,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4280821800,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -3868,9 +3868,9 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": true,
                       "fillColor": 4294967295,
                       "imageMode": "Stretch",
+                      "IsMask": true,
                       "zIndex": 0,
                       "Enabled": true
                     }
@@ -3917,11 +3917,11 @@
                         },
                         {
                           "type": "Text",
+                          "text": "",
+                          "TextColor": 4294967295,
                           "HorizontalWrap": "None",
                           "HorizontalAlignment": "Center",
                           "VerticalAlignment": "Middle",
-                          "text": "",
-                          "TextColor": 4294967295,
                           "zIndex": 0,
                           "Enabled": true
                         }
@@ -3964,9 +3964,9 @@
                         },
                         {
                           "type": "Image",
-                          "IsMask": false,
                           "fillColor": 4280821800,
                           "imageMode": "Stretch",
+                          "IsMask": false,
                           "zIndex": 0,
                           "Enabled": true
                         },
@@ -4013,9 +4013,9 @@
                             },
                             {
                               "type": "Image",
-                              "IsMask": false,
                               "fillColor": 4286611584,
                               "imageMode": "Stretch",
+                              "IsMask": false,
                               "zIndex": 0,
                               "Enabled": true
                             },
@@ -4073,9 +4073,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -4123,9 +4123,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -4173,9 +4173,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -4223,9 +4223,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -4273,9 +4273,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 0,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 }
@@ -4318,19 +4318,19 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4282137660,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
                 {
                   "type": "Text",
+                  "text": "Inspector",
+                  "TextColor": 4294967295,
                   "HorizontalWrap": "None",
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
-                  "text": "Inspector",
-                  "TextColor": 4294967295,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -4381,9 +4381,9 @@
         },
         {
           "type": "Image",
-          "IsMask": false,
           "fillColor": 4281150765,
           "imageMode": "Stretch",
+          "IsMask": false,
           "zIndex": 0,
           "Enabled": true
         },
@@ -4429,19 +4429,19 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4281150765,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
             {
               "type": "Text",
+              "text": "File",
+              "TextColor": 4294967295,
               "HorizontalWrap": "None",
               "HorizontalAlignment": "Center",
               "VerticalAlignment": "Middle",
-              "text": "File",
-              "TextColor": 4294967295,
               "zIndex": 0,
               "Enabled": true
             },
@@ -4488,9 +4488,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4281808695,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -4537,19 +4537,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Open Project",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Open Project",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -4596,19 +4596,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Save Project",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Save Project",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -4659,19 +4659,19 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4281150765,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
             {
               "type": "Text",
+              "text": "Windows",
+              "TextColor": 4294967295,
               "HorizontalWrap": "None",
               "HorizontalAlignment": "Center",
               "VerticalAlignment": "Middle",
-              "text": "Windows",
-              "TextColor": 4294967295,
               "zIndex": 0,
               "Enabled": true
             },
@@ -4718,9 +4718,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4281808695,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -4767,19 +4767,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Hierarchy",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Hierarchy",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -4826,19 +4826,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Project Files",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Project Files",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -4885,19 +4885,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Scene View",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Scene View",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -4944,19 +4944,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Game View",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Game View",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -5003,19 +5003,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Console",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Console",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -5062,19 +5062,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "Inspector",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "Inspector",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },
@@ -5125,19 +5125,19 @@
             },
             {
               "type": "Image",
-              "IsMask": false,
               "fillColor": 4281150765,
               "imageMode": "Stretch",
+              "IsMask": false,
               "zIndex": 0,
               "Enabled": true
             },
             {
               "type": "Text",
+              "text": "Create",
+              "TextColor": 4294967295,
               "HorizontalWrap": "None",
               "HorizontalAlignment": "Center",
               "VerticalAlignment": "Middle",
-              "text": "Create",
-              "TextColor": 4294967295,
               "zIndex": 0,
               "Enabled": true
             },
@@ -5184,9 +5184,9 @@
                 },
                 {
                   "type": "Image",
-                  "IsMask": false,
                   "fillColor": 4281808695,
                   "imageMode": "Stretch",
+                  "IsMask": false,
                   "zIndex": 0,
                   "Enabled": true
                 },
@@ -5233,19 +5233,19 @@
                     },
                     {
                       "type": "Image",
-                      "IsMask": false,
                       "fillColor": 4281808695,
                       "imageMode": "Stretch",
+                      "IsMask": false,
                       "zIndex": 0,
                       "Enabled": true
                     },
                     {
                       "type": "Text",
+                      "text": "GameObject",
+                      "TextColor": 4294967295,
                       "HorizontalWrap": "None",
                       "HorizontalAlignment": "Center",
                       "VerticalAlignment": "Middle",
-                      "text": "GameObject",
-                      "TextColor": 4294967295,
                       "zIndex": 0,
                       "Enabled": true
                     },

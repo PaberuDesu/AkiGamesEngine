@@ -6,14 +6,19 @@ using Color = AkiGames.Core.Color;
 namespace AkiGames.UI
 {
     public class Image : DrawableComponent
-    {
-        public Texture? texture = null;
+    {        
+        private Texture? _texture;
+        public Texture? texture
+        {
+            get => _texture ?? VeldridGame.WhiteTexture;
+            set => _texture = value;
+        }
+    
         public Color fillColor = Color.White;
-        // Эффект для тайлинга – пока не реализован в Veldrid, оставляем заглушкой
-        // public static Effect TileEffect; 
-
+    
         public ImageMode imageMode = ImageMode.Stretch;
-        public bool IsMask { get; set; } = false;
+    
+        public bool IsMask = false;
         private static int nextMaskId = 1;
         internal int maskId = 0;
 
@@ -23,19 +28,8 @@ namespace AkiGames.UI
             Tile
         }
 
-        private void CreateTexture(SpriteBatch spriteBatch)
-        {
-            if (texture != null) return;
-        
-            var texDesc = TextureDescription.Texture2D(1, 1, 1, 1, PixelFormat.R8_G8_B8_A8_UNorm, TextureUsage.Sampled);
-            texture = spriteBatch.GraphicsDevice.ResourceFactory.CreateTexture(texDesc);
-            spriteBatch.GraphicsDevice.UpdateTexture(texture, new byte[] { 255, 255, 255, 255 }, 0, 0, 0, 1, 1, 1, 0, 0);
-        }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
-            CreateTexture(spriteBatch);
-
             // Находим ближайшую родительскую маску (пока заглушка)
             Image? parentMask = FindParentMask();
 
@@ -58,9 +52,6 @@ namespace AkiGames.UI
             {
                 DrawTexture(spriteBatch, uiTransform.Bounds, fillColor);
             }
-
-            // Восстанавливаем стандартный spriteBatch (заглушка)
-            // if (parentMask != null) RestoreSpriteBatch(spriteBatch);
         }
 
         private void DrawTexture(SpriteBatch spriteBatch, Rectangle rect, Color color)

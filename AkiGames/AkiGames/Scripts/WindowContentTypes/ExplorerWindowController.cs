@@ -276,7 +276,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             GameObject gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
             
             _gameWindow.RefreshContent(gameMainObject);
-            _hierarchyWindow.RefreshContent(fullPath, gameMainObject);
+            _hierarchyWindow.RefreshContent(gameMainObject, fullPath);
             _sceneWindow.RefreshContent(gameMainObject);
         }
 

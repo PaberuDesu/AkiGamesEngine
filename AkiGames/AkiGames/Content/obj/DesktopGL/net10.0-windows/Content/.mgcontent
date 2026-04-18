@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/arrow.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/EditorFont.spritefont</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/folder_full_icon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/folder_icon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/image_icon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/text_file_icon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Image_Component.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Script_Component.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Text_Component.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Transform_Component.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/main.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/DropDownSubmenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/DropDownSubmenuItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ExplorerContentItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/HierarchyContentItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorBoolDescriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorColorDescriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorContentItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorFieldDescriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorStringDescriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorVector2Descriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/scene_grid.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/CheckboxApproved.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/CheckboxEmpty.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/InputField.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Round.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

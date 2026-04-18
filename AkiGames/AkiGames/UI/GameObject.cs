@@ -51,6 +51,14 @@ namespace AkiGames.UI
             component.uiTransform = uiTransform;
             if (_isAwakened) component.AkiGamesAwakeTree();
         }
+        public void RemoveComponent(GameComponent component)
+        {
+            // Удаляем компонент из внутреннего списка
+            if (!_components.Remove(component)) return;
+
+            if (component is IDisposable disposable)
+                disposable.Dispose();
+        }
 
         public event Action<GameObject> ChildAdded;
         private List<GameObject> _children = [];
@@ -73,6 +81,14 @@ namespace AkiGames.UI
             child.Parent = this;
             if (_isAwakened) child.AkiGamesAwakeTree();
             ChildAdded?.Invoke(child);
+        }
+
+        public void RemoveChild(GameObject child)
+        {
+            if (_children.Remove(child))
+            {
+                child.Parent = null;
+            }
         }
 
         private bool _isAwakened = false;
@@ -205,7 +221,7 @@ namespace AkiGames.UI
                 if (component is UITransform) continue;
                 GameComponent componentCopy = component.Copy();
                 componentCopy.gameObject = copy;
-                component.uiTransform = copy.uiTransform;
+                componentCopy.uiTransform = copy.uiTransform;
                 copy.AddComponent(componentCopy);
             }
 
@@ -223,6 +239,26 @@ namespace AkiGames.UI
             copy._isAwakened = false;
 
             return copy;
+        }
+
+        public override void Dispose()
+        {
+            // Отвязываемся от родителя
+            Parent?.RemoveChild(this);
+
+            // Рекурсивно удаляем детей
+            foreach (var child in _children.ToList())
+                child.Dispose();
+
+            // Удаляем все компоненты
+            foreach (var component in _components.ToList())
+                component.Dispose();
+
+            // Очищаем списки
+            _children.Clear();
+            _components.Clear();
+
+            base.Dispose();
         }
     }
 }

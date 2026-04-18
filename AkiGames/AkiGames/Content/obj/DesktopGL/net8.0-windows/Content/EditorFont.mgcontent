@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/EditorFont.spritefont</SourceFile>
-  <SourceTime>2025-08-10T11:32:59.2372105+03:00</SourceTime>
+  <SourceTime>2026-04-17T19:27:57.9682747+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/bin/DesktopGL/Content/EditorFont.xnb</DestFile>
-  <DestTime>2026-01-08T23:38:49.1893658+03:00</DestTime>
+  <DestTime>2026-04-17T19:29:46.1142218+03:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2025-06-02T13:31:02+03:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

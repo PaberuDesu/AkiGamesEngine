@@ -23,12 +23,14 @@ namespace AkiGames.Scripts
         public static void LoadContent(ContentManager content) =>
             _texture = content.Load<Texture2D>("arrow");
 
-        public override void OnMouseDown()
+        public void ShowOrHideChildren()
         {
             uiTransform.LocalRotation = isOpened ? 0 : 90;
 
             isOpened = !isOpened;
             _hierarchyWindow.ShowChildrenOf(_item, isOpened);
         }
+
+        public override void OnMouseDown() => ShowOrHideChildren();
     }
 }

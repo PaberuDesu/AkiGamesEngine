@@ -10,7 +10,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 {
     public class HierarchyWindowController : WindowController
     {
-        private ScrollableListController _contentList;
+        internal ScrollableListController contentList {get; private set;}
         private static string _gamePath = null;
 
 
@@ -20,26 +20,18 @@ namespace AkiGames.Scripts.WindowContentTypes
         {
             contentObject = gameObject.Children[3];
             scrollableContent = contentObject.Children[0].Children[0];
-            _contentList = scrollableContent.GetComponent<ScrollableListController>();
+            contentList = scrollableContent.GetComponent<ScrollableListController>();
             base.Awake();
         }
 
-        public void RefreshContent(string fullPath, GameObject gameMainObject)
+        public void RefreshContent(GameObject gameMainObject, string fullPath = "")
         {
-            _gamePath = fullPath;
+            if (fullPath != "") _gamePath = fullPath;
             
-            _contentList.gameObject.Children = [];
+            contentList.gameObject.Children = [];
             ProcessChildrenRecursive(gameMainObject, null, 0);
 
-            _contentList.Refresh();
-        }
-
-        public void RefreshContent(GameObject gameMainObject)
-        {
-            _contentList.gameObject.Children = [];
-            ProcessChildrenRecursive(gameMainObject, null, 0);
-
-            _contentList.Refresh();
+            contentList.Refresh();
         }
 
         private void ProcessChildrenRecursive(GameObject objectRealization, HierarchyListItem descriptingParentObject, int level)
@@ -52,11 +44,12 @@ namespace AkiGames.Scripts.WindowContentTypes
                     descriptorPrefabCopy.IsActive = level == 0;
                     HierarchyListItem itemController = new()
                     {
-                        Name = new string(' ', level * 3) + childRealization.ObjectName
+                        Name = new string(' ', level * 3) + childRealization.ObjectName,
+                        scrollableList = contentList
                     };
                     itemController.SetActionOnDoubleClick((_) => { InspectorWindowController.LoadFor(childRealization); });
                     descriptorPrefabCopy.AddComponent(itemController);
-                    _contentList.gameObject.AddChild(descriptorPrefabCopy);
+                    contentList.gameObject.AddChild(descriptorPrefabCopy);
                     descriptingParentObject?.childItems.Add(itemController);
                     ProcessChildrenRecursive(childRealization, itemController, level + 1);
                 }
@@ -92,7 +85,7 @@ namespace AkiGames.Scripts.WindowContentTypes
                 }
             }
 
-            _contentList.Refresh();
+            contentList.Refresh();
         }
 
         public override void ProcessHotkey(Input.HotKey hotkey)

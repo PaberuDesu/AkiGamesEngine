@@ -134,6 +134,16 @@
 /processor:AkiProcessor
 /build:main.aki
 
+#begin Prefabs/ContextMenu.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ContextMenu.aki
+
+#begin Prefabs/ContextMenuItem.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ContextMenuItem.aki
+
 #begin Prefabs/DropDownSubmenu.aki
 /importer:AkiImporter
 /processor:AkiProcessor

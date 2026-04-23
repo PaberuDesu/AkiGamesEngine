@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using AkiGames.UI;
-using AkiGames.UI.ScrollableList;
 using System.Linq;
-using AkiGames.Scripts.WindowContentTypes;
+using Microsoft.Xna.Framework;
 using AkiGames.Core;
+using AkiGames.UI;
+using AkiGames.Scripts.WindowContentTypes;
 
 namespace AkiGames.Scripts
 {
@@ -16,20 +15,18 @@ namespace AkiGames.Scripts
         private int _lastInsertPosition;
 
         private GameObject _hierarchyList;
-        internal ScrollableListController scrollableList;
+        internal UI.ScrollableList.ScrollableListController scrollableList;
 
         public GameObject RepresentedObject;
         public int Level;
         internal List<HierarchyListItem> childItems = [];
-        private HierarchyExpander _opener = null;
-        internal bool IsOpened => _opener?.isOpened ?? false;
+        public HierarchyExpander Opener {get; private set;} = null;
+        internal bool IsOpened => Opener?.isOpened ?? false;
 
         private static bool _isAnyDragging = false; // идёт ли сейчас перетаскивание какого-либо элемента
         private double _hoverStartTime = -1; // время начала наведения курсора (мс)
         private bool _pendingOpen = false; // ожидание открытия
         private const double HoverDelayMs = 600; // задержка в мс
-
-        public static bool IsAnyDragging => _isAnyDragging;
 
         private void SetIsDragging(bool value)
         {
@@ -41,13 +38,15 @@ namespace AkiGames.Scripts
         {
             _hierarchyList = gameObject.Parent;
 
-            _opener = gameObject.Children[0].GetComponent<HierarchyExpander>();
-            _opener.gameObject.IsActive = childItems.Count > 0;
+            Opener = gameObject.Children[0].GetComponent<HierarchyExpander>();
+            Opener.gameObject.IsActive = childItems.Count > 0;
         }
 
         public override void OnRMBUp()
         {
-            //TODO: menu (rename, delete)
+            GameObject contextMenu = Game1.Prefabs["ContextMenu"].Copy();
+            Game1.MainObject.AddChild(contextMenu);
+            contextMenu.GetComponent<ContextMenuController>().Show(Events.Input.mousePosition.ToVector2(), this);
         }
 
         public void StartDrag()
@@ -228,8 +227,8 @@ namespace AkiGames.Scripts
                 if (now - _hoverStartTime >= HoverDelayMs)
                 {
                     StopHovering();
-                    if (_opener != null && !IsOpened && childItems.Count > 0)
-                        _opener.ShowOrHideChildren();
+                    if (Opener != null && !IsOpened && childItems.Count > 0)
+                        Opener.ShowOrHideChildren();
                 }
             }
         }

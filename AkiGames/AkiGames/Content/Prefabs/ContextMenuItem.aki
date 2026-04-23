@@ -1,0 +1,61 @@
+{
+  "ObjectName": "ContextMenuItem",
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 0,
+      "Height": 0,
+      "HorizontalAlignment": "Stretch",
+      "VerticalAlignment": "Top",
+      "anchorLeftTop": {
+        "x": 0.1,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 1,
+        "y": 0
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "fillColor": 4281808695,
+      "imageMode": "Stretch",
+      "zIndex": 1,
+      "Enabled": true
+    },
+    {
+      "type": "Text",
+      "HorizontalWrap": "None",
+      "HorizontalAlignment": "Left",
+      "VerticalAlignment": "Middle",
+      "text": "",
+      "TextColor": 4294967295,
+      "zIndex": 1,
+      "Enabled": true
+    },
+    {
+      "type": "EventHandler"
+    },
+    {
+      "type": "HoverInteractor"
+    }
+  ],
+  "Children": []
+}

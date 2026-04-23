@@ -15,6 +15,8 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Text_Component.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Transform_Component.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/main.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ContextMenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ContextMenuItem.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/DropDownSubmenu.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/DropDownSubmenuItem.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ExplorerContentItem.aki</File>
@@ -32,6 +34,8 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Round.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

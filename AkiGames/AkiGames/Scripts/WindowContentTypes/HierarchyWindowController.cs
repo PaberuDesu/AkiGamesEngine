@@ -149,6 +149,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         {
             // Обновляем отображение иерархии
             RefreshContent(Game1.gameMainObject.Children[0]); // RootGameObject
+            gameObject.RefreshBounds();
 
             // Обновляем окно сцены
             _sceneWindow?.RefreshContent(Game1.gameMainObject.Children[0]);

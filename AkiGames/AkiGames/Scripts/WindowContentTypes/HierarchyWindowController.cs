@@ -16,11 +16,15 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         GameObject contentObject;
 
+        private SceneWindowController _sceneWindow;
+
         public override void Awake()
         {
             contentObject = gameObject.Children[3];
             scrollableContent = contentObject.Children[0].Children[0];
             contentList = scrollableContent.GetComponent<ScrollableListController>();
+            
+            _sceneWindow = gameObject.Parent.Children[2].GetComponent<SceneWindowController>();
             base.Awake();
         }
 
@@ -45,7 +49,9 @@ namespace AkiGames.Scripts.WindowContentTypes
                     HierarchyListItem itemController = new()
                     {
                         Name = new string(' ', level * 3) + childRealization.ObjectName,
-                        scrollableList = contentList
+                        scrollableList = contentList,
+                        RepresentedObject = childRealization,
+                        Level = level
                     };
                     itemController.SetActionOnDoubleClick((_) => { InspectorWindowController.LoadFor(childRealization); });
                     descriptorPrefabCopy.AddComponent(itemController);
@@ -86,6 +92,15 @@ namespace AkiGames.Scripts.WindowContentTypes
             }
 
             contentList.Refresh();
+        }
+
+        public void UpdateScene() // когда изменили иерархию сцены, обновляем окна иерархии и сцены
+        {
+            // Обновляем отображение иерархии
+            RefreshContent(Game1.gameMainObject.Children[0]); // RootGameObject
+
+            // Обновляем окно сцены
+            _sceneWindow?.RefreshContent(Game1.gameMainObject.Children[0]);
         }
 
         public override void ProcessHotkey(Input.HotKey hotkey)

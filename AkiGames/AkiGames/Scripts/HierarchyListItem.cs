@@ -24,6 +24,19 @@ namespace AkiGames.Scripts
         private HierarchyExpander _opener = null;
         internal bool IsOpened => _opener?.isOpened ?? false;
 
+        private static bool _isAnyDragging = false; // идёт ли сейчас перетаскивание какого-либо элемента
+        private double _hoverStartTime = -1; // время начала наведения курсора (мс)
+        private bool _pendingOpen = false; // ожидание открытия
+        private const double HoverDelayMs = 600; // задержка в мс
+
+        public static bool IsAnyDragging => _isAnyDragging;
+
+        private void SetIsDragging(bool value)
+        {
+            _isDragging = value;
+            _isAnyDragging = value;
+        }
+
         public override void Start()
         {
             _hierarchyList = gameObject.Parent;
@@ -39,7 +52,7 @@ namespace AkiGames.Scripts
 
         public void StartDrag()
         {
-            _isDragging = true;
+            SetIsDragging(true);
             
             if (transporter is null)
             {
@@ -58,7 +71,7 @@ namespace AkiGames.Scripts
         {
             if (_isDragging)
             {
-                _isDragging = false;
+                SetIsDragging(false);
                 _hierarchyList.RemoveChild(transporter);
         
                 if (RepresentedObject != null)
@@ -110,6 +123,19 @@ namespace AkiGames.Scripts
         {
             if (!_isDragging) StartDrag();
 
+            UpdateTransporterPosition();
+
+            // Автоскролл
+            Rectangle visibleContentRect = _hierarchyList.Parent.uiTransform.Bounds;
+            float relativeY = (Events.Input.mousePosition.Y - visibleContentRect.Y) / (float)visibleContentRect.Height;
+            if (relativeY < 0.2)
+                scrollableList.Scroll((int)(-3 * Math.Pow((0.2 - relativeY)*5,3)));
+            if (relativeY > 0.8)
+                scrollableList.Scroll((int)(3 * Math.Pow((relativeY - 0.8)*5,3)));
+        }
+
+        private void UpdateTransporterPosition()
+        {
             int spacing = scrollableList.Spacing;
             int itemHeightWithSpacing = uiTransform.Bounds.Height+spacing;
 
@@ -125,14 +151,6 @@ namespace AkiGames.Scripts
 
             _lastInsertPosition = roundedCoordinate;
 
-            // Автоскролл
-            Rectangle visibleContentRect = _hierarchyList.Parent.uiTransform.Bounds;
-            float relativeY = (Events.Input.mousePosition.Y - visibleContentRect.Y) / (float)visibleContentRect.Height;
-            if (relativeY < 0.2)
-                scrollableList.Scroll((int)(-3 * Math.Pow((0.2 - relativeY)*5,3)));
-            if (relativeY > 0.8)
-                scrollableList.Scroll((int)(3 * Math.Pow((relativeY - 0.8)*5,3)));
-            
             transporter.uiTransform.OffsetMin = new(0, roundedCoordinate);
             transporter.RefreshBounds();
         }
@@ -174,6 +192,52 @@ namespace AkiGames.Scripts
             }
 
             return (RepresentedObject.Parent, 0); // необработанные случаи
+        }
+
+        public override void OnMouseEnter()
+        {
+            base.OnMouseEnter();
+
+            // Автораскрытие только:
+            // - если идёт перетаскивание любого элемента
+            // - этот элемент НЕ является перетаскиваемым
+            // - у него есть дочерние элементы
+            // - он ещё не раскрыт
+
+            // Здесь засекаем время удержания курсора над элементом списка,
+            // чтобы автоматически открыть список дочерних элементов
+            if (_isAnyDragging && !_isDragging && childItems.Count > 0 && !IsOpened)
+            {
+                _hoverStartTime = gameTime.TotalGameTime.TotalMilliseconds;
+                _pendingOpen = true;
+            }
+        }
+
+        public override void OnMouseExit()
+        {
+            base.OnMouseExit();
+            StopHovering();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (_pendingOpen && _hoverStartTime > 0 && gameTime != null)
+            {
+                double now = gameTime.TotalGameTime.TotalMilliseconds;
+                if (now - _hoverStartTime >= HoverDelayMs)
+                {
+                    StopHovering();
+                    if (_opener != null && !IsOpened && childItems.Count > 0)
+                        _opener.ShowOrHideChildren();
+                }
+            }
+        }
+
+        private void StopHovering()
+        {
+            _hoverStartTime = -1;
+            _pendingOpen = false;
         }
     }
 }

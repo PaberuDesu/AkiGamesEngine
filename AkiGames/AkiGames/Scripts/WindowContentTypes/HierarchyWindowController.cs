@@ -12,6 +12,7 @@ namespace AkiGames.Scripts.WindowContentTypes
     {
         internal ScrollableListController contentList {get; private set;}
         private static string _gamePath = null;
+        private HashSet<GameObject> _openedObjects = [];
 
 
         GameObject contentObject;
@@ -31,11 +32,14 @@ namespace AkiGames.Scripts.WindowContentTypes
         public void RefreshContent(GameObject gameMainObject, string fullPath = "")
         {
             if (fullPath != "") _gamePath = fullPath;
+
+            SaveOpenedState();
             
             contentList.gameObject.Children = [];
             ProcessChildrenRecursive(gameMainObject, null, 0);
-
             contentList.Refresh();
+
+            RestoreOpenedState();
         }
 
         private void ProcessChildrenRecursive(GameObject objectRealization, HierarchyListItem descriptingParentObject, int level)
@@ -58,6 +62,53 @@ namespace AkiGames.Scripts.WindowContentTypes
                     contentList.gameObject.AddChild(descriptorPrefabCopy);
                     descriptingParentObject?.childItems.Add(itemController);
                     ProcessChildrenRecursive(childRealization, itemController, level + 1);
+                }
+            }
+        }
+
+        private void SaveOpenedState()
+        {
+            _openedObjects.Clear();
+            // Рекурсивно обходим все текущие элементы иерархии
+            SaveOpenedStateRecursive(contentList.gameObject.Children);
+        }
+
+        private void SaveOpenedStateRecursive(List<GameObject> items)
+        {
+            foreach (GameObject item in items)
+            {
+                HierarchyListItem listItem = item.GetComponent<HierarchyListItem>();
+                if (listItem != null && listItem.RepresentedObject != null && listItem.IsOpened)
+                {
+                    _openedObjects.Add(listItem.RepresentedObject);
+                }
+                // Проверяем дочерние элементы
+                if (item.Children.Count > 0)
+                    SaveOpenedStateRecursive(item.Children);
+            }
+        }
+
+        private void RestoreOpenedState()
+        {
+            // После перестроения обходим все созданные элементы и открываем те, чей RepresentedObject есть в сохранённом наборе
+            RestoreOpenedStateRecursive(contentList.gameObject.Children);
+        }
+
+        private void RestoreOpenedStateRecursive(List<GameObject> items)
+        {
+            foreach (GameObject item in items)
+            {
+                HierarchyListItem listItem = item.GetComponent<HierarchyListItem>();
+                if (listItem != null && listItem.RepresentedObject != null
+                    && _openedObjects.Contains(listItem.RepresentedObject) && !listItem.IsOpened)
+                {
+                    // Открываем узел, если он ещё не открыт
+                    item.Children[0]?.GetComponent<HierarchyExpander>()?
+                        .ShowOrHideChildren();
+                        
+                    // Рекурсивно для дочерних элементов
+                    if (item.Children.Count > 0)
+                        RestoreOpenedStateRecursive(item.Children);
                 }
             }
         }

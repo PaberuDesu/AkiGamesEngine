@@ -23,6 +23,7 @@ namespace AkiGames.Scripts
                 uiTransform.Width = (int)Fonts.main.MeasureString(_text).X;
                 _parentWidth = parentTransform.Bounds.Width;
             }
+            gameObject.RefreshBounds();
         }
 
         public override void OnMouseUp() => _window.GoBack();

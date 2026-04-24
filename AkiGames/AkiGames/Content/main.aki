@@ -4774,18 +4774,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Text",
-                      "HorizontalWrap": "None",
-                      "HorizontalAlignment": "Center",
-                      "VerticalAlignment": "Middle",
-                      "text": "Hierarchy",
-                      "TextColor": 4294967295,
-                      "zIndex": 0,
-                      "Enabled": true
-                    },
-                    {
                       "type": "WindowSwitch",
-                      "WindowName": "HierarchyWindow",
+                      "WindowName": "Hierarchy",
                       "Enabled": true
                     }
                   ],
@@ -4834,18 +4824,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Text",
-                      "HorizontalWrap": "None",
-                      "HorizontalAlignment": "Center",
-                      "VerticalAlignment": "Middle",
-                      "text": "Project Files",
-                      "TextColor": 4294967295,
-                      "zIndex": 0,
-                      "Enabled": true
-                    },
-                    {
                       "type": "WindowSwitch",
-                      "WindowName": "ExplorerWindow",
+                      "WindowName": "Explorer",
                       "Enabled": true
                     }
                   ],
@@ -4894,18 +4874,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Text",
-                      "HorizontalWrap": "None",
-                      "HorizontalAlignment": "Center",
-                      "VerticalAlignment": "Middle",
-                      "text": "Scene View",
-                      "TextColor": 4294967295,
-                      "zIndex": 0,
-                      "Enabled": true
-                    },
-                    {
                       "type": "WindowSwitch",
-                      "WindowName": "SceneWindow",
+                      "WindowName": "Scene",
                       "Enabled": true
                     }
                   ],
@@ -4954,18 +4924,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Text",
-                      "HorizontalWrap": "None",
-                      "HorizontalAlignment": "Center",
-                      "VerticalAlignment": "Middle",
-                      "text": "Game View",
-                      "TextColor": 4294967295,
-                      "zIndex": 0,
-                      "Enabled": true
-                    },
-                    {
                       "type": "WindowSwitch",
-                      "WindowName": "GameWindow",
+                      "WindowName": "Game",
                       "Enabled": true
                     }
                   ],
@@ -5014,18 +4974,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Text",
-                      "HorizontalWrap": "None",
-                      "HorizontalAlignment": "Center",
-                      "VerticalAlignment": "Middle",
-                      "text": "Console",
-                      "TextColor": 4294967295,
-                      "zIndex": 0,
-                      "Enabled": true
-                    },
-                    {
                       "type": "WindowSwitch",
-                      "WindowName": "ConsoleWindow",
+                      "WindowName": "Console",
                       "Enabled": true
                     }
                   ],
@@ -5074,18 +5024,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Text",
-                      "HorizontalWrap": "None",
-                      "HorizontalAlignment": "Center",
-                      "VerticalAlignment": "Middle",
-                      "text": "Inspector",
-                      "TextColor": 4294967295,
-                      "zIndex": 0,
-                      "Enabled": true
-                    },
-                    {
                       "type": "WindowSwitch",
-                      "WindowName": "InspectorWindow",
+                      "WindowName": "Inspector",
                       "Enabled": true
                     }
                   ],

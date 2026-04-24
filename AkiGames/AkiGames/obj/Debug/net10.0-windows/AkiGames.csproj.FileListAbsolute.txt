@@ -69,3 +69,4 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Debug\net10.0-w
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Debug\net10.0-windows\ref\AkiGames.dll
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\ContextMenu.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\ContextMenuItem.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\UI\Checkmark.xnb

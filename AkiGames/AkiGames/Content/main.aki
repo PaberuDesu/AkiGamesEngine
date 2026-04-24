@@ -4784,7 +4784,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "DropDownItem",
+                      "type": "WindowSwitch",
+                      "WindowName": "HierarchyWindow",
                       "Enabled": true
                     }
                   ],
@@ -4843,7 +4844,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "DropDownItem",
+                      "type": "WindowSwitch",
+                      "WindowName": "ExplorerWindow",
                       "Enabled": true
                     }
                   ],
@@ -4902,7 +4904,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "DropDownItem",
+                      "type": "WindowSwitch",
+                      "WindowName": "SceneWindow",
                       "Enabled": true
                     }
                   ],
@@ -4961,7 +4964,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "DropDownItem",
+                      "type": "WindowSwitch",
+                      "WindowName": "GameWindow",
                       "Enabled": true
                     }
                   ],
@@ -5020,7 +5024,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "DropDownItem",
+                      "type": "WindowSwitch",
+                      "WindowName": "ConsoleWindow",
                       "Enabled": true
                     }
                   ],
@@ -5079,7 +5084,8 @@
                       "Enabled": true
                     },
                     {
-                      "type": "DropDownItem",
+                      "type": "WindowSwitch",
+                      "WindowName": "InspectorWindow",
                       "Enabled": true
                     }
                   ],

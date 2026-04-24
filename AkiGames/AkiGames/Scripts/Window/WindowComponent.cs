@@ -9,6 +9,7 @@ namespace AkiGames.Scripts.Window
     public class WindowComponent : GameComponent
     {
         private WindowController _windowController = null;
+        private static bool _isProcessingHotkey = false;
 
         public override void Awake()
         {
@@ -33,7 +34,13 @@ namespace AkiGames.Scripts.Window
             if (!IsScrollable) _windowController?.OnScroll(scrollValue);
         }
 
-        public override void ProcessHotkey(Input.HotKey hotkey) => _windowController?.ProcessHotkey(hotkey);
+        public override void ProcessHotkey(Input.HotKey hotkey)
+        {
+            if (_isProcessingHotkey) return;
+            _isProcessingHotkey = true;
+            _windowController?.ProcessHotkey(hotkey);
+            _isProcessingHotkey = false;
+        }
 
         private bool IsScrollable => gameObject.Components.Any(component =>
             {

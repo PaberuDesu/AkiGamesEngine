@@ -50,8 +50,7 @@ namespace AkiGames
         ){}
         public virtual void ProcessHotkey(
             HotKey hotkey
-        )
-        { }
+        ){}
 
         public virtual void Dispose()
         {

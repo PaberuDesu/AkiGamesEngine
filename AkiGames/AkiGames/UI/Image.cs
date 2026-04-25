@@ -1,12 +1,14 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using AkiGames.Core;
 
 namespace AkiGames.UI
 {
     public class Image : DrawableComponent
     {
         public Texture2D texture = null;
+        [DontSerialize] public string texturePath = "";
         public Color fillColor = Color.White;
         public static Effect TileEffect;
 
@@ -21,8 +23,19 @@ namespace AkiGames.UI
             Tile
         }
 
+        public override void Awake() => LoadTextureFromPath();
+
+        private void LoadTextureFromPath()
+        {
+            if (texture == null && !string.IsNullOrWhiteSpace(texturePath))
+            {
+                texture = Game1.LoadGameTexture(texturePath);
+            }
+        }
+
         private void CreateTexture(SpriteBatch spriteBatch)
         {
+            LoadTextureFromPath();
             if (texture != null) return;
 
             texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);

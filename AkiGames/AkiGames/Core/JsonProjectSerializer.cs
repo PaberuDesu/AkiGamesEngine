@@ -48,17 +48,21 @@ namespace AkiGames.Core
             typeof(SamplerState)
         ];
 
-        public static string SerializeToJson(GameObject gameObject) =>
-            JsonSerializer.Serialize(
+        public static string SerializeToJson(GameObject gameObject)
+        {
+            gameObject.EnsureUniqueObjectIdsInTree();
+            return JsonSerializer.Serialize(
                 ConvertGameObjectToJsonObject(gameObject),
                 _options
             );
+        }
 
         private static object ConvertGameObjectToJsonObject(GameObject gameObject)
         {
             return new
             {
                 gameObject.ObjectName,
+                gameObject.ObjectID,
                 gameObject.IsActive,
                 gameObject.IsMouseTargetable,
                 Components = gameObject.Components?.Select(ConvertComponentToJsonObject).ToArray(),
@@ -147,6 +151,10 @@ namespace AkiGames.Core
             // Parse isActive
             if (element.TryGetProperty("IsActive", out JsonElement activeElement))
                 obj.IsActive = activeElement.GetBoolean();
+
+            // Parse objectId
+            if (element.TryGetProperty("ObjectID", out JsonElement objectIdElement))
+                obj.ObjectID = objectIdElement.GetInt32();
 
             // Parse isMouseTargetable
             if (element.TryGetProperty("IsMouseTargetable", out JsonElement mouseTargetElement))

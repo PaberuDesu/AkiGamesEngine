@@ -54,6 +54,11 @@ namespace AkiGames.Scripts.WindowContentTypes
         
         public void RefreshContent(GameObject gameObjectTree)
         {
+            foreach (GameObject child in _content.Children)
+            {
+                child.Dispose();
+            }
+
             _content.Children = [ProcessChildrenRecursive(gameObjectTree)];
             _content.Children[0].AkiGamesAwakeTree();
             _prevBounds = Rectangle.Empty; // чтобы перезагрузить Update

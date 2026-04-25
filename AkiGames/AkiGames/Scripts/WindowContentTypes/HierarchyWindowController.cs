@@ -17,6 +17,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         GameObject contentObject;
 
+        private GameWindowController _gameWindow;
         private SceneWindowController _sceneWindow;
 
         public override void Awake()
@@ -25,6 +26,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             scrollableContent = contentObject.Children[0].Children[0];
             contentList = scrollableContent.GetComponent<ScrollableListController>();
             
+            _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();
             _sceneWindow = gameObject.Parent.Children[2].GetComponent<SceneWindowController>();
             base.Awake();
         }
@@ -148,11 +150,14 @@ namespace AkiGames.Scripts.WindowContentTypes
         public void UpdateScene() // когда изменили иерархию сцены, обновляем окна иерархии и сцены
         {
             // Обновляем отображение иерархии
-            RefreshContent(Game1.gameMainObject.Children[0]); // RootGameObject
+            if (Game1.editableGameMainObject == null) return;
+            Game1.editableGameMainObject.EnsureUniqueObjectIdsInTree();
+            RefreshContent(Game1.editableGameMainObject); // RootGameObject
             gameObject.RefreshBounds();
 
             // Обновляем окно сцены
-            _sceneWindow?.RefreshContent(Game1.gameMainObject.Children[0]);
+            _sceneWindow?.RefreshContent(Game1.editableGameMainObject);
+            _gameWindow?.RefreshContent(Game1.editableGameMainObject);
         }
 
         public override void ProcessHotkey(Input.HotKey hotkey)
@@ -163,9 +168,9 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public static void SaveHierarchy()
         {
-            if (_gamePath != null)
+            if (_gamePath != null && Game1.editableGameMainObject != null)
             {
-                string jsonString = JsonProjectSerializer.SerializeToJson(Game1.gameMainObject.Children[0]);
+                string jsonString = JsonProjectSerializer.SerializeToJson(Game1.editableGameMainObject);
                 File.WriteAllText(_gamePath, jsonString);
             }
         }

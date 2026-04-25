@@ -10,6 +10,8 @@ namespace AkiGames.UI
     public class GameObject(string name) : GameStructure
     {
         public string ObjectName = name;
+        public int ObjectID;
+        [DontSerialize, HideInInspector] public ObjectIdSpace ObjectIDSpace = ObjectIdSpace.Main;
         public bool IsActive = true;
         public bool IsGlobalActive
         {
@@ -25,6 +27,18 @@ namespace AkiGames.UI
 
         private double _lastClickTime = -DoubleClickThreshold;
         private const double DoubleClickThreshold = 500; // ms
+
+        private static readonly Dictionary<ObjectIdSpace, Dictionary<int, GameObject>> _objectsById = new()
+        {
+            [ObjectIdSpace.Main] = [],
+            [ObjectIdSpace.Game] = []
+        };
+        private static readonly Dictionary<ObjectIdSpace, int> _nextObjectIds = new()
+        {
+            [ObjectIdSpace.Main] = 1,
+            [ObjectIdSpace.Game] = 1
+        };
+        private static ObjectIdSpace _activeObjectIdSpace = ObjectIdSpace.Main;
 
         public GameObject Parent = null;
 
@@ -71,6 +85,7 @@ namespace AkiGames.UI
                 foreach (GameObject child in value)
                 {
                     child.Parent = this;
+                    child.SetObjectIdSpaceRecursive(ObjectIDSpace);
                     ChildAdded?.Invoke(child);
                 }
             }
@@ -79,6 +94,7 @@ namespace AkiGames.UI
         {
             _children.Add(child);
             child.Parent = this;
+            child.SetObjectIdSpaceRecursive(ObjectIDSpace);
             if (_isAwakened) child.AkiGamesAwakeTree();
             ChildAdded?.Invoke(child);
         }
@@ -92,6 +108,8 @@ namespace AkiGames.UI
         }
 
         private bool _isAwakened = false;
+        protected override ObjectIdSpace CurrentObjectIdSpace => ObjectIDSpace;
+        public override void Awake() => EnsureUniqueObjectId();
         public override void AkiGamesAwakeTree()
         {
             _isAwakened = true;
@@ -99,6 +117,131 @@ namespace AkiGames.UI
             uiTransform.gameObject = this;
             foreach (GameObject child in Children) child.AkiGamesAwakeTree();
             foreach (GameComponent component in Components) component.AkiGamesAwakeTree();
+        }
+
+        public void AkiGamesAwakeTree(ObjectIdSpace objectIdSpace)
+        {
+            SetObjectIdSpaceRecursive(objectIdSpace);
+            AkiGamesAwakeTree();
+        }
+
+        public void AkiGamesEditorAwakeTree(ObjectIdSpace objectIdSpace)
+        {
+            SetObjectIdSpaceRecursive(objectIdSpace);
+            AkiGamesEditorAwakeTree();
+        }
+
+        public void AkiGamesEditorAwakeTree()
+        {
+            EnsureUniqueObjectId();
+            uiTransform.gameObject = this;
+
+            foreach (GameComponent component in _components)
+            {
+                component.gameObject = this;
+                component.uiTransform = uiTransform;
+            }
+
+            foreach (GameObject child in _children)
+            {
+                child.Parent = this;
+                child.AkiGamesEditorAwakeTree();
+            }
+        }
+
+        public void SetObjectIdSpaceRecursive(ObjectIdSpace objectIdSpace)
+        {
+            ObjectIDSpace = objectIdSpace;
+            foreach (GameObject child in _children)
+            {
+                child.SetObjectIdSpaceRecursive(objectIdSpace);
+            }
+        }
+
+        private void EnsureUniqueObjectId()
+        {
+            Dictionary<int, GameObject> objectsById = _objectsById[ObjectIDSpace];
+            int nextObjectId = _nextObjectIds[ObjectIDSpace];
+
+            if (ObjectID > 0 &&
+                objectsById.TryGetValue(ObjectID, out GameObject existingObject) &&
+                existingObject == this)
+            {
+                if (ObjectID >= nextObjectId) _nextObjectIds[ObjectIDSpace] = ObjectID + 1;
+                return;
+            }
+
+            if (ObjectID > 0 && !objectsById.ContainsKey(ObjectID))
+            {
+                objectsById[ObjectID] = this;
+                if (ObjectID >= nextObjectId) _nextObjectIds[ObjectIDSpace] = ObjectID + 1;
+                return;
+            }
+
+            while (objectsById.ContainsKey(nextObjectId))
+            {
+                nextObjectId++;
+            }
+
+            ObjectID = nextObjectId;
+            objectsById[ObjectID] = this;
+            _nextObjectIds[ObjectIDSpace] = nextObjectId + 1;
+        }
+
+        public void EnsureUniqueObjectIdsInTree()
+        {
+            HashSet<int> usedObjectIds = [];
+            int nextObjectId = 1;
+            EnsureUniqueObjectIdsInTree(usedObjectIds, ref nextObjectId);
+        }
+
+        private void EnsureUniqueObjectIdsInTree(HashSet<int> usedObjectIds, ref int nextObjectId)
+        {
+            if (ObjectID <= 0 || !usedObjectIds.Add(ObjectID))
+            {
+                while (usedObjectIds.Contains(nextObjectId))
+                {
+                    nextObjectId++;
+                }
+
+                ObjectID = nextObjectId;
+                usedObjectIds.Add(ObjectID);
+            }
+
+            if (ObjectID >= nextObjectId)
+            {
+                nextObjectId = ObjectID + 1;
+            }
+
+            foreach (GameObject child in _children)
+            {
+                child.EnsureUniqueObjectIdsInTree(usedObjectIds, ref nextObjectId);
+            }
+        }
+
+        public static IDisposable UseObjectIdSpace(ObjectIdSpace objectIdSpace)
+        {
+            ObjectIdSpace previousObjectIdSpace = _activeObjectIdSpace;
+            _activeObjectIdSpace = objectIdSpace;
+            return new ObjectIdSpaceScope(previousObjectIdSpace);
+        }
+
+        public static GameObject FindById(int objectId) =>
+            FindById(objectId, _activeObjectIdSpace);
+
+        public static GameObject FindById(int objectId, ObjectIdSpace objectIdSpace)
+        {
+            if (objectId <= 0) return null;
+            Dictionary<int, GameObject> objectsById = _objectsById[objectIdSpace];
+            return objectsById.TryGetValue(objectId, out GameObject gameObject) ? gameObject : null;
+        }
+
+        private class ObjectIdSpaceScope(ObjectIdSpace previousObjectIdSpace) : IDisposable
+        {
+            public void Dispose()
+            {
+                _activeObjectIdSpace = previousObjectIdSpace;
+            }
         }
 
         public virtual void RefreshBounds(UITransform parentTransform = null)
@@ -198,10 +341,11 @@ namespace AkiGames.UI
             }
         }
 
-        public GameObject Copy()
+        public GameObject Copy(bool preserveObjectId = false)
         {
             // Создаем поверхностную копию через MemberwiseClone
             var copy = (GameObject)MemberwiseClone();
+            copy._isAwakened = false;
 
             // Копируем элементы с глубоким копированием
             copy._components = [];
@@ -229,13 +373,14 @@ namespace AkiGames.UI
             copy._children = [];
             foreach (var child in _children)
             {
-                GameObject childCopy = child.Copy();
+                GameObject childCopy = child.Copy(preserveObjectId);
                 copy.AddChild(childCopy);
                 childCopy.Parent = copy;
             }
 
             // Сбрасываем родителя и состояние
             copy.Parent = null;
+            if (!preserveObjectId) copy.ObjectID = 0;
             copy._isAwakened = false;
 
             return copy;
@@ -243,6 +388,13 @@ namespace AkiGames.UI
 
         public override void Dispose()
         {
+            if (ObjectID > 0 &&
+                _objectsById[ObjectIDSpace].TryGetValue(ObjectID, out GameObject existingObject) &&
+                existingObject == this)
+            {
+                _objectsById[ObjectIDSpace].Remove(ObjectID);
+            }
+
             // Отвязываемся от родителя
             Parent?.RemoveChild(this);
 

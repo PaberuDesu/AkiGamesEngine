@@ -274,10 +274,25 @@ namespace AkiGames.Scripts.WindowContentTypes
 
             JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(File.ReadAllText(fullPath));
             GameObject gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
+            gameMainObject.EnsureUniqueObjectIdsInTree();
+            Game1.editableGameMainObject = gameMainObject;
+            Game1.SetGameContentRoot(FindContentRoot(fullPath));
             
             _gameWindow.RefreshContent(gameMainObject);
             _hierarchyWindow.RefreshContent(gameMainObject, fullPath);
             _sceneWindow.RefreshContent(gameMainObject);
+        }
+
+        private static string FindContentRoot(string fullPath)
+        {
+            DirectoryInfo directory = new(Path.GetDirectoryName(fullPath));
+            while (directory != null)
+            {
+                if (directory.Name == "Content") return directory.FullName;
+                directory = directory.Parent;
+            }
+
+            return Path.GetDirectoryName(fullPath);
         }
 
         internal void GoBack()

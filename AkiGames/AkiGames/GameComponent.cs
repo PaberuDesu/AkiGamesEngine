@@ -8,6 +8,8 @@ namespace AkiGames
         public bool Enabled = true;
         [DontSerialize, HideInInspector] public GameObject gameObject;
         [DontSerialize, HideInInspector] public UITransform uiTransform;
+        protected override ObjectIdSpace CurrentObjectIdSpace =>
+            gameObject?.ObjectIDSpace ?? ObjectIdSpace.Main;
         public override void Update() { if (Enabled) base.Update(); }
 
         public virtual GameComponent Copy()
@@ -23,7 +25,9 @@ namespace AkiGames
         public override void Dispose()
         {
             // Удаляем компонент из родительского объекта
-            gameObject?.RemoveComponent(this);
+            GameObject owner = gameObject;
+            gameObject = null;
+            owner?.RemoveComponent(this);
     
             base.Dispose();
         }

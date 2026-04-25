@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using AkiGames.Core;
+using AkiGames.UI;
 using static AkiGames.Events.Input;
 using System;
 
@@ -9,9 +10,11 @@ namespace AkiGames
     {
         protected GameTime gameTime;
         private bool _startFlag = true;
+        protected virtual ObjectIdSpace CurrentObjectIdSpace => ObjectIdSpace.Main;
 
         public virtual void AkiGamesAwakeTree()
         {
+            using var _ = GameObject.UseObjectIdSpace(CurrentObjectIdSpace);
             Game1.UpdateAction += Update;
             Awake();
         }
@@ -20,6 +23,8 @@ namespace AkiGames
 
         private void Update(GameTime gt)
         {
+            using var _ = GameObject.UseObjectIdSpace(CurrentObjectIdSpace);
+
             if (_startFlag)
             {
                 _startFlag = false;

@@ -88,7 +88,7 @@ namespace AkiGames.Scripts
             if (oldParent == null) return;
 
             // Корневой объект сцены
-            GameObject rootSceneObject = Game1.gameMainObject.Children[0];
+            GameObject rootSceneObject = Game1.editableGameMainObject;
             if (oldParent == rootSceneObject) return; // Нельзя поднять объект, находящийся прямо в корне
 
             GameObject newParent = oldParent?.Parent;

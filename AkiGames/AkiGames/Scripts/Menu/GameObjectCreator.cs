@@ -14,13 +14,13 @@ namespace AkiGames.Scripts.Menu
 
         private void CreateGameObject()
         {
-            if (Game1.gameMainObject is null || _hierarchyWindowController is null) return;
+            if (Game1.editableGameMainObject is null || _hierarchyWindowController is null) return;
 
             GameObject newObject = new("new object");
             newObject.Components = [newObject.uiTransform];
-            GameObject root = Game1.gameMainObject.Children[0];
+            GameObject root = Game1.editableGameMainObject;
             root.AddChild(newObject);
-            _hierarchyWindowController.RefreshContent(root);
+            _hierarchyWindowController.UpdateScene();
         }
 
         public override void OnMouseUp()

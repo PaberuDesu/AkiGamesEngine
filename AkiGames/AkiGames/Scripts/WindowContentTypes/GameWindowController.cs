@@ -10,7 +10,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         private UITransform _viewMaskTransform;
         private UITransform _viewTransform;
         private Image _gameViewImage;
-        private static GameObject _gameMainObject = new("main");
+        private static GameObject _gameMainObject;
         private Rectangle prevBounds = Rectangle.Empty;
 
         public override void Awake()
@@ -19,12 +19,6 @@ namespace AkiGames.Scripts.WindowContentTypes
             GameObject _viewObject = gameObject.Children[3].Children[0];
             _gameViewImage = _viewObject.GetComponent<Image>();
             _gameViewImage.texture = Game1.GameRenderTarget;
-            _gameMainObject.uiTransform = new UITransform
-            {
-                VerticalAlignment = UITransform.AlignmentV.Middle,
-                HorizontalAlignment = UITransform.AlignmentH.Center,
-                Width = 1920, Height = 1080
-            };
 
             _viewMaskTransform = _viewObject.Parent.uiTransform;
             _viewTransform = _viewObject.uiTransform;
@@ -59,8 +53,19 @@ namespace AkiGames.Scripts.WindowContentTypes
         public void RefreshContent(GameObject gameObjectTree)
         {
             // Получаем иерархию объектов
-            _gameMainObject.Children = [gameObjectTree];
-            _gameMainObject.Children[0].RefreshBounds();
+            Game1.gameMainObject?.Dispose();
+
+            _gameMainObject = new("main")
+            {
+                ObjectIDSpace = ObjectIdSpace.Game,
+                uiTransform = UITransform.TransformOfBounds(new Rectangle(0, 0, 1920, 1080))
+            };
+
+            GameObject runtimeTree = gameObjectTree.Copy(preserveObjectId: true);
+            runtimeTree.SetObjectIdSpaceRecursive(ObjectIdSpace.Game);
+            _gameMainObject.Children = [runtimeTree];
+            runtimeTree.AkiGamesEditorAwakeTree(ObjectIdSpace.Game);
+            runtimeTree.RefreshBounds(_gameMainObject.uiTransform);
             Game1.gameMainObject = _gameMainObject;
         
             _viewTransform.RefreshBounds();

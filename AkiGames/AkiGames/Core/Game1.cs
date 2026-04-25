@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Events;
 using AkiGames.UI;
@@ -27,8 +28,12 @@ namespace AkiGames.Core
         public static Dictionary<string, Texture2D> UIImages { get; } = [];
 
         public static GraphicsDevice AppGraphicsDevice { get; private set; }
+        public static IServiceProvider AppServices { get; private set; }
+        public static ContentManager GameContent { get; private set; }
+        public static string GameContentRoot { get; private set; }
 
         // Для рендеринга игры
+        public static GameObject editableGameMainObject;
         public static GameObject gameMainObject;
         public static RenderTarget2D GameRenderTarget { get; private set; }
         private static Color backgroundColor = new(45, 45, 45);
@@ -39,6 +44,7 @@ namespace AkiGames.Core
             {
                 PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
             };
+            AppServices = Services;
             WindowHandle = Window.Handle;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -46,6 +52,46 @@ namespace AkiGames.Core
 
             // Устанавливаем обработчик изменения размера окна
             Window.ClientSizeChanged += OnWindowSizeChanged;
+        }
+
+        public static void SetGameContentRoot(string contentRoot)
+        {
+            GameContent?.Dispose();
+            GameContentRoot = contentRoot;
+            GameContent = string.IsNullOrWhiteSpace(contentRoot) || AppServices == null ?
+                null :
+                new ContentManager(AppServices, contentRoot);
+        }
+
+        public static Texture2D LoadGameTexture(string assetPath)
+        {
+            if (string.IsNullOrWhiteSpace(assetPath)) return null;
+
+            string normalizedPath = assetPath.Replace('\\', '/').TrimStart('/');
+            if (normalizedPath.StartsWith("Content/", StringComparison.OrdinalIgnoreCase))
+            {
+                normalizedPath = normalizedPath["Content/".Length..];
+            }
+
+            string assetName = Path.ChangeExtension(normalizedPath, null);
+
+            if (GameContent != null)
+            {
+                try
+                {
+                    return GameContent.Load<Texture2D>(assetName);
+                }
+                catch { }
+            }
+
+            string rawPath = Path.IsPathRooted(assetPath) ?
+                assetPath :
+                Path.Combine(GameContentRoot ?? "", normalizedPath);
+
+            if (!File.Exists(rawPath) || AppGraphicsDevice == null) return null;
+
+            using FileStream stream = File.OpenRead(rawPath);
+            return Texture2D.FromStream(AppGraphicsDevice, stream);
         }
 
         protected override void Initialize()

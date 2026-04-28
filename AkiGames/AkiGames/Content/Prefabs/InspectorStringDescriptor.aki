@@ -127,7 +127,7 @@
     {
       "ObjectName": "ValueContainer (Mask)",
       "IsActive": true,
-      "IsMouseTargetable": true,
+      "IsMouseTargetable": false,
       "Components": [
         {
           "type": "UITransform",

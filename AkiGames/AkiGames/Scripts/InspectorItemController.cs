@@ -106,9 +106,27 @@ namespace AkiGames.Scripts
                     fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
+                    GameObject stringInputObject = fieldDescription.Children[1];
+                    Image stringInputImage = stringInputObject.GetComponent<Image>();
+
+
                     Text contentText = fieldDescription.Children[2].Children[0].Children[0].GetComponent<Text>();
-                    if (!isSettable) contentText.TextColor = _inactiveColor;
-                    contentText.text = $"{value}";
+                    contentText.text = value?.ToString() ?? "";
+
+                    if (isSettable)
+                    {
+                        stringInputObject.AddComponent(new InspectorStringInputField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            TextField = contentText
+                        });
+                    }
+                    else
+                    {
+                        stringInputObject.IsMouseTargetable = false;
+                        stringInputImage.fillColor = _inactiveColor;
+                    }
                     break;
                 case "Vector2":
                     fieldDescription = Game1.Prefabs["InspectorVector2Descriptor"].Copy();

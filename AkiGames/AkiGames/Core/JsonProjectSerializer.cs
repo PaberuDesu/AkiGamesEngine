@@ -89,8 +89,8 @@ namespace AkiGames.Core
                     if (property.GetCustomAttribute<DontSerialize>() == null)
                     {
                         var value = property.GetValue(gameComponent);
-                        if (value != null)
-                            dict[property.Name] = value;
+                        if (value != null || IsSerializableTextureType(property.PropertyType))
+                            dict[property.Name] = ConvertValueForSerialization(property.PropertyType, value);
                     }
                 } catch{}
             }
@@ -105,8 +105,8 @@ namespace AkiGames.Core
                     if (field.GetCustomAttribute<DontSerialize>() == null)
                     {
                         var value = field.GetValue(gameComponent);
-                        if (value != null)
-                            dict[field.Name] = value;
+                        if (value != null || IsSerializableTextureType(field.FieldType))
+                            dict[field.Name] = ConvertValueForSerialization(field.FieldType, value);
                     }
                 }
                 catch{}
@@ -115,8 +115,19 @@ namespace AkiGames.Core
             return dict;
         }
 
+        private static object ConvertValueForSerialization(Type type, object value) =>
+            IsSerializableTextureType(type) ?
+                Game1.GetGameTextureLink(value as Texture2D) :
+                value;
+
+        private static bool IsSerializableTextureType(Type type) =>
+            type == typeof(Texture2D);
+
         private static bool IsBlacklisted(Type type)
         {
+            if (IsSerializableTextureType(type))
+                return false;
+
             // Проверяем базовые типы
             if (_blacklistedTypes.Contains(type))
                 return true;
@@ -310,6 +321,10 @@ namespace AkiGames.Core
                                 options
                             );
                         }
+                        else if (targetType == typeof(Texture2D))
+                        {
+                            value = DeserializeTexture(jsonProperty.Value);
+                        }
                         else
                         {
                             // Для остальных типов используем стандартную десериализацию
@@ -328,6 +343,18 @@ namespace AkiGames.Core
                     catch (Exception ex) { ConsoleWindowController.Log($"Error: '{ex}' when tried to deserialize {jsonProperty.Name}"); }
                 }
             }
+        }
+
+        private static Texture2D DeserializeTexture(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null) return null;
+            if (element.ValueKind != JsonValueKind.String)
+            {
+                throw new JsonException("Texture value must be a Content link string.");
+            }
+
+            string textureLink = element.GetString();
+            return string.IsNullOrWhiteSpace(textureLink) ? null : Game1.LoadGameTexture(textureLink);
         }
     }
 }

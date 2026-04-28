@@ -31,6 +31,8 @@ namespace AkiGames.Core
         public static IServiceProvider AppServices { get; private set; }
         public static ContentManager GameContent { get; private set; }
         public static string GameContentRoot { get; private set; }
+        private static readonly Dictionary<Texture2D, string> _gameTextureLinks =
+            new(ReferenceEqualityComparer.Instance);
 
         // Для рендеринга игры
         public static GameObject editableGameMainObject;
@@ -57,6 +59,7 @@ namespace AkiGames.Core
         public static void SetGameContentRoot(string contentRoot)
         {
             GameContent?.Dispose();
+            _gameTextureLinks.Clear();
             GameContentRoot = contentRoot;
             GameContent = string.IsNullOrWhiteSpace(contentRoot) || AppServices == null ?
                 null :
@@ -65,13 +68,10 @@ namespace AkiGames.Core
 
         public static Texture2D LoadGameTexture(string assetPath)
         {
-            if (string.IsNullOrWhiteSpace(assetPath)) return null;
+            string contentLink = NormalizeGameTextureLink(assetPath);
+            if (string.IsNullOrWhiteSpace(contentLink)) return null;
 
-            string normalizedPath = assetPath.Replace('\\', '/').TrimStart('/');
-            if (normalizedPath.StartsWith("Content/", StringComparison.OrdinalIgnoreCase))
-            {
-                normalizedPath = normalizedPath["Content/".Length..];
-            }
+            string normalizedPath = contentLink["Content/".Length..];
 
             string assetName = Path.ChangeExtension(normalizedPath, null);
 
@@ -79,7 +79,9 @@ namespace AkiGames.Core
             {
                 try
                 {
-                    return GameContent.Load<Texture2D>(assetName);
+                    Texture2D texture = GameContent.Load<Texture2D>(assetName);
+                    RegisterGameTexture(texture, contentLink);
+                    return texture;
                 }
                 catch { }
             }
@@ -91,7 +93,63 @@ namespace AkiGames.Core
             if (!File.Exists(rawPath) || AppGraphicsDevice == null) return null;
 
             using FileStream stream = File.OpenRead(rawPath);
-            return Texture2D.FromStream(AppGraphicsDevice, stream);
+            Texture2D loadedTexture = Texture2D.FromStream(AppGraphicsDevice, stream);
+            RegisterGameTexture(loadedTexture, contentLink);
+            return loadedTexture;
+        }
+
+        public static string GetGameTextureLink(Texture2D texture)
+        {
+            if (texture == null) return "";
+            if (_gameTextureLinks.TryGetValue(texture, out string link)) return link;
+            return NormalizeGameTextureLink(texture.Name);
+        }
+
+        private static void RegisterGameTexture(Texture2D texture, string assetPath)
+        {
+            string contentLink = NormalizeGameTextureLink(assetPath);
+            if (texture == null || string.IsNullOrWhiteSpace(contentLink)) return;
+
+            _gameTextureLinks[texture] = contentLink;
+            texture.Name = contentLink;
+        }
+
+        private static string NormalizeGameTextureLink(string assetPath)
+        {
+            if (string.IsNullOrWhiteSpace(assetPath)) return "";
+
+            string normalizedPath = assetPath.Trim();
+            if (Path.IsPathRooted(normalizedPath) && !string.IsNullOrWhiteSpace(GameContentRoot))
+            {
+                string fullPath = Path.GetFullPath(normalizedPath);
+                string contentRoot = Path.GetFullPath(GameContentRoot)
+                    .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+                if (
+                    fullPath.StartsWith(contentRoot + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) ||
+                    fullPath.StartsWith(contentRoot + Path.AltDirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                )
+                {
+                    normalizedPath = Path.GetRelativePath(contentRoot, fullPath);
+                }
+            }
+
+            if (Path.IsPathRooted(normalizedPath))
+            {
+                normalizedPath = normalizedPath.Replace('\\', '/');
+                int contentIndex = normalizedPath.LastIndexOf("/Content/", StringComparison.OrdinalIgnoreCase);
+                if (contentIndex < 0) return "";
+
+                normalizedPath = normalizedPath[(contentIndex + 1)..];
+            }
+
+            normalizedPath = normalizedPath.Replace('\\', '/').TrimStart('/');
+            if (normalizedPath.StartsWith("Content/", StringComparison.OrdinalIgnoreCase))
+            {
+                normalizedPath = normalizedPath["Content/".Length..];
+            }
+
+            return string.IsNullOrWhiteSpace(normalizedPath) ? "" : $"Content/{normalizedPath}";
         }
 
         protected override void Initialize()

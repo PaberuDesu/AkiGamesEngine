@@ -33,7 +33,6 @@ namespace AkiGames.Core
             if (IsRunningEditorProject(projectRoot))
             {
                 ClearActiveProject();
-                ConsoleWindowController.Log("Using editor component types for the opened engine project.");
                 return false;
             }
 
@@ -59,7 +58,6 @@ namespace AkiGames.Core
                 RegisterComponentTypes(assembly);
                 JsonProjectSerializer.ClearTypeCache();
                 InvokeLoadContent(content);
-                ConsoleWindowController.Log($"Loaded {_activeComponentTypes.Values.Distinct().Count()} project component type(s).");
                 return _activeComponentTypes.Count > 0;
             }
             catch (Exception ex)

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using AkiGames.Core;
-using AkiGames.UI;
 using AkiGames.Events;
 using AkiGames.Scripts.WindowContentTypes;
+using AkiGames.UI;
 
 namespace AkiGames.Scripts
 {
@@ -16,14 +16,13 @@ namespace AkiGames.Scripts
         public void Show(Vector2 screenPosition, HierarchyListItem targetItem)
         {
             _contextMenuItemPrefab ??= Game1.Prefabs["ContextMenuItem"];
-
             _targetItem = targetItem;
 
             Game1.MainObject.AddChild(gameObject);
 
             uiTransform.OffsetMin = screenPosition;
             uiTransform.Width = 180;
-            uiTransform.Height = 0; // авто-высота от Column
+            uiTransform.Height = 0;
             uiTransform.RefreshBounds();
 
             Column column = gameObject.GetComponent<Column>();
@@ -33,11 +32,11 @@ namespace AkiGames.Scripts
                 gameObject.AddComponent(column);
             }
 
-            AddMenuItem("Переименовать", RenameObject);
-            AddMenuItem("Создать дочерний", CreateChild);
-            AddMenuItem("Переместить вверх", MoveUp);
-            AddMenuItem("Переместить вниз", MoveDown);
-            AddMenuItem("Удалить", DeleteObject);
+            AddMenuItem("Rename", RenameObject);
+            AddMenuItem("Create Child", CreateChild);
+            AddMenuItem("Move Up", MoveUp);
+            AddMenuItem("Move Down", MoveDown);
+            AddMenuItem("Delete", DeleteObject);
 
             column.Refresh();
             gameObject.RefreshBounds();
@@ -63,13 +62,7 @@ namespace AkiGames.Scripts
         private void RenameObject()
         {
             if (_targetItem?.RepresentedObject == null) return;
-            string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                "Введите новое имя", "Переименование", _targetItem.RepresentedObject.ObjectName);
-            if (!string.IsNullOrWhiteSpace(newName))
-            {
-                _targetItem.RepresentedObject.ObjectName = newName;
-                UpdateHierarchyAndScene();
-            }
+            _targetItem.StartRenaming();
         }
 
         private void CreateChild()
@@ -81,46 +74,40 @@ namespace AkiGames.Scripts
             UpdateHierarchyAndScene();
         }
 
-        private void MoveUp() // Повысить уровень (сделать sibling'ом своего родителя)
+        private void MoveUp()
         {
             GameObject obj = _targetItem?.RepresentedObject;
             GameObject oldParent = obj?.Parent;
             if (oldParent == null) return;
 
-            // Корневой объект сцены
             GameObject rootSceneObject = Game1.editableGameMainObject;
-            if (oldParent == rootSceneObject) return; // Нельзя поднять объект, находящийся прямо в корне
+            if (oldParent == rootSceneObject) return;
 
-            GameObject newParent = oldParent?.Parent;
+            GameObject newParent = oldParent.Parent;
             if (newParent == null) return;
 
-            // Запоминаем позицию старого родителя в новом родителе
             int index = newParent.Children.IndexOf(oldParent);
-
-            // Открепляем объект от старого родителя
             oldParent.RemoveChild(obj);
 
-            // Вставляем объект после старого родителя
             List<GameObject> children = newParent.Children;
-            children.Insert(index+1, obj);
+            children.Insert(index + 1, obj);
             newParent.Children = children;
             obj.Parent = newParent;
 
             UpdateHierarchyAndScene();
         }
 
-        private void MoveDown() // Понизить уровень (вложить в предыдущий sibling)
+        private void MoveDown()
         {
             GameObject obj = _targetItem?.RepresentedObject;
             GameObject parent = obj?.Parent;
             if (parent == null) return;
 
             List<GameObject> siblings = parent.Children;
-            int idx = siblings.IndexOf(obj);
-            if (idx <= 0) return; // нет предыдущего sibling
+            int index = siblings.IndexOf(obj);
+            if (index <= 0) return;
 
-            GameObject targetParent = siblings[idx - 1]; // Старший брат, который окажется родителем
-
+            GameObject targetParent = siblings[index - 1];
             parent.RemoveChild(obj);
             targetParent.AddChild(obj);
 
@@ -138,26 +125,30 @@ namespace AkiGames.Scripts
 
         private static void OpenObjectIfClosed(HierarchyListItem item)
         {
-            // Раскрываем родителя, если он свёрнут
             if (item != null && !item.IsOpened && item.Opener != null)
+            {
                 item.Opener.ShowOrHideChildren();
+            }
         }
 
-        private HierarchyListItem FindListItemByGameObject(GameObject go)
+        private HierarchyListItem FindListItemByGameObject(GameObject gameObjectToFind)
         {
             foreach (GameObject child in _targetItem.gameObject.Parent.Children)
             {
                 HierarchyListItem item = child.GetComponent<HierarchyListItem>();
-                if (item != null && item.RepresentedObject == go)
+                if (item != null && item.RepresentedObject == gameObjectToFind)
+                {
                     return item;
+                }
             }
+
             return null;
         }
 
         private void UpdateHierarchyAndScene()
         {
             _targetItem.gameObject.GetAncestry()[2]
-                .GetComponent<WindowContentTypes.HierarchyWindowController>()
+                .GetComponent<HierarchyWindowController>()
                 ?.UpdateScene();
         }
 
@@ -165,11 +156,12 @@ namespace AkiGames.Scripts
 
         public override void Update()
         {
-            if ((Input.RMB.IsDown || Input.LMB.IsDown)
-                && !gameObject.IsParentFor(Input.MouseHoverTarget))
+            if ((Input.RMB.IsDown || Input.LMB.IsDown) &&
+                !gameObject.IsParentFor(Input.MouseHoverTarget))
             {
                 CloseMenu();
             }
+
             if (Input.LMB.IsUp) CloseMenu();
         }
     }

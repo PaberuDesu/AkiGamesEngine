@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using AkiGames.Core;
 using AkiGames.UI;
 using AkiGames.Scripts.WindowContentTypes;
@@ -23,6 +24,57 @@ namespace AkiGames.Scripts
         public HierarchyExpander Opener {get; private set;} = null;
         internal bool IsOpened => Opener?.isOpened ?? false;
 
+        private static GameObject _selectedObject = null;
+        private bool _renameOnCurrentDoubleClick = false;
+        private long _lastMouseDownMs = -RenameDoubleClickThresholdMs;
+        private bool _isRenaming = false;
+        private string _renameValue = "";
+        private KeyboardState _currentKeyboardState;
+        private KeyboardState _previousKeyboardState;
+        private const long RenameDoubleClickThresholdMs = 500;
+        private const double RenameCursorBlinkMs = 500;
+
+        private static readonly Dictionary<Keys, (string normal, string shifted)> _symbolKeys = new()
+        {
+            { Keys.D0, ("0", ")") },
+            { Keys.D1, ("1", "!") },
+            { Keys.D2, ("2", "@") },
+            { Keys.D3, ("3", "#") },
+            { Keys.D4, ("4", "$") },
+            { Keys.D5, ("5", "%") },
+            { Keys.D6, ("6", "^") },
+            { Keys.D7, ("7", "&") },
+            { Keys.D8, ("8", "*") },
+            { Keys.D9, ("9", "(") },
+            { Keys.NumPad0, ("0", "0") },
+            { Keys.NumPad1, ("1", "1") },
+            { Keys.NumPad2, ("2", "2") },
+            { Keys.NumPad3, ("3", "3") },
+            { Keys.NumPad4, ("4", "4") },
+            { Keys.NumPad5, ("5", "5") },
+            { Keys.NumPad6, ("6", "6") },
+            { Keys.NumPad7, ("7", "7") },
+            { Keys.NumPad8, ("8", "8") },
+            { Keys.NumPad9, ("9", "9") },
+            { Keys.Space, (" ", " ") },
+            { Keys.OemComma, (",", "<") },
+            { Keys.OemPeriod, (".", ">") },
+            { Keys.OemMinus, ("-", "_") },
+            { Keys.OemPlus, ("=", "+") },
+            { Keys.OemQuestion, ("/", "?") },
+            { Keys.OemSemicolon, (";", ":") },
+            { Keys.OemQuotes, ("'", "\"") },
+            { Keys.OemOpenBrackets, ("[", "{") },
+            { Keys.OemCloseBrackets, ("]", "}") },
+            { Keys.OemPipe, ("\\", "|") },
+            { Keys.OemTilde, ("`", "~") },
+            { Keys.Decimal, (".", ".") },
+            { Keys.Add, ("+", "+") },
+            { Keys.Subtract, ("-", "-") },
+            { Keys.Multiply, ("*", "*") },
+            { Keys.Divide, ("/", "/") }
+        };
+
         private static bool _isAnyDragging = false; // идёт ли сейчас перетаскивание какого-либо элемента
         private double _hoverStartTime = -1; // время начала наведения курсора (мс)
         private bool _pendingOpen = false; // ожидание открытия
@@ -40,6 +92,38 @@ namespace AkiGames.Scripts
 
             Opener = gameObject.Children[0].GetComponent<HierarchyExpander>();
             Opener.gameObject.IsActive = childItems.Count > 0;
+        }
+
+        public override void OnMouseDown()
+        {
+            long now = Environment.TickCount64;
+            bool clickedSelectedObject = _selectedObject == RepresentedObject;
+
+            if (clickedSelectedObject && !_isRenaming)
+            {
+                InspectorWindowController.LoadFor(RepresentedObject);
+            }
+
+            if (now - _lastMouseDownMs > RenameDoubleClickThresholdMs)
+            {
+                _renameOnCurrentDoubleClick = clickedSelectedObject;
+            }
+
+            _lastMouseDownMs = now;
+            _selectedObject = RepresentedObject;
+            base.OnMouseDown();
+        }
+
+        public override void OnDoubleClick()
+        {
+            if (_renameOnCurrentDoubleClick)
+            {
+                StartRenaming();
+                return;
+            }
+
+            base.OnDoubleClick();
+            _selectedObject = RepresentedObject;
         }
 
         public override void OnRMBUp()
@@ -221,6 +305,8 @@ namespace AkiGames.Scripts
         public override void Update()
         {
             base.Update();
+            if (_isRenaming) UpdateRenaming();
+
             if (_pendingOpen && _hoverStartTime > 0 && gameTime != null)
             {
                 double now = gameTime.TotalGameTime.TotalMilliseconds;
@@ -237,6 +323,134 @@ namespace AkiGames.Scripts
         {
             _hoverStartTime = -1;
             _pendingOpen = false;
+        }
+
+        public void StartRenaming()
+        {
+            if (RepresentedObject == null) return;
+
+            _selectedObject = RepresentedObject;
+            _isRenaming = true;
+            _renameValue = RepresentedObject.ObjectName;
+            _currentKeyboardState = Keyboard.GetState();
+            _previousKeyboardState = _currentKeyboardState;
+            UpdateDisplayedName();
+        }
+
+        private void UpdateRenaming()
+        {
+            _previousKeyboardState = _currentKeyboardState;
+            _currentKeyboardState = Keyboard.GetState();
+
+            if (
+                Events.Input.LMB.IsDown &&
+                Events.Input.MouseHoverTarget != gameObject &&
+                !gameObject.IsParentFor(Events.Input.MouseHoverTarget)
+            )
+            {
+                CommitRenaming();
+                return;
+            }
+
+            if (IsKeyPressed(Keys.Escape))
+            {
+                CancelRenaming();
+                return;
+            }
+
+            if (IsKeyPressed(Keys.Enter))
+            {
+                CommitRenaming();
+                return;
+            }
+
+            ProcessRenameKeyboardInput();
+            UpdateDisplayedName();
+        }
+
+        private void ProcessRenameKeyboardInput()
+        {
+            bool shiftPressed =
+                _currentKeyboardState.IsKeyDown(Keys.LeftShift) ||
+                _currentKeyboardState.IsKeyDown(Keys.RightShift);
+            bool capsLock = _currentKeyboardState.CapsLock;
+
+            for (Keys key = Keys.A; key <= Keys.Z; key++)
+            {
+                if (!IsKeyPressed(key)) continue;
+
+                char character = (char)('a' + (key - Keys.A));
+                bool upper = shiftPressed ^ capsLock;
+                _renameValue += upper ? char.ToUpper(character) : character;
+            }
+
+            foreach (var keyPair in _symbolKeys)
+            {
+                if (IsKeyPressed(keyPair.Key))
+                {
+                    _renameValue += shiftPressed ? keyPair.Value.shifted : keyPair.Value.normal;
+                }
+            }
+
+            if (IsKeyPressed(Keys.Back) && _renameValue.Length > 0)
+            {
+                _renameValue = _renameValue[..^1];
+            }
+
+            if (IsKeyPressed(Keys.Delete))
+            {
+                _renameValue = "";
+            }
+        }
+
+        private bool IsKeyPressed(Keys key) =>
+            _currentKeyboardState.IsKeyDown(key) && _previousKeyboardState.IsKeyUp(key);
+
+        private void CommitRenaming()
+        {
+            string newName = _renameValue.Trim();
+            if (!string.IsNullOrWhiteSpace(newName))
+            {
+                RepresentedObject.ObjectName = newName;
+            }
+
+            _isRenaming = false;
+            UpdateDisplayedName();
+            gameObject.GetAncestry()[2].GetComponent<HierarchyWindowController>().UpdateScene();
+        }
+
+        private void CancelRenaming()
+        {
+            _isRenaming = false;
+            UpdateDisplayedName();
+        }
+
+        public override void Deactivate()
+        {
+            if (_isRenaming)
+            {
+                CommitRenaming();
+                return;
+            }
+
+            base.Deactivate();
+        }
+
+        private void UpdateDisplayedName()
+        {
+            Text title = gameObject.Children[1].GetComponent<Text>();
+            string visibleName = _isRenaming ? _renameValue : RepresentedObject?.ObjectName ?? "";
+            title.text = new string(' ', Level * 3) + visibleName + RenameCursor;
+        }
+
+        private string RenameCursor
+        {
+            get
+            {
+                if (!_isRenaming) return "";
+                double timeMs = gameTime?.TotalGameTime.TotalMilliseconds ?? 0;
+                return (int)(timeMs / RenameCursorBlinkMs) % 2 == 0 ? "_" : "";
+            }
         }
     }
 }

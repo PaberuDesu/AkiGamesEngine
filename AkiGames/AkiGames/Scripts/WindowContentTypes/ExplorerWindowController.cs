@@ -272,11 +272,14 @@ namespace AkiGames.Scripts.WindowContentTypes
         {
             InspectorWindowController.LoadFor(null);// чистим инспектор
 
+            string contentRoot = FindContentRoot(fullPath);
+            Game1.SetGameContentRoot(contentRoot);
+            ProjectScriptLoader.LoadProjectScripts(FindProjectRoot(contentRoot), Game1.GameContent);
+
             JsonElement akiContent = JsonSerializer.Deserialize<JsonElement>(File.ReadAllText(fullPath));
             GameObject gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
             gameMainObject.EnsureUniqueObjectIdsInTree();
             Game1.editableGameMainObject = gameMainObject;
-            Game1.SetGameContentRoot(FindContentRoot(fullPath));
             
             _gameWindow.RefreshContent(gameMainObject);
             _hierarchyWindow.RefreshContent(gameMainObject, fullPath);
@@ -293,6 +296,14 @@ namespace AkiGames.Scripts.WindowContentTypes
             }
 
             return Path.GetDirectoryName(fullPath);
+        }
+
+        private static string FindProjectRoot(string contentRoot)
+        {
+            DirectoryInfo directory = new(contentRoot);
+            return string.Equals(directory.Name, "Content", StringComparison.OrdinalIgnoreCase) ?
+                directory.Parent?.FullName ?? contentRoot :
+                Directory.GetParent(contentRoot)?.FullName ?? contentRoot;
         }
 
         internal void GoBack()

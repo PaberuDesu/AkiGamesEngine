@@ -8,7 +8,7 @@ namespace AkiGames.UI
     public class Image : DrawableComponent
     {
         public Texture2D texture = null;
-        [DontSerialize] public string texturePath = "";
+        private string texturePath = "";
         public Color fillColor = Color.White;
         public static Effect TileEffect;
 

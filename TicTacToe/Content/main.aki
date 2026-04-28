@@ -1,5 +1,6 @@
 {
   "ObjectName": "RootObject",
+  "ObjectID": 1,
   "IsActive": true,
   "IsMouseTargetable": true,
   "Components": [
@@ -36,6 +37,7 @@
   "Children": [
     {
       "ObjectName": "Background",
+      "ObjectID": 2,
       "IsActive": true,
       "IsMouseTargetable": true,
       "Components": [
@@ -80,6 +82,7 @@
       "Children": [
         {
           "ObjectName": "gameField",
+          "ObjectID": 3,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -121,12 +124,14 @@
               "Enabled": true
             },
             {
-              "type": "FieldController"
+              "type": "FieldController",
+              "Enabled": true
             }
           ],
           "Children": [
             {
               "ObjectName": "Cell_1-1",
+              "ObjectID": 4,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -140,7 +145,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -168,13 +173,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_1-2",
+              "ObjectID": 5,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -188,7 +195,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -216,13 +223,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_1-3",
+              "ObjectID": 6,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -236,7 +245,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -264,13 +273,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_2-1",
+              "ObjectID": 7,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -284,7 +295,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -312,13 +323,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_2-2",
+              "ObjectID": 8,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -332,7 +345,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -360,13 +373,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_2-3",
+              "ObjectID": 9,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -380,7 +395,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -408,13 +423,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_3-1",
+              "ObjectID": 10,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -428,7 +445,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -456,13 +473,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_3-2",
+              "ObjectID": 11,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -476,7 +495,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -504,13 +523,15 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
             },
             {
               "ObjectName": "Cell_3-3",
+              "ObjectID": 12,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -524,7 +545,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  140,
+                  "Width": 140,
                   "Height": 140,
                   "HorizontalAlignment": "Left",
                   "VerticalAlignment": "Top",
@@ -552,7 +573,8 @@
                   "Enabled": true
                 },
                 {
-                  "type": "CellController"
+                  "type": "CellController",
+                  "Enabled": true
                 }
               ],
               "Children": []
@@ -561,6 +583,7 @@
         },
         {
           "ObjectName": "GameEnd",
+          "ObjectID": 13,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -574,7 +597,7 @@
                 "x": 0,
                 "y": 0
               },
-              "Width":  0,
+              "Width": 0,
               "Height": 0,
               "HorizontalAlignment": "Stretch",
               "VerticalAlignment": "Stretch",
@@ -602,12 +625,14 @@
               "Enabled": true
             },
             {
-              "type": "EndGame"
+              "type": "EndGame",
+              "Enabled": true
             }
           ],
           "Children": [
             {
               "ObjectName": "GameResult",
+              "ObjectID": 14,
               "IsActive": true,
               "IsMouseTargetable": false,
               "Components": [
@@ -621,7 +646,7 @@
                     "x": 0,
                     "y": 0
                   },
-                  "Width":  700,
+                  "Width": 700,
                   "Height": 350,
                   "HorizontalAlignment": "Center",
                   "VerticalAlignment": "Middle",
@@ -655,6 +680,7 @@
         },
         {
           "ObjectName": "Retry",
+          "ObjectID": 15,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -668,7 +694,7 @@
                 "x": 0,
                 "y": 0
               },
-              "Width":  70,
+              "Width": 70,
               "Height": 70,
               "HorizontalAlignment": "Left",
               "VerticalAlignment": "Top",
@@ -696,7 +722,8 @@
               "Enabled": true
             },
             {
-              "type": "Retry"
+              "type": "Retry",
+              "Enabled": true
             }
           ],
           "Children": []

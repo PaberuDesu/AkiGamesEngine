@@ -203,17 +203,21 @@ namespace AkiGames.Core
         }
 
         private static readonly Dictionary<string, Type> _typeCache = [];
+        public static void ClearTypeCache() => _typeCache.Clear();
+
         public static GameComponent CreateComponentByType(string typeName)
         {
             // Проверяем кеш
             if (!_typeCache.TryGetValue(typeName, out Type componentType))
             {
                 // Если нет в кеше, ищем тип
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                componentType = assemblies
-                    .SelectMany(assembly => assembly.GetTypes())
+                componentType = ProjectScriptLoader.ResolveComponentType(typeName);
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                componentType ??= assemblies
+                    .Where(assembly => !ProjectScriptLoader.IsProjectScriptAssembly(assembly))
+                    .SelectMany(GetLoadableTypes)
                     .FirstOrDefault(t =>
-                        t.Name == typeName &&
+                        (t.Name == typeName || t.FullName == typeName) &&
                         typeof(GameComponent).IsAssignableFrom(t) &&
                         t.GetConstructor(Type.EmptyTypes) != null);
 
@@ -222,6 +226,18 @@ namespace AkiGames.Core
             }
 
             return componentType != null ? (GameComponent)Activator.CreateInstance(componentType) : null;
+        }
+
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                return ex.Types.Where(type => type != null);
+            }
         }
 
         private static void SetPropertiesFromJson(GameComponent gameComponent, JsonElement element)

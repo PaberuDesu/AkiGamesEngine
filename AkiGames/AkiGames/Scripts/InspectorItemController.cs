@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Core;
 using AkiGames.Scripts.InspectorRedactor;
+using AkiGames.Scripts.WindowContentTypes;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts
@@ -49,6 +50,7 @@ namespace AkiGames.Scripts
             {
                 if (
                     !property.CanRead || !property.GetMethod.IsPublic ||
+                    property.GetIndexParameters().Length > 0 ||
                     property.GetCustomAttribute<HideInInspector>() != null
                 ) continue;
                 GameObject propertyObj = CreateFieldDescription(property, height, component);
@@ -76,16 +78,22 @@ namespace AkiGames.Scripts
             if (memberInfo is FieldInfo fieldInfo)
             {
                 type = fieldInfo.FieldType.Name;
-                value = fieldInfo.GetValue(gameComponent);
                 isSettable = !fieldInfo.IsInitOnly;
                 if (fieldInfo.FieldType.IsEnum) enumValuesArray = Enum.GetValues(fieldInfo.FieldType);
+                if (!TryReadMemberValue(fieldInfo, gameComponent, out value))
+                {
+                    return null;
+                }
             }
             if (memberInfo is PropertyInfo propertyInfo)
             {
                 type = propertyInfo.PropertyType.Name;
-                value = propertyInfo.GetValue(gameComponent);
                 isSettable = propertyInfo.SetMethod != null && propertyInfo.SetMethod.IsPublic;
                 if (propertyInfo.PropertyType.IsEnum) enumValuesArray = Enum.GetValues(propertyInfo.PropertyType);
+                if (!TryReadMemberValue(propertyInfo, gameComponent, out value))
+                {
+                    return null;
+                }
             }
 
             GameObject fieldDescription;
@@ -212,5 +220,35 @@ namespace AkiGames.Scripts
             content.AddChild(fieldDescription);
             return fieldDescription;
         }
+
+        private static bool TryReadMemberValue(MemberInfo memberInfo, GameComponent gameComponent, out object value)
+        {
+            try
+            {
+                value = memberInfo switch
+                {
+                    FieldInfo fieldInfo => fieldInfo.GetValue(gameComponent),
+                    PropertyInfo propertyInfo => propertyInfo.GetValue(gameComponent),
+                    _ => null
+                };
+                return true;
+            }
+            catch (TargetInvocationException ex)
+            {
+                LogInspectorMemberError(memberInfo, gameComponent, ex.InnerException?.Message ?? ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LogInspectorMemberError(memberInfo, gameComponent, ex.Message);
+            }
+
+            value = null;
+            return false;
+        }
+
+        private static void LogInspectorMemberError(MemberInfo memberInfo, GameComponent gameComponent, string error) =>
+            ConsoleWindowController.Log(
+                $"{memberInfo.Name} field of component {gameComponent.GetType().Name} can't be shown in inspector because of an error: {error}"
+            );
     }
 }

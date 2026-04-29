@@ -1,5 +1,6 @@
 {
   "ObjectName": "InspectorStringDescriptor",
+  "ObjectID": 1,
   "IsActive": true,
   "IsMouseTargetable": true,
   "Components": [
@@ -36,6 +37,7 @@
   "Children": [
     {
       "ObjectName": "Title",
+      "ObjectID": 2,
       "IsActive": true,
       "IsMouseTargetable": false,
       "Components": [
@@ -75,6 +77,7 @@
           "VerticalAlignment": "Middle",
           "text": "",
           "TextColor": 4294967295,
+          "zIndex": 0,
           "Enabled": true
         }
       ],
@@ -82,6 +85,7 @@
     },
     {
       "ObjectName": "Background",
+      "ObjectID": 3,
       "IsActive": true,
       "IsMouseTargetable": true,
       "Components": [
@@ -117,8 +121,10 @@
         {
           "type": "Image",
           "IsMask": false,
+          "texture": "",
           "fillColor": 4279176975,
           "imageMode": "Stretch",
+          "zIndex": 0,
           "Enabled": true
         }
       ],
@@ -126,6 +132,7 @@
     },
     {
       "ObjectName": "ValueContainer (Mask)",
+      "ObjectID": 4,
       "IsActive": true,
       "IsMouseTargetable": false,
       "Components": [
@@ -161,14 +168,17 @@
         {
           "type": "Image",
           "IsMask": true,
+          "texture": "",
           "fillColor": 4294967295,
           "imageMode": "Stretch",
+          "zIndex": 0,
           "Enabled": true
         }
       ],
       "Children": [
         {
           "ObjectName": "ValueContainer",
+          "ObjectID": 5,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -181,6 +191,7 @@
           "Children": [
             {
               "ObjectName": "Value",
+              "ObjectID": 6,
               "IsActive": true,
               "IsMouseTargetable": false,
               "Components": [
@@ -220,6 +231,7 @@
                   "VerticalAlignment": "Top",
                   "text": "",
                   "TextColor": 4294967295,
+                  "zIndex": 0,
                   "Enabled": true
                 }
               ],
@@ -229,6 +241,7 @@
         },
         {
           "ObjectName": "Scrollbar",
+          "ObjectID": 7,
           "IsActive": false,
           "IsMouseTargetable": true,
           "Components": [
@@ -264,8 +277,10 @@
             {
               "type": "Image",
               "IsMask": false,
+              "texture": "",
               "fillColor": 4280821800,
               "imageMode": "Stretch",
+              "zIndex": 0,
               "Enabled": true
             },
             {
@@ -277,6 +292,7 @@
           "Children": [
             {
               "ObjectName": "Thumb",
+              "ObjectID": 8,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -312,8 +328,10 @@
                 {
                   "type": "Image",
                   "IsMask": false,
+                  "texture": "",
                   "fillColor": 4286611584,
                   "imageMode": "Stretch",
+                  "zIndex": 0,
                   "Enabled": true
                 },
                 {

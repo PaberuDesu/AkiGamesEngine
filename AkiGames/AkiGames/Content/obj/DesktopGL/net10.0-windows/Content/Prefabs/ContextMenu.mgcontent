@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ContextMenu.aki</SourceFile>
-  <SourceTime>2026-04-24T00:38:02.0700014+03:00</SourceTime>
+  <SourceTime>2026-04-29T15:52:36.5089752+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/bin/DesktopGL/Content/Prefabs/ContextMenu.xnb</DestFile>
-  <DestTime>2026-04-24T00:38:23.0277863+03:00</DestTime>
+  <DestTime>2026-04-29T15:55:19.9754984+03:00</DestTime>
   <Importer>AkiImporter</Importer>
   <ImporterTime>2026-04-17T19:27:58.7937273+03:00</ImporterTime>
   <Processor>AkiProcessor</Processor>

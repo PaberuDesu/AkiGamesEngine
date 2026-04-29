@@ -1,5 +1,6 @@
 {
   "ObjectName": "ContextMenuItem",
+  "ObjectID": 1,
   "IsActive": true,
   "IsMouseTargetable": true,
   "Components": [
@@ -15,7 +16,7 @@
       },
       "Width": 0,
       "Height": 0,
-      "HorizontalAlignment": "Stretch",
+      "HorizontalAlignment": "Specific",
       "VerticalAlignment": "Top",
       "anchorLeftTop": {
         "x": 0.1,
@@ -35,6 +36,7 @@
     {
       "type": "Image",
       "IsMask": false,
+      "texture": "",
       "fillColor": 4281808695,
       "imageMode": "Stretch",
       "zIndex": 1,
@@ -51,10 +53,12 @@
       "Enabled": true
     },
     {
-      "type": "EventHandler"
+      "type": "EventHandler",
+      "Enabled": true
     },
     {
-      "type": "HoverInteractor"
+      "type": "HoverInteractor",
+      "Enabled": true
     }
   ],
   "Children": []

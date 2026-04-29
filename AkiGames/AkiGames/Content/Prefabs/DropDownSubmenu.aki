@@ -1,5 +1,6 @@
 {
   "ObjectName": "submenu",
+  "ObjectID": 1,
   "IsActive": false,
   "IsMouseTargetable": true,
   "Components": [
@@ -35,6 +36,7 @@
     {
       "type": "Image",
       "IsMask": false,
+      "texture": "",
       "fillColor": 4281808695,
       "imageMode": "Stretch",
       "zIndex": 1,

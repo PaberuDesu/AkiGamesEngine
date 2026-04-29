@@ -1,5 +1,6 @@
 {
   "ObjectName": "ContextMenu",
+  "ObjectID": 1,
   "IsActive": true,
   "IsMouseTargetable": true,
   "Components": [
@@ -35,6 +36,7 @@
     {
       "type": "Image",
       "IsMask": false,
+      "texture": "",
       "fillColor": 4281808695,
       "imageMode": "Stretch",
       "zIndex": 1,
@@ -46,7 +48,8 @@
       "Enabled": true
     },
     {
-      "type": "ContextMenuController"
+      "type": "ContextMenuController",
+      "Enabled": true
     }
   ],
   "Children": []

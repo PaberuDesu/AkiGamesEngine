@@ -1,5 +1,6 @@
 {
   "ObjectName": "HierarchyContentItem",
+  "ObjectID": 1,
   "IsActive": true,
   "IsMouseTargetable": true,
   "Components": [
@@ -35,14 +36,17 @@
     {
       "type": "Image",
       "IsMask": false,
+      "texture": "",
       "fillColor": 0,
       "imageMode": "Stretch",
+      "zIndex": 0,
       "Enabled": true
     }
   ],
   "Children": [
     {
       "ObjectName": "OpenButton",
+      "ObjectID": 2,
       "IsActive": true,
       "IsMouseTargetable": true,
       "Components": [
@@ -78,8 +82,10 @@
         {
           "type": "Image",
           "IsMask": false,
+          "texture": "Content/arrow.png",
           "fillColor": 4294967295,
           "imageMode": "Stretch",
+          "zIndex": 0,
           "Enabled": true
         },
         {
@@ -91,6 +97,7 @@
     },
     {
       "ObjectName": "Title",
+      "ObjectID": 3,
       "IsActive": true,
       "IsMouseTargetable": false,
       "Components": [
@@ -130,6 +137,7 @@
           "VerticalAlignment": "Middle",
           "text": "",
           "TextColor": 4294967295,
+          "zIndex": 0,
           "Enabled": true
         }
       ],

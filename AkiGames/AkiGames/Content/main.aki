@@ -1695,7 +1695,7 @@
                     {
                       "type": "Image",
                       "IsMask": false,
-                      "texture": "",
+                      "texture": "Content/scene_grid.png",
                       "fillColor": 4294967295,
                       "imageMode": "Tile",
                       "zIndex": 0,
@@ -4961,11 +4961,20 @@
                       "Enabled": true
                     }
                   ],
-                  "Children": []
+                  "Children": [
+                    {
+                      "ObjectName": "Toggle",
+                      "ObjectID": 100,
+                      "IsActive": true,
+                      "IsMouseTargetable": true,
+                      "Components": [],
+                      "Children": []
+                    }
+                  ]
                 },
                 {
                   "ObjectName": "Project Files",
-                  "ObjectID": 100,
+                  "ObjectID": 101,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5017,7 +5026,7 @@
                 },
                 {
                   "ObjectName": "SceneView",
-                  "ObjectID": 101,
+                  "ObjectID": 102,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5069,7 +5078,7 @@
                 },
                 {
                   "ObjectName": "GameView",
-                  "ObjectID": 102,
+                  "ObjectID": 103,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5121,7 +5130,7 @@
                 },
                 {
                   "ObjectName": "Console",
-                  "ObjectID": 103,
+                  "ObjectID": 104,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5173,7 +5182,7 @@
                 },
                 {
                   "ObjectName": "Inspector",
-                  "ObjectID": 104,
+                  "ObjectID": 105,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5229,7 +5238,7 @@
         },
         {
           "ObjectName": "CreateMenu",
-          "ObjectID": 105,
+          "ObjectID": 106,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -5290,7 +5299,7 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 106,
+              "ObjectID": 107,
               "IsActive": false,
               "IsMouseTargetable": true,
               "Components": [
@@ -5341,7 +5350,7 @@
               "Children": [
                 {
                   "ObjectName": "GameObject",
-                  "ObjectID": 107,
+                  "ObjectID": 108,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5408,7 +5417,7 @@
     },
     {
       "ObjectName": "DraggedExplorerFile",
-      "ObjectID": 108,
+      "ObjectID": 109,
       "IsActive": false,
       "IsMouseTargetable": false,
       "Components": [

@@ -29,6 +29,8 @@ namespace AkiGames.Core
 
         public static GraphicsDevice AppGraphicsDevice { get; private set; }
         public static IServiceProvider AppServices { get; private set; }
+        public static ContentManager EditorContent { get; private set; }
+        public static string EditorContentRoot { get; private set; }
         public static ContentManager GameContent { get; private set; }
         public static string GameContentRoot { get; private set; }
         private static readonly Dictionary<Texture2D, string> _gameTextureLinks =
@@ -49,6 +51,8 @@ namespace AkiGames.Core
             AppServices = Services;
             WindowHandle = Window.Handle;
             Content.RootDirectory = "Content";
+            EditorContent = Content;
+            EditorContentRoot = Content.RootDirectory;
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
 
@@ -86,9 +90,20 @@ namespace AkiGames.Core
                 catch { }
             }
 
+            if (EditorContent != null)
+            {
+                try
+                {
+                    Texture2D texture = EditorContent.Load<Texture2D>(assetName);
+                    RegisterGameTexture(texture, contentLink);
+                    return texture;
+                }
+                catch { }
+            }
+
             string rawPath = Path.IsPathRooted(assetPath) ?
                 assetPath :
-                Path.Combine(GameContentRoot ?? "", normalizedPath);
+                Path.Combine(GameContentRoot ?? EditorContentRoot ?? "", normalizedPath);
 
             if (!File.Exists(rawPath) || AppGraphicsDevice == null) return null;
 
@@ -228,9 +243,7 @@ namespace AkiGames.Core
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             ExplorerWindowController.LoadContent(Content);
-            SceneWindowController.LoadContent(Content);
             InspectorItemController.LoadContent(Content);
-            HierarchyExpander.LoadContent(Content);
             try
             {
                 Fonts.main = Content.Load<SpriteFont>("EditorFont");

@@ -110,7 +110,7 @@ namespace AkiGames.Scripts
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
                     GameObject stringInputObject = fieldDescription.Children[1];
-                    Image stringInputImage = stringInputObject.GetComponent<Image>();
+                    Image image = stringInputObject.GetComponent<Image>();
 
 
                     Text contentText = fieldDescription.Children[2].Children[0].Children[0].GetComponent<Text>();
@@ -128,7 +128,7 @@ namespace AkiGames.Scripts
                     else
                     {
                         stringInputObject.IsMouseTargetable = false;
-                        stringInputImage.fillColor = _inactiveColor;
+                        image.fillColor = _inactiveColor;
                     }
                     break;
                 case "Vector2":
@@ -138,9 +138,6 @@ namespace AkiGames.Scripts
 
                     Image imageX = fieldDescription.Children[1].GetComponent<Image>();
                     Image imageY = fieldDescription.Children[2].GetComponent<Image>();
-
-                    imageX.texture = Game1.UIImages["InputField"];
-                    imageY.texture = Game1.UIImages["InputField"];
 
                     if (!isSettable)
                     {
@@ -168,9 +165,8 @@ namespace AkiGames.Scripts
                     fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
-                    Image image = fieldDescription.Children[1].GetComponent<Image>();
-                    image.texture = Game1.UIImages["Round"];
-                    image.fillColor = (Color)value;
+                    fieldDescription.Children[1].GetComponent<Image>().
+                        fillColor = (Color)value;
                     break;
                 case "Boolean":
                     fieldDescription = Game1.Prefabs["InspectorBoolDescriptor"].Copy();
@@ -196,7 +192,6 @@ namespace AkiGames.Scripts
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
                     image = fieldDescription.Children[1].GetComponent<Image>();
-                    image.texture = Game1.UIImages["InputField"];
 
                     Text textureValueText = image.gameObject.Children[0].GetComponent<Text>();
                     textureValueText.text = GetTextureDisplayName(value as Texture2D);
@@ -227,7 +222,6 @@ namespace AkiGames.Scripts
                         image.fillColor = _inactiveColor;
                         image.gameObject.IsMouseTargetable = false;
                     }
-                    image.texture = Game1.UIImages["InputField"];
 
                     image.gameObject.Children[0].GetComponent<Text>().text = value is null ? "null" : $"{value}";
                     
@@ -271,7 +265,9 @@ namespace AkiGames.Scripts
         private static string GetTextureDisplayName(Texture2D texture)
         {
             string textureLink = Game1.GetGameTextureLink(texture);
-            return ContentFileUtility.GetDisplayName(textureLink);
+            return string.IsNullOrWhiteSpace(textureLink) ?
+                "null" :
+                ContentFileUtility.GetDisplayName(textureLink);
         }
 
         private static bool TryReadMemberValue(MemberInfo memberInfo, GameComponent gameComponent, out object value)

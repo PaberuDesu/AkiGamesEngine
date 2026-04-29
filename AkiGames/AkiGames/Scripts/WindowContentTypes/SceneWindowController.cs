@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Scripts.Window;
 using AkiGames.UI;
 
@@ -8,7 +6,6 @@ namespace AkiGames.Scripts.WindowContentTypes
 {
     public class SceneWindowController : WindowController
     {
-        private static Texture2D _tex = null;
         private UITransform _container;
         private GameObject _content;
         private Rectangle _prevBounds;
@@ -19,12 +16,8 @@ namespace AkiGames.Scripts.WindowContentTypes
             GameObject parent  = gameObject.Children[3];
             _container = parent.uiTransform;
             _content  = parent.Children[1];
-            parent.Children[0].GetComponent<Image>().texture = _tex;
             base.Awake();
         }
-
-        public static void LoadContent(ContentManager content) =>
-            _tex = content.Load<Texture2D>("scene_grid");
         
         public override void Update()
         {

@@ -35,6 +35,7 @@
     },
     {
       "type": "InspectorItemController",
+      "component": 0,
       "Enabled": true
     }
   ],

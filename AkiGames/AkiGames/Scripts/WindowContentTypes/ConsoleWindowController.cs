@@ -17,7 +17,6 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public override void Awake()
         {
-            scrollableContent = gameObject.Children[3].Children[0].Children[0];
             _contentList = scrollableContent.GetComponent<ScrollableListController>();
             _textComponent = _contentList.gameObject.Children[0].GetComponent<Text>();
             base.Awake();

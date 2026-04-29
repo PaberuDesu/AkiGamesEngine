@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using AkiGames.Core;
+using AkiGames.Scripts.InspectorRedactor;
 using AkiGames.UI;
 using AkiGames.Scripts.WindowContentTypes;
 
@@ -11,6 +12,7 @@ namespace AkiGames.Scripts
     public class HierarchyListItem() : ContentItemController
     {
         private GameObject transporter = null;
+        private static GameObject draggedHierarchyObject = null;
         private bool _isDragging = false;
         private int _lastInsertPosition;
 
@@ -91,6 +93,7 @@ namespace AkiGames.Scripts
         public void StartDrag()
         {
             SetIsDragging(true);
+            EnsureDraggedHierarchyObject();
             
             if (transporter is null)
             {
@@ -100,13 +103,25 @@ namespace AkiGames.Scripts
                 transporter.uiTransform.VerticalAlignment = UITransform.AlignmentV.Top;
                 transporter.AddComponent(new Image{fillColor = Color.RoyalBlue});
             }
-            _hierarchyList.AddChild(transporter);
         }
 
         public override void OnMouseUpOutside() => OnMouseUp();
 
         public override void OnMouseUp()
         {
+            if (!_isDragging) return;
+
+            if (!IsCursorInsideHierarchyWindow())
+            {
+                SetIsDragging(false);
+                HideTransporter();
+                HideDraggedHierarchyObject();
+                TryApplyGameObjectDrop();
+                return;
+            }
+
+            HideDraggedHierarchyObject();
+
             if (_isDragging)
             {
                 SetIsDragging(false);
@@ -161,6 +176,15 @@ namespace AkiGames.Scripts
         {
             if (!_isDragging) StartDrag();
 
+            if (!IsCursorInsideHierarchyWindow())
+            {
+                HideTransporter();
+                UpdateDraggedHierarchyObjectPosition();
+                return;
+            }
+
+            HideDraggedHierarchyObject();
+            ShowTransporter();
             UpdateTransporterPosition();
 
             // Автоскролл
@@ -170,6 +194,78 @@ namespace AkiGames.Scripts
                 scrollableList.Scroll((int)(-3 * Math.Pow((0.2 - relativeY)*5,3)));
             if (relativeY > 0.8)
                 scrollableList.Scroll((int)(3 * Math.Pow((relativeY - 0.8)*5,3)));
+        }
+
+        private void ShowTransporter()
+        {
+            if (transporter != null && transporter.Parent == null)
+                _hierarchyList.AddChild(transporter);
+        }
+
+        private void HideTransporter()
+        {
+            if (transporter?.Parent != null)
+                transporter.Parent.RemoveChild(transporter);
+        }
+
+        private void EnsureDraggedHierarchyObject()
+        {
+            if (draggedHierarchyObject != null) return;
+            if (Game1.MainObject == null || Game1.MainObject.Children.Count <= 2) return;
+
+            draggedHierarchyObject = Game1.MainObject.Children[2];
+            draggedHierarchyObject.RefreshBounds();
+        }
+
+        private void UpdateDraggedHierarchyObjectPosition()
+        {
+            EnsureDraggedHierarchyObject();
+            if (draggedHierarchyObject == null) return;
+
+            draggedHierarchyObject.IsActive = true;
+            Image draggedImage = draggedHierarchyObject.GetComponent<Image>();
+            if (draggedImage != null)
+            {
+                draggedImage.fillColor = Color.White;
+                draggedImage.texture = Game1.UIImages.TryGetValue("Round", out var roundTexture) ?
+                    roundTexture :
+                    null;
+            }
+
+            draggedHierarchyObject.uiTransform.OffsetMin = Events.Input.mousePosition.ToVector2();
+            draggedHierarchyObject.RefreshBounds();
+        }
+
+        private void HideDraggedHierarchyObject()
+        {
+            if (draggedHierarchyObject != null)
+                draggedHierarchyObject.IsActive = false;
+        }
+
+        private bool IsCursorInsideHierarchyWindow()
+        {
+            List<GameObject> ancestry = gameObject.GetAncestry();
+            if (ancestry.Count > 2)
+                return ancestry[2].uiTransform.Contains(Events.Input.mousePosition);
+
+            return _hierarchyList?.Parent?.uiTransform.Contains(Events.Input.mousePosition) ?? false;
+        }
+
+        private void TryApplyGameObjectDrop()
+        {
+            InspectorGameComponentDropField gameComponentDropField =
+                InspectorDropFieldFinder.FindInAncestry<InspectorGameComponentDropField>(
+                    Events.Input.MouseHoverTarget
+                );
+            if (gameComponentDropField?.TryApplyGameObject(RepresentedObject) == true)
+                return;
+
+            InspectorGameObjectDropField gameObjectDropField =
+                InspectorDropFieldFinder.FindInAncestry<InspectorGameObjectDropField>(
+                    Events.Input.MouseHoverTarget
+                );
+
+            gameObjectDropField?.TryApplyGameObject(RepresentedObject);
         }
 
         private void UpdateTransporterPosition()

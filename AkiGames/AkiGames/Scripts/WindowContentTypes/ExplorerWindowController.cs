@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using AkiGames.Core;
-using AkiGames.Scripts;
 using AkiGames.Scripts.Window;
 using AkiGames.Events;
 using AkiGames.UI;
@@ -49,7 +48,6 @@ namespace AkiGames.Scripts.WindowContentTypes
             _titleTransform = header.Children[0].uiTransform;
             _titleText = header.Children[0].GetComponent<Text>();
             _backButton = header.Children[1];
-            scrollableContent = _contentObject.Children[1].Children[0];
             _contentList = scrollableContent.GetComponent<ScrollableListController>();
 
             _hierarchyWindow = gameObject.Parent.Children[1].GetComponent<HierarchyWindowController>();

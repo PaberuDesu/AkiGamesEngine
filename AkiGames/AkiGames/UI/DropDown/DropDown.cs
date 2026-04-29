@@ -7,7 +7,7 @@ namespace AkiGames.UI.DropDown
 {
     public class DropDown : InteractableComponent
     {
-        public List<string> menuItems = [];
+        [HideInInspector] public List<string> menuItems = [];
         public List<string> MenuItems
         {
             private get => menuItems;

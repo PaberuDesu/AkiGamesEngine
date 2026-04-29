@@ -89,7 +89,7 @@ namespace AkiGames.Core
                     if (property.GetCustomAttribute<DontSerialize>() == null)
                     {
                         var value = property.GetValue(gameComponent);
-                        if (value != null || IsSerializableTextureType(property.PropertyType))
+                        if (value != null || IsSerializableLinkType(property.PropertyType))
                             dict[property.Name] = ConvertValueForSerialization(property.PropertyType, value);
                     }
                 } catch{}
@@ -105,7 +105,7 @@ namespace AkiGames.Core
                     if (field.GetCustomAttribute<DontSerialize>() == null)
                     {
                         var value = field.GetValue(gameComponent);
-                        if (value != null || IsSerializableTextureType(field.FieldType))
+                        if (value != null || IsSerializableLinkType(field.FieldType))
                             dict[field.Name] = ConvertValueForSerialization(field.FieldType, value);
                     }
                 }
@@ -115,17 +115,37 @@ namespace AkiGames.Core
             return dict;
         }
 
-        private static object ConvertValueForSerialization(Type type, object value) =>
-            IsSerializableTextureType(type) ?
-                Game1.GetGameTextureLink(value as Texture2D) :
-                value;
+        private static object ConvertValueForSerialization(Type type, object value)
+        {
+            if (IsSerializableTextureType(type))
+                return Game1.GetGameTextureLink(value as Texture2D);
+
+            if (IsSerializableGameObjectReferenceType(type))
+                return (value as GameObject)?.ObjectID ?? 0;
+
+            if (IsSerializableGameComponentReferenceType(type))
+                return (value as GameComponent)?.gameObject?.ObjectID ?? 0;
+
+            return value;
+        }
+
+        private static bool IsSerializableLinkType(Type type) =>
+            IsSerializableTextureType(type) ||
+            IsSerializableGameObjectReferenceType(type) ||
+            IsSerializableGameComponentReferenceType(type);
 
         private static bool IsSerializableTextureType(Type type) =>
             type == typeof(Texture2D);
 
+        private static bool IsSerializableGameObjectReferenceType(Type type) =>
+            type == typeof(GameObject);
+
+        private static bool IsSerializableGameComponentReferenceType(Type type) =>
+            typeof(GameComponent).IsAssignableFrom(type);
+
         private static bool IsBlacklisted(Type type)
         {
-            if (IsSerializableTextureType(type))
+            if (IsSerializableLinkType(type))
                 return false;
 
             // Проверяем базовые типы
@@ -153,6 +173,17 @@ namespace AkiGames.Core
 
         public static GameObject ParseGameObject(JsonElement element)
         {
+            List<PendingGameObjectReference> pendingGameObjectReferences = [];
+            GameObject rootObject = ParseGameObject(element, pendingGameObjectReferences);
+            ResolveGameObjectReferences(rootObject, pendingGameObjectReferences);
+            return rootObject;
+        }
+
+        private static GameObject ParseGameObject(
+            JsonElement element,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
+        {
             // Parse name
             GameObject obj =  new(
                 element.TryGetProperty("ObjectName", out JsonElement nameElement) ?
@@ -176,7 +207,10 @@ namespace AkiGames.Core
             {
                 foreach (JsonElement componentElement in componentsElement.EnumerateArray())
                 {
-                    GameComponent component = ParseComponent(componentElement);
+                    GameComponent component = ParseComponent(
+                        componentElement,
+                        pendingGameObjectReferences
+                    );
 
                     if (component != null)
                     {
@@ -195,7 +229,10 @@ namespace AkiGames.Core
             {
                 foreach (JsonElement childElement in childrenElement.EnumerateArray())
                 {
-                    GameObject child = ParseGameObject(childElement);
+                    GameObject child = ParseGameObject(
+                        childElement,
+                        pendingGameObjectReferences
+                    );
                     obj.AddChild(child);
                 }
             }
@@ -203,12 +240,16 @@ namespace AkiGames.Core
             return obj;
         }
 
-        private static GameComponent ParseComponent(JsonElement element)
+        private static GameComponent ParseComponent(
+            JsonElement element,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
         {
             if (!element.TryGetProperty("type", out JsonElement typeElement)) return null;
 
             GameComponent gameComponent = CreateComponentByType(typeElement.GetString());
-            if (gameComponent != null) SetPropertiesFromJson(gameComponent, element);
+            if (gameComponent != null)
+                SetPropertiesFromJson(gameComponent, element, pendingGameObjectReferences);
             
             return gameComponent;
         }
@@ -251,7 +292,11 @@ namespace AkiGames.Core
             }
         }
 
-        private static void SetPropertiesFromJson(GameComponent gameComponent, JsonElement element)
+        private static void SetPropertiesFromJson(
+            GameComponent gameComponent,
+            JsonElement element,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
         {
             Type componentType = gameComponent.GetType();
 
@@ -325,6 +370,26 @@ namespace AkiGames.Core
                         {
                             value = DeserializeTexture(jsonProperty.Value);
                         }
+                        else if (targetType == typeof(GameObject))
+                        {
+                            value = DeserializeGameObjectReference(
+                                jsonProperty.Value,
+                                gameComponent,
+                                property ?? (MemberInfo)field,
+                                targetType,
+                                pendingGameObjectReferences
+                            );
+                        }
+                        else if (IsSerializableGameComponentReferenceType(targetType))
+                        {
+                            value = DeserializeGameObjectReference(
+                                jsonProperty.Value,
+                                gameComponent,
+                                property ?? (MemberInfo)field,
+                                targetType,
+                                pendingGameObjectReferences
+                            );
+                        }
                         else
                         {
                             // Для остальных типов используем стандартную десериализацию
@@ -343,6 +408,116 @@ namespace AkiGames.Core
                     catch (Exception ex) { ConsoleWindowController.Log($"Error: '{ex}' when tried to deserialize {jsonProperty.Name}"); }
                 }
             }
+        }
+
+        private static GameObject DeserializeGameObjectReference(
+            JsonElement element,
+            GameComponent component,
+            MemberInfo memberInfo,
+            Type targetType,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
+        {
+            int objectId = element.ValueKind switch
+            {
+                JsonValueKind.Number => element.GetInt32(),
+                JsonValueKind.String when int.TryParse(element.GetString(), out int parsedId) => parsedId,
+                JsonValueKind.Null => 0,
+                _ => throw new JsonException("GameObject value must be an object id.")
+            };
+
+            if (objectId <= 0) return null;
+
+            pendingGameObjectReferences.Add(
+                new PendingGameObjectReference(component, memberInfo, targetType, objectId)
+            );
+            return null;
+        }
+
+        private static void ResolveGameObjectReferences(
+            GameObject rootObject,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
+        {
+            if (rootObject == null || pendingGameObjectReferences.Count == 0) return;
+
+            Dictionary<int, GameObject> objectsById = [];
+            AddGameObjectsById(rootObject, objectsById);
+
+            foreach (PendingGameObjectReference reference in pendingGameObjectReferences)
+            {
+                try
+                {
+                    if (!objectsById.TryGetValue(reference.ObjectId, out GameObject linkedObject))
+                    {
+                        ConsoleWindowController.Log(
+                            $"{reference.TargetType.Name} reference {reference.ObjectId} for {reference.MemberInfo.Name} can't be resolved."
+                        );
+                        continue;
+                    }
+
+                    object linkedValue = reference.TargetType == typeof(GameObject) ?
+                        linkedObject :
+                        linkedObject.GetComponent(reference.TargetType);
+
+                    if (linkedValue == null)
+                    {
+                        ConsoleWindowController.Log(
+                            $"{reference.TargetType.Name} reference {reference.ObjectId} for {reference.MemberInfo.Name} can't be resolved: component wasn't found."
+                        );
+                        continue;
+                    }
+
+                    SetMemberValue(reference.Component, reference.MemberInfo, linkedValue);
+                }
+                catch (Exception ex)
+                {
+                    ConsoleWindowController.Log(
+                        $"{reference.TargetType.Name} reference {reference.ObjectId} for {reference.MemberInfo.Name} can't be resolved because of an error: {ex.Message}"
+                    );
+                }
+            }
+        }
+
+        private static void AddGameObjectsById(
+            GameObject gameObject,
+            Dictionary<int, GameObject> objectsById
+        )
+        {
+            if (gameObject.ObjectID > 0 && !objectsById.ContainsKey(gameObject.ObjectID))
+                objectsById[gameObject.ObjectID] = gameObject;
+
+            foreach (GameObject child in gameObject.Children)
+                AddGameObjectsById(child, objectsById);
+        }
+
+        private static void SetMemberValue(
+            GameComponent component,
+            MemberInfo memberInfo,
+            object value
+        )
+        {
+            if (memberInfo is PropertyInfo propertyInfo)
+            {
+                propertyInfo.SetValue(component, value);
+                return;
+            }
+
+            if (memberInfo is FieldInfo fieldInfo)
+                fieldInfo.SetValue(component, value);
+        }
+
+        private sealed class PendingGameObjectReference(
+            GameComponent component,
+            MemberInfo memberInfo,
+            Type targetType,
+            int objectId
+        )
+        {
+            public GameComponent Component { get; } = component;
+            public MemberInfo MemberInfo { get; } = memberInfo;
+            public Type TargetType { get; } = targetType;
+            public int ObjectId { get; } = objectId;
         }
 
         private static Texture2D DeserializeTexture(JsonElement element)

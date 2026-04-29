@@ -23,7 +23,7 @@ namespace AkiGames.Scripts
         public override void Awake()
         {
             GameObject title = gameObject.Children[4];
-            content = gameObject.Children[5];
+            content = gameObject.Children[5];//TODO: set in editor
 
             int height = 8;
             title.uiTransform.OffsetMin = new Vector2(0, height);
@@ -185,6 +185,59 @@ namespace AkiGames.Scripts
                     checkbox.gameObject.IsMouseTargetable = isSettable;
                     
                     if (!isSettable) image.fillColor = _inactiveColor;
+                    break;
+                case var _ when memberType == typeof(GameObject):
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+
+                    Text gameObjectValueText = image.gameObject.Children[0].GetComponent<Text>();
+                    gameObjectValueText.text =
+                        InspectorGameObjectDropField.GetDisplayName(value as GameObject);
+
+                    if (isSettable)
+                    {
+                        image.gameObject.AddComponent(new InspectorGameObjectDropField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            TextField = gameObjectValueText
+                        });
+                    }
+                    else
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
+                    break;
+                case var _ when typeof(GameComponent).IsAssignableFrom(memberType):
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+
+                    Text gameComponentValueText = image.gameObject.Children[0].GetComponent<Text>();
+                    gameComponentValueText.text =
+                        InspectorGameComponentDropField.GetDisplayName(value as GameComponent);
+
+                    if (isSettable)
+                    {
+                        image.gameObject.AddComponent(new InspectorGameComponentDropField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            ComponentType = memberType,
+                            TextField = gameComponentValueText
+                        });
+                    }
+                    else
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
                     break;
                 case var _ when memberType == typeof(Texture2D):
                     fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();

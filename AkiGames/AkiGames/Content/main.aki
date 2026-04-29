@@ -127,6 +127,7 @@
             },
             {
               "type": "GameWindowController",
+              "scrollableContent": 0,
               "Enabled": true
             }
           ],
@@ -727,6 +728,7 @@
             },
             {
               "type": "HierarchyWindowController",
+              "scrollableContent": 21,
               "Enabled": true
             }
           ],
@@ -1475,6 +1477,7 @@
             },
             {
               "type": "SceneWindowController",
+              "scrollableContent": 0,
               "Enabled": true
             }
           ],
@@ -2113,6 +2116,7 @@
             },
             {
               "type": "ExplorerWindowController",
+              "scrollableContent": 52,
               "Enabled": true
             }
           ],
@@ -3000,6 +3004,7 @@
             },
             {
               "type": "ConsoleWindowController",
+              "scrollableContent": 67,
               "Enabled": true
             }
           ],
@@ -3797,6 +3802,7 @@
             },
             {
               "type": "InspectorWindowController",
+              "scrollableContent": 83,
               "Enabled": true
             }
           ],

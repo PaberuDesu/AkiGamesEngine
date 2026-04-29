@@ -14,16 +14,11 @@ namespace AkiGames.Scripts.WindowContentTypes
         private static string _gamePath = null;
         private HashSet<GameObject> _openedObjects = [];
 
-
-        GameObject contentObject;
-
         private GameWindowController _gameWindow;
         private SceneWindowController _sceneWindow;
 
         public override void Awake()
         {
-            contentObject = gameObject.Children[3];
-            scrollableContent = contentObject.Children[0].Children[0];
             contentList = scrollableContent.GetComponent<ScrollableListController>();
             
             _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();

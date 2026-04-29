@@ -1,4 +1,5 @@
 using System.Reflection;
+using AkiGames.Core;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts.InspectorRedactor
@@ -6,7 +7,7 @@ namespace AkiGames.Scripts.InspectorRedactor
     public class InspectorCheckBox : CheckBox
     {
         public MemberInfo Info { private get; set; }
-        public GameComponent Component { private get; set; }
+        [HideInInspector] [DontSerialize] public GameComponent Component { private get; set; }
 
         protected override void ChangeValue()
         {

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using AkiGames.Core;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts.InspectorRedactor
@@ -7,7 +8,7 @@ namespace AkiGames.Scripts.InspectorRedactor
     public class InspectorVector2InputField : NumberInputField
     {
         public MemberInfo Info { private get; set; }
-        public GameComponent Component { private get; set; }
+        [HideInInspector] [DontSerialize] public GameComponent Component { private get; set; }
         public Coordinate coordinate;
         public enum Coordinate
         {

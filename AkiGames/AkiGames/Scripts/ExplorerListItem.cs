@@ -56,26 +56,14 @@ namespace AkiGames.Scripts
             if (_isDragging && IsImageFile)
             {
                 InspectorTextureDropField textureDropField =
-                    FindTextureDropField(Input.MouseHoverTarget);
+                    InspectorDropFieldFinder.FindInAncestry<InspectorTextureDropField>(
+                        Input.MouseHoverTarget
+                    );
                 textureDropField?.TryApplyFile(FilePath);
             }
 
             _isDragging = false;
             draggedFile.IsActive = false;
-        }
-
-        private static InspectorTextureDropField FindTextureDropField(GameObject target)
-        {
-            while (target != null)
-            {
-                InspectorTextureDropField textureDropField =
-                    target.GetComponent<InspectorTextureDropField>();
-                if (textureDropField != null) return textureDropField;
-
-                target = target.Parent;
-            }
-
-            return null;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using AkiGames.Core;
 using static AkiGames.Events.Input;
@@ -58,6 +59,15 @@ namespace AkiGames.UI
         }
         public T GetComponent<T>() where T : GameComponent =>
             Components.OfType<T>().FirstOrDefault();
+        public GameComponent GetComponent(Type componentType)
+        {
+            if (componentType == null || !typeof(GameComponent).IsAssignableFrom(componentType))
+                return null;
+
+            return Components.FirstOrDefault(component =>
+                componentType.IsAssignableFrom(component.GetType())
+            );
+        }
         public void AddComponent(GameComponent component)
         {
             _components.Add(component);
@@ -383,7 +393,135 @@ namespace AkiGames.UI
             if (!preserveObjectId) copy.ObjectID = 0;
             copy._isAwakened = false;
 
+            Dictionary<GameObject, GameObject> objectMap = [];
+            MapOriginalTreeToCopyTree(this, copy, objectMap);
+            RemapGameObjectReferences(copy, objectMap);
+
             return copy;
+        }
+
+        private static void MapOriginalTreeToCopyTree(
+            GameObject original,
+            GameObject copy,
+            Dictionary<GameObject, GameObject> objectMap
+        )
+        {
+            objectMap[original] = copy;
+
+            List<GameObject> originalChildren = original.Children;
+            List<GameObject> copiedChildren = copy.Children;
+            int count = Math.Min(originalChildren.Count, copiedChildren.Count);
+            for (int i = 0; i < count; i++)
+                MapOriginalTreeToCopyTree(originalChildren[i], copiedChildren[i], objectMap);
+        }
+
+        private static void RemapGameObjectReferences(
+            GameObject copyRoot,
+            Dictionary<GameObject, GameObject> objectMap
+        )
+        {
+            foreach (GameComponent component in copyRoot.Components)
+                RemapComponentGameObjectReferences(component, objectMap);
+
+            foreach (GameObject child in copyRoot.Children)
+                RemapGameObjectReferences(child, objectMap);
+        }
+
+        private static void RemapComponentGameObjectReferences(
+            GameComponent component,
+            Dictionary<GameObject, GameObject> objectMap
+        )
+        {
+            Type componentType = component.GetType();
+
+            foreach (FieldInfo field in componentType.GetFields(
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy
+            ))
+            {
+                try
+                {
+                    object value = field.GetValue(component);
+                    if (field.FieldType == typeof(GameObject))
+                    {
+                        if (
+                            value is GameObject originalObject &&
+                            objectMap.TryGetValue(originalObject, out GameObject copiedObject)
+                        )
+                        {
+                            field.SetValue(component, copiedObject);
+                        }
+
+                        continue;
+                    }
+
+                    if (
+                        typeof(GameComponent).IsAssignableFrom(field.FieldType) &&
+                        TryGetCopiedComponent(value as GameComponent, objectMap, out GameComponent copiedComponent) &&
+                        field.FieldType.IsAssignableFrom(copiedComponent.GetType())
+                    )
+                    {
+                        field.SetValue(component, copiedComponent);
+                    }
+                }
+                catch { }
+            }
+
+            foreach (PropertyInfo property in componentType.GetProperties(
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy
+            ))
+            {
+                if (
+                    !property.CanRead ||
+                    property.SetMethod?.IsPublic != true ||
+                    property.GetIndexParameters().Length > 0
+                ) continue;
+
+                try
+                {
+                    object value = property.GetValue(component);
+                    if (property.PropertyType == typeof(GameObject))
+                    {
+                        if (
+                            value is GameObject originalObject &&
+                            objectMap.TryGetValue(originalObject, out GameObject copiedObject)
+                        )
+                        {
+                            property.SetValue(component, copiedObject);
+                        }
+
+                        continue;
+                    }
+
+                    if (
+                        typeof(GameComponent).IsAssignableFrom(property.PropertyType) &&
+                        TryGetCopiedComponent(value as GameComponent, objectMap, out GameComponent copiedComponent) &&
+                        property.PropertyType.IsAssignableFrom(copiedComponent.GetType())
+                    )
+                    {
+                        property.SetValue(component, copiedComponent);
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private static bool TryGetCopiedComponent(
+            GameComponent originalComponent,
+            Dictionary<GameObject, GameObject> objectMap,
+            out GameComponent copiedComponent
+        )
+        {
+            copiedComponent = null;
+            if (
+                originalComponent?.gameObject == null ||
+                !objectMap.TryGetValue(originalComponent.gameObject, out GameObject copiedObject)
+            )
+            {
+                return false;
+            }
+
+            copiedComponent = copiedObject.GetComponent(originalComponent.GetType());
+            return copiedComponent != null;
         }
 
         public override void Dispose()

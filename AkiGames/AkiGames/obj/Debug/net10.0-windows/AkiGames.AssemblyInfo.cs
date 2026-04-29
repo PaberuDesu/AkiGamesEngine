@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AkiGames")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31b84eab0bb582f60e1ebafca6a6f8fe372241ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a19955a4cfc248778932e48317d25dfcc1957857")]
 [assembly: System.Reflection.AssemblyProductAttribute("AkiGames")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AkiGames")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

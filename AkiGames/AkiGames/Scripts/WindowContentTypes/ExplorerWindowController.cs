@@ -275,10 +275,12 @@ namespace AkiGames.Scripts.WindowContentTypes
             GameObject gameMainObject = JsonProjectSerializer.LoadFromJson(akiContent);
             gameMainObject.EnsureUniqueObjectIdsInTree();
             Game1.editableGameMainObject = gameMainObject;
+
+            bool isPrefab = IsPrefabFile(fullPath);
             
             _gameWindow.RefreshContent(gameMainObject);
-            _hierarchyWindow.RefreshContent(gameMainObject, fullPath);
-            _sceneWindow.RefreshContent(gameMainObject);
+            _hierarchyWindow.RefreshContent(gameMainObject, fullPath, isPrefab);
+            _sceneWindow.RefreshContent(gameMainObject, isPrefab);
         }
 
         private static string FindContentRoot(string fullPath)
@@ -299,6 +301,22 @@ namespace AkiGames.Scripts.WindowContentTypes
             return string.Equals(directory.Name, "Content", StringComparison.OrdinalIgnoreCase) ?
                 directory.Parent?.FullName ?? contentRoot :
                 Directory.GetParent(contentRoot)?.FullName ?? contentRoot;
+        }
+
+        private static bool IsPrefabFile(string fullPath)
+        {
+            DirectoryInfo directory = new(Path.GetDirectoryName(fullPath));
+            while (directory != null)
+            {
+                if (string.Equals(directory.Name, "Prefabs", StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (string.Equals(directory.Name, "Content", StringComparison.OrdinalIgnoreCase))
+                    return false;
+
+                directory = directory.Parent;
+            }
+            ConsoleWindowController.Log($"Warning: Could not determine if file '{fullPath}' is a prefab. Assuming it's not.");
+            return false;
         }
 
         internal void GoBack()

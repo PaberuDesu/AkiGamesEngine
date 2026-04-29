@@ -6,8 +6,12 @@ namespace AkiGames.Scripts.WindowContentTypes
 {
     public class SceneWindowController : WindowController
     {
+        private static readonly Color SceneBackgroundColor = Color.White;
+        private static readonly Color PrefabBackgroundColor = new(215, 230, 255);
+
         private UITransform _container;
         private GameObject _content;
+        private Image _backgroundImage;
         private Rectangle _prevBounds;
         private float _scaleFactor = 1;
 
@@ -15,6 +19,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         {
             GameObject parent  = gameObject.Children[3];
             _container = parent.uiTransform;
+            _backgroundImage = parent.Children[0].GetComponent<Image>();
             _content  = parent.Children[1];
             base.Awake();
         }
@@ -45,8 +50,13 @@ namespace AkiGames.Scripts.WindowContentTypes
             base.Update();
         }
         
-        public void RefreshContent(GameObject gameObjectTree)
+        public void RefreshContent(GameObject gameObjectTree, bool isPrefab = false)
         {
+            if (_backgroundImage != null)
+                _backgroundImage.fillColor = isPrefab ?
+                    PrefabBackgroundColor :
+                    SceneBackgroundColor;
+
             foreach (GameObject child in _content.Children)
             {
                 child.Dispose();

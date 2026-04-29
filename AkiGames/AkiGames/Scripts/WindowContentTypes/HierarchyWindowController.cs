@@ -13,6 +13,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         internal ScrollableListController contentList {get; private set;}
         private static string _gamePath = null;
         private HashSet<GameObject> _openedObjects = [];
+        private bool _showRootObject = false;
 
         private GameWindowController _gameWindow;
         private SceneWindowController _sceneWindow;
@@ -26,17 +27,58 @@ namespace AkiGames.Scripts.WindowContentTypes
             base.Awake();
         }
 
-        public void RefreshContent(GameObject gameMainObject, string fullPath = "")
+        public void RefreshContent(
+            GameObject gameMainObject,
+            string fullPath = "",
+            bool? showRootObject = null
+        )
         {
+            bool openedNewFile = fullPath != "" && fullPath != _gamePath;
             if (fullPath != "") _gamePath = fullPath;
+            if (showRootObject.HasValue) _showRootObject = showRootObject.Value;
 
-            SaveOpenedState();
+            if (openedNewFile)
+                _openedObjects.Clear();
+            else
+                SaveOpenedState();
+
+            if (openedNewFile && _showRootObject)
+                _openedObjects.Add(gameMainObject);
             
-            contentList.gameObject.Children = [];
-            ProcessChildrenRecursive(gameMainObject, null, 0);
-            contentList.Refresh();
-
+            ClearContentItems();
+            if (_showRootObject)
+            {
+                HierarchyListItem rootItem = CreateHierarchyItem(gameMainObject, null, 0, true);
+                ProcessChildrenRecursive(gameMainObject, rootItem, 1);
+            }
+            else
+            {
+                ProcessChildrenRecursive(gameMainObject, null, 0);
+            }
             RestoreOpenedState();
+            RefreshListLayout(openedNewFile);
+        }
+
+        private void ClearContentItems()
+        {
+            foreach (GameObject child in contentList.gameObject.Children)
+            {
+                child.Dispose();
+            }
+
+            contentList.gameObject.Children = [];
+        }
+
+        private void RefreshListLayout(bool resetScroll)
+        {
+            contentList.Refresh();
+            gameObject.RefreshBounds();
+
+            if (resetScroll)
+                contentList.ScrollToTop();
+
+            contentList.Update();
+            gameObject.RefreshBounds();
         }
 
         private void ProcessChildrenRecursive(GameObject objectRealization, HierarchyListItem descriptingParentObject, int level)
@@ -45,22 +87,38 @@ namespace AkiGames.Scripts.WindowContentTypes
             {
                 foreach (GameObject childRealization in objectRealization.Children)
                 {
-                    GameObject descriptorPrefabCopy = Game1.Prefabs["HierarchyContentItem"].Copy();
-                    descriptorPrefabCopy.IsActive = level == 0;
-                    HierarchyListItem itemController = new()
-                    {
-                        Name = new string(' ', level * 3) + childRealization.ObjectName,
-                        scrollableList = contentList,
-                        RepresentedObject = childRealization,
-                        Level = level
-                    };
-                    itemController.SetActionOnDoubleClick((_) => { InspectorWindowController.LoadFor(childRealization); });
-                    descriptorPrefabCopy.AddComponent(itemController);
-                    contentList.gameObject.AddChild(descriptorPrefabCopy);
-                    descriptingParentObject?.childItems.Add(itemController);
+                    HierarchyListItem itemController = CreateHierarchyItem(
+                        childRealization,
+                        descriptingParentObject,
+                        level,
+                        level == 0
+                    );
                     ProcessChildrenRecursive(childRealization, itemController, level + 1);
                 }
             }
+        }
+
+        private HierarchyListItem CreateHierarchyItem(
+            GameObject objectRealization,
+            HierarchyListItem descriptingParentObject,
+            int level,
+            bool isActive
+        )
+        {
+            GameObject descriptorPrefabCopy = Game1.Prefabs["HierarchyContentItem"].Copy();
+            descriptorPrefabCopy.IsActive = isActive;
+            HierarchyListItem itemController = new()
+            {
+                Name = new string(' ', level * 3) + objectRealization.ObjectName,
+                scrollableList = contentList,
+                RepresentedObject = objectRealization,
+                Level = level
+            };
+            itemController.SetActionOnDoubleClick((_) => { InspectorWindowController.LoadFor(objectRealization); });
+            descriptorPrefabCopy.AddComponent(itemController);
+            contentList.gameObject.AddChild(descriptorPrefabCopy);
+            descriptingParentObject?.childItems.Add(itemController);
+            return itemController;
         }
 
         private void SaveOpenedState()
@@ -151,7 +209,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             gameObject.RefreshBounds();
 
             // Обновляем окно сцены
-            _sceneWindow?.RefreshContent(Game1.editableGameMainObject);
+            _sceneWindow?.RefreshContent(Game1.editableGameMainObject, _showRootObject);
             _gameWindow?.RefreshContent(Game1.editableGameMainObject);
         }
 

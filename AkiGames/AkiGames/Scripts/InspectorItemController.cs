@@ -23,7 +23,7 @@ namespace AkiGames.Scripts
         public override void Awake()
         {
             GameObject title = gameObject.Children[4];
-            content = gameObject.Children[5];//TODO: set in editor
+            content = gameObject.Children[5];
 
             int height = 8;
             title.uiTransform.OffsetMin = new Vector2(0, height);

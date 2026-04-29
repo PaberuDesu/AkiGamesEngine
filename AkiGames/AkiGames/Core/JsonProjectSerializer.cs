@@ -169,7 +169,7 @@ namespace AkiGames.Core
             return false;
         }
 
-        public static GameObject LoadFromJson(JsonElement rootElement) => ParseGameObject(rootElement);//TODO: define scene or prefab
+        public static GameObject LoadFromJson(JsonElement rootElement) => ParseGameObject(rootElement);
 
         public static GameObject ParseGameObject(JsonElement element)
         {

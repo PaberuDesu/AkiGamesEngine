@@ -26,6 +26,7 @@ namespace AkiGames.UI.ScrollableList
             }
         }
         internal bool IsLimitReached => _offset == _maxOffset || !gameObject.IsActive;
+        internal void ScrollToTop() => Offset = 0;
         internal void ScrollToBottom() => Offset = _maxOffset;
 
         internal void SetOffsetByPosition(float newY) =>

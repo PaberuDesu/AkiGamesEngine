@@ -21,6 +21,7 @@ namespace AkiGames.UI.ScrollableList
         [DontSerialize, HideInInspector] public int PixelOffset => _scrollbar.Offset * (itemHeight+Spacing);
 
         [DontSerialize, HideInInspector] public bool IsLimitReached => _scrollbar.IsLimitReached;
+        public void ScrollToTop() => _scrollbar.ScrollToTop();
         public void ScrollToBottom() => _scrollbar.ScrollToBottom();
 
         public override void Awake()

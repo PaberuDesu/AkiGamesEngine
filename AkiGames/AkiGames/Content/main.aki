@@ -1657,6 +1657,15 @@
                   },
                   "LocalRotation": 0,
                   "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": true,
+                  "texture": "",
+                  "fillColor": 4294967295,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
                 }
               ],
               "Children": [
@@ -1696,8 +1705,9 @@
                       "Enabled": true
                     },
                     {
-                      "type": "Image",
+                      "type": "SceneGridImage",
                       "IsMask": false,
+                      "TileScale": 1,
                       "texture": "Content/scene_grid.png",
                       "fillColor": 4294967295,
                       "imageMode": "Tile",

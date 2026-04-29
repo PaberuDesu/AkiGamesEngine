@@ -1,4 +1,6 @@
+using System;
 using Microsoft.Xna.Framework;
+using AkiGames.Events;
 using AkiGames.Scripts.Window;
 using AkiGames.UI;
 
@@ -6,41 +8,45 @@ namespace AkiGames.Scripts.WindowContentTypes
 {
     public class SceneWindowController : WindowController
     {
+        private const int SceneContentWidth = 1920;
+        private const int SceneContentHeight = 1080;
+        private const float MinZoom = 0.5f;
+        private const float MaxZoom = 4f;
+        private const float ZoomStep = 1.1f;
         private static readonly Color SceneBackgroundColor = Color.White;
         private static readonly Color PrefabBackgroundColor = new(215, 230, 255);
 
         private UITransform _container;
         private GameObject _content;
-        private Image _backgroundImage;
+        private SceneGridImage _backgroundImage;
         private Rectangle _prevBounds;
         private float _scaleFactor = 1;
+        private float _zoom = 1;
+        private float _prevZoom = 1;
 
         public override void Awake()
         {
             GameObject parent  = gameObject.Children[3];
             _container = parent.uiTransform;
-            _backgroundImage = parent.Children[0].GetComponent<Image>();
+            _backgroundImage = parent.Children[0].GetComponent<SceneGridImage>();
             _content  = parent.Children[1];
             base.Awake();
         }
         
         public override void Update()
         {
-            if (_container.Bounds != _prevBounds)
+            if (_container.Bounds != _prevBounds || _zoom != _prevZoom)
             {
-                float aspectRatio = _container.Bounds.Width / _container.Bounds.Height;
-                if (aspectRatio > 1920 / 1080.0f)
-                {
-                    _content.uiTransform.Width = (int)(_container.Bounds.Height * 1920.0f / 1080);
-                    _content.uiTransform.Height = _container.Bounds.Height;
-                }
-                else
-                {
-                    _content.uiTransform.Width = _container.Bounds.Width;
-                    _content.uiTransform.Height = (int)(_container.Bounds.Width * 1080.0f / 1920);
-                }
+                float baseScale = Math.Min(
+                    _container.Bounds.Width / (float)SceneContentWidth,
+                    _container.Bounds.Height / (float)SceneContentHeight
+                );
+                _scaleFactor = baseScale * _zoom;
+                _content.uiTransform.Width = (int)(SceneContentWidth * _scaleFactor);
+                _content.uiTransform.Height = (int)(SceneContentHeight * _scaleFactor);
                 _prevBounds = _container.Bounds;
-                _scaleFactor = _content.uiTransform.Width / 1920f;
+                _prevZoom = _zoom;
+                if (_backgroundImage != null) _backgroundImage.TileScale = _scaleFactor;
 
                 if (_content.Children.Count > 0) RescaleObjectsRecursive(_content.Children[0]);
 
@@ -49,11 +55,19 @@ namespace AkiGames.Scripts.WindowContentTypes
 
             base.Update();
         }
+
+        public override void OnScroll(int scrollValue)
+        {
+            int zoomSteps = Math.Max(1, Math.Abs(scrollValue) / 120);
+            float zoomFactor = (float)Math.Pow(ZoomStep, zoomSteps);
+            if (scrollValue > 0) zoomFactor = 1 / zoomFactor;
+
+            _zoom = Math.Clamp(_zoom * zoomFactor, MinZoom, MaxZoom);
+        }
         
         public void RefreshContent(GameObject gameObjectTree, bool isPrefab = false)
         {
-            if (_backgroundImage != null)
-                _backgroundImage.fillColor = isPrefab ?
+            _backgroundImage?.fillColor = isPrefab ?
                     PrefabBackgroundColor :
                     SceneBackgroundColor;
 
@@ -66,7 +80,6 @@ namespace AkiGames.Scripts.WindowContentTypes
             _content.Children[0].AkiGamesAwakeTree();
             _prevBounds = Rectangle.Empty; // чтобы перезагрузить Update
         }
-        
 
         private GameObject ProcessChildrenRecursive(GameObject objectRealization)
         {

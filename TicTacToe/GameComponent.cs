@@ -19,5 +19,15 @@ namespace AkiGames
         }
 
         public override void OnScrollFromOutsideTheObject(int scrollValue) => OnScroll(scrollValue);
+
+        public override void Dispose()
+        {
+            // Удаляем компонент из родительского объекта
+            GameObject owner = gameObject;
+            gameObject = null;
+            owner?.RemoveComponent(this);
+    
+            base.Dispose();
+        }
     }
 }

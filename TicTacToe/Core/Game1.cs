@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using AkiGames.Events;
 using AkiGames.UI;
@@ -26,6 +27,9 @@ namespace AkiGames.Core
         public static Dictionary<string, Texture2D> UIImages { get; } = [];
 
         public static GraphicsDevice AppGraphicsDevice { get; private set; }
+        public static ContentManager GameContent { get; private set; }
+        private static readonly Dictionary<Texture2D, string> _gameTextureLinks =
+            new(ReferenceEqualityComparer.Instance);
 
         // Для рендеринга игры
         public static GameObject gameMainObject;
@@ -39,11 +43,82 @@ namespace AkiGames.Core
             };
             WindowHandle = Window.Handle;
             Content.RootDirectory = "Content";
+            GameContent = Content;
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
 
             // Устанавливаем обработчик изменения размера окна
             Window.ClientSizeChanged += OnWindowSizeChanged;
+        }
+
+        public static Texture2D LoadGameTexture(string assetPath)
+        {
+            string contentLink = NormalizeGameTextureLink(assetPath);
+            if (string.IsNullOrWhiteSpace(contentLink)) return null;
+
+            string normalizedPath = contentLink["Content/".Length..];
+            string assetName = Path.ChangeExtension(normalizedPath, null);
+
+            if (GameContent != null)
+            {
+                try
+                {
+                    Texture2D texture = GameContent.Load<Texture2D>(assetName);
+                    RegisterGameTexture(texture, contentLink);
+                    return texture;
+                }
+                catch { }
+            }
+
+            string rawPath = Path.IsPathRooted(assetPath) ?
+                assetPath :
+                Path.Combine(GameContent?.RootDirectory ?? "Content", normalizedPath);
+
+            if (!File.Exists(rawPath) || AppGraphicsDevice == null) return null;
+
+            using FileStream stream = File.OpenRead(rawPath);
+            Texture2D loadedTexture = Texture2D.FromStream(AppGraphicsDevice, stream);
+            RegisterGameTexture(loadedTexture, contentLink);
+            return loadedTexture;
+        }
+
+        public static string GetGameTextureLink(Texture2D texture)
+        {
+            if (texture == null) return "";
+            if (_gameTextureLinks.TryGetValue(texture, out string link)) return link;
+            return NormalizeGameTextureLink(texture.Name);
+        }
+
+        private static void RegisterGameTexture(Texture2D texture, string assetPath)
+        {
+            string contentLink = NormalizeGameTextureLink(assetPath);
+            if (texture == null || string.IsNullOrWhiteSpace(contentLink)) return;
+
+            _gameTextureLinks[texture] = contentLink;
+            texture.Name = contentLink;
+        }
+
+        private static string NormalizeGameTextureLink(string assetPath)
+        {
+            if (string.IsNullOrWhiteSpace(assetPath)) return "";
+
+            string normalizedPath = assetPath.Trim();
+            if (Path.IsPathRooted(normalizedPath))
+            {
+                normalizedPath = normalizedPath.Replace('\\', '/');
+                int contentIndex = normalizedPath.LastIndexOf("/Content/", StringComparison.OrdinalIgnoreCase);
+                if (contentIndex < 0) return "";
+
+                normalizedPath = normalizedPath[(contentIndex + 1)..];
+            }
+
+            normalizedPath = normalizedPath.Replace('\\', '/').TrimStart('/');
+            if (normalizedPath.StartsWith("Content/", StringComparison.OrdinalIgnoreCase))
+            {
+                normalizedPath = normalizedPath["Content/".Length..];
+            }
+
+            return string.IsNullOrWhiteSpace(normalizedPath) ? "" : $"Content/{normalizedPath}";
         }
 
         protected override void Initialize()
@@ -121,9 +196,7 @@ namespace AkiGames.Core
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            FieldController.LoadContent(Content);
             CellController.LoadContent(Content);
-            Retry.LoadContent(Content);
             EndGame.LoadContent(Content);
 
             // Путь к папке Prefabs

@@ -18,6 +18,8 @@ namespace AkiGames.UI.ScrollableList
         private int _prevListLength = 0;
         private UITransform _parentTransform;
 
+        [DontSerialize, HideInInspector] public int PixelOffset => _scrollbar.Offset * (itemHeight+Spacing);
+
         [DontSerialize, HideInInspector] public bool IsLimitReached => _scrollbar.IsLimitReached;
         public void ScrollToBottom() => _scrollbar.ScrollToBottom();
 
@@ -30,9 +32,8 @@ namespace AkiGames.UI.ScrollableList
 
         internal void SetStartIndex()
         {
-            int offset = _scrollbar.Offset;
+            int offsetPixels = PixelOffset;
             int accumulatedHeight = 0;
-            int offsetPixels = offset * itemHeight;
             for (int i = 0; i < gameObject.Children.Count; i++)
             {
                 if (!gameObject.Children[i].IsActive) continue;
@@ -92,6 +93,19 @@ namespace AkiGames.UI.ScrollableList
             }
         }
 
+        public int ActiveMembers
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < gameObject.Children.Count; i++)
+                {
+                    if (gameObject.Children[i].IsActive) count++;
+                }
+                return count;
+            }
+        }
+
         public override void OnScroll(int scrollValue)
         {
             if (gameObject.Parent.uiTransform.Contains(Input.mousePosition))//if list mask contains cursor
@@ -102,13 +116,13 @@ namespace AkiGames.UI.ScrollableList
 
         public override void OnScrollFromOutsideTheObject(int scrollValue) => Scroll(scrollValue);
 
-        private void Scroll(int scrollValue)
+        public void Scroll(int scrollValue)
         {
             if (scrollValueThisFrame != null) return;
             int offsetPrev = _scrollbar.Offset;
             _scrollbar.Offset = scrollValue > 0 ?
-            Math.Min(_maxScroll, _scrollbar.Offset + 1) :
-            Math.Max(0, _scrollbar.Offset - 1);
+                Math.Min(_maxScroll, _scrollbar.Offset + 1) :
+                Math.Max(0, _scrollbar.Offset - 1);
             scrollValueThisFrame = _scrollbar.Offset - offsetPrev;
         }
     }

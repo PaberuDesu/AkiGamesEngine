@@ -119,7 +119,7 @@
             {
               "type": "Image",
               "IsMask": false,
-              "texture": "",
+              "texture": "Content/field.png",
               "fillColor": 4294967295,
               "imageMode": "Stretch",
               "zIndex": 0,
@@ -680,7 +680,7 @@
                 {
                   "type": "Image",
                   "IsMask": false,
-                  "texture": "",
+                  "texture": "Content/draw.png",
                   "fillColor": 4294967295,
                   "imageMode": "Stretch",
                   "zIndex": 0,
@@ -729,7 +729,7 @@
             {
               "type": "Image",
               "IsMask": false,
-              "texture": "",
+              "texture": "Content/retry.png",
               "fillColor": 4294967295,
               "imageMode": "Stretch",
               "zIndex": 0,

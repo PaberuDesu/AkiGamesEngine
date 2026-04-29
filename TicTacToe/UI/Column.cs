@@ -5,7 +5,7 @@ namespace AkiGames.UI
     public class Column : GameComponent
     {
         protected int itemHeight = 25;
-        public int Spacing { protected get; set; } = 0;
+        public int Spacing = 0;
 
         public override void Awake() => Refresh();
 

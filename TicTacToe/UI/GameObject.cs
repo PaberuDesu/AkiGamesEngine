@@ -10,6 +10,7 @@ namespace AkiGames.UI
     public class GameObject(string name) : GameStructure
     {
         public string ObjectName = name;
+        public int ObjectID;
         public bool IsActive = true;
         public bool IsGlobalActive
         {
@@ -25,6 +26,9 @@ namespace AkiGames.UI
 
         private double _lastClickTime = -DoubleClickThreshold;
         private const double DoubleClickThreshold = 500; // ms
+
+        private static readonly Dictionary<int, GameObject> _objectsById = [];
+        private static int _nextObjectId = 1;
 
         public GameObject Parent = null;
 
@@ -51,6 +55,14 @@ namespace AkiGames.UI
             component.uiTransform = uiTransform;
             if (_isAwakened) component.AkiGamesAwakeTree();
         }
+        public void RemoveComponent(GameComponent component)
+        {
+            // Удаляем компонент из внутреннего списка
+            if (!_components.Remove(component)) return;
+
+            if (component is IDisposable disposable)
+                disposable.Dispose();
+        }
 
         public event Action<GameObject> ChildAdded;
         private List<GameObject> _children = [];
@@ -75,7 +87,16 @@ namespace AkiGames.UI
             ChildAdded?.Invoke(child);
         }
 
+        public void RemoveChild(GameObject child)
+        {
+            if (_children.Remove(child))
+            {
+                child.Parent = null;
+            }
+        }
+
         private bool _isAwakened = false;
+        public override void Awake() => EnsureUniqueObjectId();
         public override void AkiGamesAwakeTree()
         {
             _isAwakened = true;
@@ -84,6 +105,85 @@ namespace AkiGames.UI
             foreach (GameObject child in Children) child.AkiGamesAwakeTree();
             foreach (GameComponent component in Components) component.AkiGamesAwakeTree();
         }
+
+        public void AkiGamesEditorAwakeTree()
+        {
+            EnsureUniqueObjectId();
+            uiTransform.gameObject = this;
+
+            foreach (GameComponent component in _components)
+            {
+                component.gameObject = this;
+                component.uiTransform = uiTransform;
+            }
+
+            foreach (GameObject child in _children)
+            {
+                child.Parent = this;
+                child.AkiGamesEditorAwakeTree();
+            }
+        }
+
+        private void EnsureUniqueObjectId()
+        {
+            if (ObjectID > 0 &&
+                _objectsById.TryGetValue(ObjectID, out GameObject existingObject) &&
+                existingObject == this)
+            {
+                if (ObjectID >= _nextObjectId) _nextObjectId = ObjectID + 1;
+                return;
+            }
+
+            if (ObjectID > 0 && !_objectsById.ContainsKey(ObjectID))
+            {
+                _objectsById[ObjectID] = this;
+                if (ObjectID >= _nextObjectId) _nextObjectId = ObjectID + 1;
+                return;
+            }
+
+            while (_objectsById.ContainsKey(_nextObjectId))
+            {
+                _nextObjectId++;
+            }
+
+            ObjectID = _nextObjectId;
+            _objectsById[ObjectID] = this;
+            _nextObjectId++;
+        }
+
+        public void EnsureUniqueObjectIdsInTree()
+        {
+            HashSet<int> usedObjectIds = [];
+            int nextObjectId = 1;
+            EnsureUniqueObjectIdsInTree(usedObjectIds, ref nextObjectId);
+        }
+
+        private void EnsureUniqueObjectIdsInTree(HashSet<int> usedObjectIds, ref int nextObjectId)
+        {
+            if (ObjectID <= 0 || !usedObjectIds.Add(ObjectID))
+            {
+                while (usedObjectIds.Contains(nextObjectId))
+                {
+                    nextObjectId++;
+                }
+
+                ObjectID = nextObjectId;
+                usedObjectIds.Add(ObjectID);
+            }
+
+            if (ObjectID >= nextObjectId)
+            {
+                nextObjectId = ObjectID + 1;
+            }
+
+            foreach (GameObject child in _children)
+            {
+                child.EnsureUniqueObjectIdsInTree(usedObjectIds, ref nextObjectId);
+            }
+        }
+
+        public static GameObject FindById(int objectId) =>
+            objectId > 0 && _objectsById.TryGetValue(objectId, out GameObject gameObject) ? gameObject : null;
 
         public virtual void RefreshBounds(UITransform parentTransform = null)
         {
@@ -182,10 +282,11 @@ namespace AkiGames.UI
             }
         }
 
-        public GameObject Copy()
+        public GameObject Copy(bool preserveObjectId = false)
         {
             // Создаем поверхностную копию через MemberwiseClone
             var copy = (GameObject)MemberwiseClone();
+            copy._isAwakened = false;
 
             // Копируем элементы с глубоким копированием
             copy._components = [];
@@ -205,7 +306,7 @@ namespace AkiGames.UI
                 if (component is UITransform) continue;
                 GameComponent componentCopy = component.Copy();
                 componentCopy.gameObject = copy;
-                component.uiTransform = copy.uiTransform;
+                componentCopy.uiTransform = copy.uiTransform;
                 copy.AddComponent(componentCopy);
             }
 
@@ -213,16 +314,44 @@ namespace AkiGames.UI
             copy._children = [];
             foreach (var child in _children)
             {
-                GameObject childCopy = child.Copy();
+                GameObject childCopy = child.Copy(preserveObjectId);
                 copy.AddChild(childCopy);
                 childCopy.Parent = copy;
             }
 
             // Сбрасываем родителя и состояние
             copy.Parent = null;
+            if (!preserveObjectId) copy.ObjectID = 0;
             copy._isAwakened = false;
 
             return copy;
+        }
+
+        public override void Dispose()
+        {
+            if (ObjectID > 0 &&
+                _objectsById.TryGetValue(ObjectID, out GameObject existingObject) &&
+                existingObject == this)
+            {
+                _objectsById.Remove(ObjectID);
+            }
+
+            // Отвязываемся от родителя
+            Parent?.RemoveChild(this);
+
+            // Рекурсивно удаляем детей
+            foreach (var child in _children.ToList())
+                child.Dispose();
+
+            // Удаляем все компоненты
+            foreach (var component in _components.ToList())
+                component.Dispose();
+
+            // Очищаем списки
+            _children.Clear();
+            _components.Clear();
+
+            base.Dispose();
         }
     }
 }

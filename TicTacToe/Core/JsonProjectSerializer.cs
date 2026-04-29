@@ -47,17 +47,21 @@ namespace AkiGames.Core
             typeof(SamplerState)
         ];
 
-        public static string SerializeToJson(GameObject gameObject) =>
-            JsonSerializer.Serialize(
+        public static string SerializeToJson(GameObject gameObject)
+        {
+            gameObject.EnsureUniqueObjectIdsInTree();
+            return JsonSerializer.Serialize(
                 ConvertGameObjectToJsonObject(gameObject),
                 _options
             );
+        }
 
         private static object ConvertGameObjectToJsonObject(GameObject gameObject)
         {
             return new
             {
                 gameObject.ObjectName,
+                gameObject.ObjectID,
                 gameObject.IsActive,
                 gameObject.IsMouseTargetable,
                 Components = gameObject.Components?.Select(ConvertComponentToJsonObject).ToArray(),
@@ -84,8 +88,8 @@ namespace AkiGames.Core
                     if (property.GetCustomAttribute<DontSerialize>() == null)
                     {
                         var value = property.GetValue(gameComponent);
-                        if (value != null)
-                            dict[property.Name] = value;
+                        if (value != null || IsSerializableTextureType(property.PropertyType))
+                            dict[property.Name] = ConvertValueForSerialization(property.PropertyType, value);
                     }
                 } catch{}
             }
@@ -100,8 +104,8 @@ namespace AkiGames.Core
                     if (field.GetCustomAttribute<DontSerialize>() == null)
                     {
                         var value = field.GetValue(gameComponent);
-                        if (value != null)
-                            dict[field.Name] = value;
+                        if (value != null || IsSerializableTextureType(field.FieldType))
+                            dict[field.Name] = ConvertValueForSerialization(field.FieldType, value);
                     }
                 }
                 catch{}
@@ -110,8 +114,19 @@ namespace AkiGames.Core
             return dict;
         }
 
+        private static object ConvertValueForSerialization(Type type, object value) =>
+            IsSerializableTextureType(type) ?
+                Game1.GetGameTextureLink(value as Texture2D) :
+                value;
+
+        private static bool IsSerializableTextureType(Type type) =>
+            type == typeof(Texture2D);
+
         private static bool IsBlacklisted(Type type)
         {
+            if (IsSerializableTextureType(type))
+                return false;
+
             // Проверяем базовые типы
             if (_blacklistedTypes.Contains(type))
                 return true;
@@ -146,6 +161,10 @@ namespace AkiGames.Core
             // Parse isActive
             if (element.TryGetProperty("IsActive", out JsonElement activeElement))
                 obj.IsActive = activeElement.GetBoolean();
+
+            // Parse objectId
+            if (element.TryGetProperty("ObjectID", out JsonElement objectIdElement))
+                obj.ObjectID = objectIdElement.GetInt32();
 
             // Parse isMouseTargetable
             if (element.TryGetProperty("IsMouseTargetable", out JsonElement mouseTargetElement))
@@ -194,17 +213,19 @@ namespace AkiGames.Core
         }
 
         private static readonly Dictionary<string, Type> _typeCache = [];
+        public static void ClearTypeCache() => _typeCache.Clear();
+
         public static GameComponent CreateComponentByType(string typeName)
         {
             // Проверяем кеш
             if (!_typeCache.TryGetValue(typeName, out Type componentType))
             {
                 // Если нет в кеше, ищем тип
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
                 componentType = assemblies
-                    .SelectMany(assembly => assembly.GetTypes())
+                    .SelectMany(GetLoadableTypes)
                     .FirstOrDefault(t =>
-                        t.Name == typeName &&
+                        (t.Name == typeName || t.FullName == typeName) &&
                         typeof(GameComponent).IsAssignableFrom(t) &&
                         t.GetConstructor(Type.EmptyTypes) != null);
 
@@ -213,6 +234,18 @@ namespace AkiGames.Core
             }
 
             return componentType != null ? (GameComponent)Activator.CreateInstance(componentType) : null;
+        }
+
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                return ex.Types.Where(type => type != null);
+            }
         }
 
         private static void SetPropertiesFromJson(GameComponent gameComponent, JsonElement element)
@@ -285,6 +318,10 @@ namespace AkiGames.Core
                                 options
                             );
                         }
+                        else if (targetType == typeof(Texture2D))
+                        {
+                            value = DeserializeTexture(jsonProperty.Value);
+                        }
                         else
                         {
                             // Для остальных типов используем стандартную десериализацию
@@ -300,9 +337,21 @@ namespace AkiGames.Core
                         else
                             field.SetValue(gameComponent, value);
                     }
-                    catch (Exception){}
+                    catch (Exception ex) { Console.WriteLine($"Error: '{ex}' when tried to deserialize {jsonProperty.Name}"); }
                 }
             }
+        }
+
+        private static Texture2D DeserializeTexture(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null) return null;
+            if (element.ValueKind != JsonValueKind.String)
+            {
+                throw new JsonException("Texture value must be a Content link string.");
+            }
+
+            string textureLink = element.GetString();
+            return string.IsNullOrWhiteSpace(textureLink) ? null : Game1.LoadGameTexture(textureLink);
         }
     }
 }

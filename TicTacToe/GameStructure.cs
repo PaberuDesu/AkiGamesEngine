@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using AkiGames.Core;
 using static AkiGames.Events.Input;
+using System;
 
 namespace AkiGames
 {
-    public abstract class GameStructure
+    public abstract class GameStructure: IDisposable
     {
         protected GameTime gameTime;
         private bool _startFlag = true;
@@ -49,7 +50,11 @@ namespace AkiGames
         ){}
         public virtual void ProcessHotkey(
             HotKey hotkey
-        )
-        { }
+        ){}
+
+        public virtual void Dispose()
+        {
+            Game1.UpdateAction -= Update;
+        }
     }
 }

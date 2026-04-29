@@ -1,10 +1,1 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/circle.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/circle.xnb","TextureProcessor","Texture2DContent",7172,262229,0,1841437
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/cross.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/cross.xnb","TextureProcessor","Texture2DContent",17915,262229,0,0120703
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/draw.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/draw.xnb","TextureProcessor","Texture2DContent",451603,8294485,0,2976773
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/field.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/field.xnb","TextureProcessor","Texture2DContent",8996,1048661,0,0863577
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/invis.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/invis.xnb","TextureProcessor","Texture2DContent",89,89,0,0047321
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/lose.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/lose.xnb","TextureProcessor","Texture2DContent",493875,8294485,0,2906567
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/main.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/main.xnb","AkiProcessor","string",20201,20266,0,0031528
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/retry.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/retry.xnb","TextureProcessor","Texture2DContent",8843,262229,0,0090985
-"C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/win.png","C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/win.xnb","TextureProcessor","Texture2DContent",524319,8294485,0,2747199

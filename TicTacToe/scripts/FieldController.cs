@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts
 {
     public class FieldController : GameComponent
     {
-        private static Texture2D _texture = null;
-
         private bool _yourMove = true;
         private int _yourSign = 1;
         private int _computerSign => 1 - _yourSign;
@@ -22,7 +18,6 @@ namespace AkiGames.Scripts
 
         public override void Awake()
         {
-            gameObject.GetComponent<Image>().texture = _texture;
             foreach (GameObject child in gameObject.Children)
             {
                 CellController cell = child.GetComponent<CellController>();
@@ -31,9 +26,6 @@ namespace AkiGames.Scripts
             }
             gameFinishScreen = gameObject.Parent.Children[1].GetComponent<EndGame>();
         }
-
-        public static void LoadContent(ContentManager content) =>
-            _texture = content.Load<Texture2D>("field");
         
         public void ClickOn(CellController cell)
         {

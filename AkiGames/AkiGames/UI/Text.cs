@@ -8,12 +8,14 @@ namespace AkiGames.UI
     {
         public string text = "";
         private string _wrappedText = "";
-        private string TextWithCurrentWrapping => HorizontalWrap == WrapModeH.None ? text : _wrappedText;
+        protected string TextWithCurrentWrapping => HorizontalWrap == WrapModeH.None ? text : _wrappedText;
         public Color TextColor = Color.White;
 
         private Rectangle _prevBounds = new();
         private string _prevText = "";
         private WrapModeH _prevWrap = WrapModeH.None;
+        private float _prevTextScale = 1f;
+        protected virtual float TextScale => 1f;
 
         public WrapModeH HorizontalWrap { private get; set; } = WrapModeH.None;
         public enum WrapModeH
@@ -40,9 +42,24 @@ namespace AkiGames.UI
 
         public override void Awake() => _wrappedText = text;
 
-        private readonly Dictionary<string, Vector2> _measureCache = [];
-        private Vector2 MeasureStringCached(string text)
+        protected void CopyTextStateFrom(Text source)
         {
+            if (source == null) return;
+
+            text = source.text;
+            TextColor = source.TextColor;
+            HorizontalAlignment = source.HorizontalAlignment;
+            VerticalAlignment = source.VerticalAlignment;
+            HorizontalWrap = source.HorizontalWrap;
+            Enabled = source.Enabled;
+            zIndex = source.zIndex;
+            _wrappedText = text;
+        }
+
+        private readonly Dictionary<string, Vector2> _measureCache = [];
+        protected Vector2 MeasureStringCached(string text)
+        {
+            text ??= "";
             if (_measureCache.TryGetValue(text, out var size))
                 return size;
 
@@ -50,16 +67,20 @@ namespace AkiGames.UI
             _measureCache[text] = size;
             return size;
         }
-        private string TruncateText()
+
+        protected Vector2 MeasureStringScaled(string text) =>
+            MeasureStringCached(text) * TextScale;
+
+        protected string TruncateText()
         {
             float maxWidth = uiTransform.Bounds.Width;
             // Если текст помещается, возвращаем как есть
-            if (MeasureStringCached(text).X <= maxWidth) return text;
+            if (MeasureStringScaled(text).X <= maxWidth) return text;
 
             string truncated = text;
 
             // Измеряем ширину многоточия
-            float ellipsisWidth = MeasureStringCached("...").X;
+            float ellipsisWidth = MeasureStringScaled("...").X;
 
             // Постепенно уменьшаем текст, пока он не поместится
             while (truncated.Length > 1)
@@ -68,7 +89,7 @@ namespace AkiGames.UI
                 truncated = truncated[..^1];
 
                 // Проверяем, помещается ли текст с многоточием
-                if (MeasureStringCached(truncated).X + ellipsisWidth <= maxWidth)
+                if (MeasureStringScaled(truncated).X + ellipsisWidth <= maxWidth)
                 {
                     return truncated + "...";
                 }
@@ -78,18 +99,23 @@ namespace AkiGames.UI
             return "...";
         }
 
-        private string DivideIntoLines()
+        protected string DivideIntoLines()
         {
             float maxWidth = uiTransform.Bounds.Width;
+            if (string.IsNullOrEmpty(text))
+            {
+                uiTransform.Height = 0;
+                return "";
+            }
 
             // Если текст помещается, возвращаем как есть
-            if (MeasureStringCached(text).X <= maxWidth)
+            if (MeasureStringScaled(text).X <= maxWidth)
             {
-                uiTransform.Height = (int)MeasureStringCached(text).Y;
+                uiTransform.Height = (int)MeasureStringScaled(text).Y;
                 return text;
             }
             // Если не помещается даже первый символ, возвращаем пустую строку
-            else if (MeasureStringCached($"{text[0]}").X > maxWidth)
+            else if (MeasureStringScaled($"{text[0]}").X > maxWidth)
             {
                 uiTransform.Height = 0;
                 return "";
@@ -106,7 +132,7 @@ namespace AkiGames.UI
                 undivided = undivided.Length > 1 ? undivided[1..] : "";
 
                 // Проверяем, помещается ли строка с еще одним символом
-                if (MeasureStringCached(line + nextSymbol).X > maxWidth)
+                if (MeasureStringScaled(line + nextSymbol).X > maxWidth)
                 {
                     divided += line + "\n";
                     line = ""; // Если нет, переходим на новую строку
@@ -114,13 +140,18 @@ namespace AkiGames.UI
                 line += nextSymbol;
             }
             divided += line; // Добавляем последнюю строку
-            uiTransform.Height = (int)MeasureStringCached(divided).Y;
+            uiTransform.Height = (int)MeasureStringScaled(divided).Y;
             return divided;
         }
 
         public override void Update()
         {
-            if (uiTransform.Bounds != _prevBounds || text != _prevText || _prevWrap != HorizontalWrap)
+            if (
+                uiTransform.Bounds != _prevBounds ||
+                text != _prevText ||
+                _prevWrap != HorizontalWrap ||
+                _prevTextScale != TextScale
+            )
             {
                 switch (HorizontalWrap)
                 {
@@ -135,6 +166,7 @@ namespace AkiGames.UI
                 _prevBounds = uiTransform.Bounds;
                 _prevText = text;
                 _prevWrap = HorizontalWrap;
+                _prevTextScale = TextScale;
             }
         }
 
@@ -148,7 +180,7 @@ namespace AkiGames.UI
 
             // Рисуем текст
             Rectangle rect = uiTransform.Bounds;
-            Vector2 stringSize = Fonts.main.MeasureString(TextWithCurrentWrapping);
+            Vector2 stringSize = MeasureStringScaled(TextWithCurrentWrapping);
             int x = rect.X;
             int y = rect.Y;
 
@@ -185,7 +217,7 @@ namespace AkiGames.UI
                 TextColor,
                 uiTransform.Rotation,
                 uiTransform.origin,
-                1, SpriteEffects.None, 0
+                TextScale, SpriteEffects.None, 0
             );
 
             // Восстанавливаем стандартный spriteBatch если был изменен

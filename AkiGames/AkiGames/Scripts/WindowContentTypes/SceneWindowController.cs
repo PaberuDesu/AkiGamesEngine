@@ -82,6 +82,12 @@ namespace AkiGames.Scripts.WindowContentTypes
             Image image = (Image) objectRealization.GetComponent<Image>()?.Copy();
             if (image != null) objectConcept.AddComponent(image);
 
+            SceneText text = SceneText.From(objectRealization.GetComponent<Text>(), _scaleFactor);
+            if (text != null)
+            {
+                objectConcept.AddComponent(text);
+            }
+
             SceneInteractableObject interactable = new()
             {
                 source = objectRealization.uiTransform
@@ -104,6 +110,9 @@ namespace AkiGames.Scripts.WindowContentTypes
             trConcept.OffsetMax = trRealization.OffsetMax * _scaleFactor;
             trConcept.Width = (int)(trRealization.Width * _scaleFactor);
             trConcept.Height = (int)(trRealization.Height * _scaleFactor);
+
+            SceneText text = objectConcept.GetComponent<SceneText>();
+            if (text != null) text.RenderScale = _scaleFactor;
 
             foreach (GameObject child in objectConcept.Children)
             {

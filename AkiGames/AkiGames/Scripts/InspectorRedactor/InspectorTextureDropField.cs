@@ -48,6 +48,8 @@ namespace AkiGames.Scripts.InspectorRedactor
                 if (TextField != null)
                     TextField.text = ContentFileUtility.GetDisplayName(filePath);
 
+                InspectorChangeApplier.Apply(Component);
+
                 return true;
             }
             catch (Exception ex)

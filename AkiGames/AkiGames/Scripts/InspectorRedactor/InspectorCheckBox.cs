@@ -21,7 +21,7 @@ namespace AkiGames.Scripts.InspectorRedactor
             {
                 propertyInfo.SetValue(Component, value);
             }
-            Component.gameObject.uiTransform.RefreshBounds();
+            InspectorChangeApplier.Apply(Component);
         }
     }
 }

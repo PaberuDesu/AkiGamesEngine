@@ -13,6 +13,8 @@ namespace AkiGames.Scripts.InspectorRedactor
         {
             base.EndRedacting();
 
+            if (Info is null || Component is null) return;
+
             if (Info is FieldInfo fieldInfo)
             {
                 if (isInteger)
@@ -27,6 +29,8 @@ namespace AkiGames.Scripts.InspectorRedactor
                 else
                     propertyInfo.SetValue(Component, result);
             }
+
+            InspectorChangeApplier.Apply(Component);
         }
     }
 }

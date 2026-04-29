@@ -108,10 +108,7 @@ namespace AkiGames.Scripts.InspectorRedactor
                     propertyInfo.SetValue(Component, value);
                 }
 
-                if (Component.gameObject?.Parent != null)
-                {
-                    Component.gameObject.RefreshBounds();
-                }
+                InspectorChangeApplier.Apply(Component);
             }
             catch (Exception ex)
             {

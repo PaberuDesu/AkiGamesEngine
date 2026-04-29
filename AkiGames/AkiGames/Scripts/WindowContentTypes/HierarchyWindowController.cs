@@ -12,6 +12,7 @@ namespace AkiGames.Scripts.WindowContentTypes
     {
         internal ScrollableListController contentList {get; private set;}
         private static string _gamePath = null;
+        private static HierarchyWindowController _activeController = null;
         private HashSet<GameObject> _openedObjects = [];
         private bool _showRootObject = false;
 
@@ -20,11 +21,24 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public override void Awake()
         {
+            _activeController = this;
             contentList = scrollableContent.GetComponent<ScrollableListController>();
             
             _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();
             _sceneWindow = gameObject.Parent.Children[2].GetComponent<SceneWindowController>();
             base.Awake();
+        }
+
+        public static void ApplyInspectorChanges() =>
+            _activeController?.RefreshViewsAfterInspectorChange();
+
+        private void RefreshViewsAfterInspectorChange()
+        {
+            if (Game1.editableGameMainObject == null) return;
+
+            Game1.editableGameMainObject.EnsureUniqueObjectIdsInTree();
+            _sceneWindow?.RefreshContent(Game1.editableGameMainObject, _showRootObject);
+            _gameWindow?.RefreshContent(Game1.editableGameMainObject);
         }
 
         public void RefreshContent(

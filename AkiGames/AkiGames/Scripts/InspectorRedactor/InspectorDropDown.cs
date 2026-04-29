@@ -74,6 +74,8 @@ namespace AkiGames.Scripts.InspectorRedactor
             {
                 propertyInfo.SetValue(Component, enumValue);
             }
+
+            InspectorChangeApplier.Apply(Component);
         }
     }
 }

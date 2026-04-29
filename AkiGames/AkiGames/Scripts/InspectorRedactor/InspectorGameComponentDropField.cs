@@ -51,6 +51,8 @@ namespace AkiGames.Scripts.InspectorRedactor
                 if (TextField != null)
                     TextField.text = GetDisplayName(linkedComponent);
 
+                InspectorChangeApplier.Apply(Component);
+
                 return true;
             }
             catch (Exception ex)

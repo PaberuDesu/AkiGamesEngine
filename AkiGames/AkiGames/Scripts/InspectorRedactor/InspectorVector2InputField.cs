@@ -54,7 +54,7 @@ namespace AkiGames.Scripts.InspectorRedactor
                     ));
                 }
             }
-            Component.gameObject.uiTransform.RefreshBounds();
+            InspectorChangeApplier.Apply(Component);
         }
     }
 }

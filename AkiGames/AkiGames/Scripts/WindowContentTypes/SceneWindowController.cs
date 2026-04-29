@@ -70,7 +70,10 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         private GameObject ProcessChildrenRecursive(GameObject objectRealization)
         {
-            GameObject objectConcept = new(objectRealization.ObjectName + " (concept)");
+            GameObject objectConcept = new(objectRealization.ObjectName + " (concept)")
+            {
+                IsActive = objectRealization.IsActive
+            };
             UITransform tr = objectRealization.uiTransform.Copy();
 
             objectConcept.uiTransform = tr;

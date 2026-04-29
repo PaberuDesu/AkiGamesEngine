@@ -152,14 +152,26 @@ namespace AkiGames.Scripts
                 ?.UpdateScene();
         }
 
-        private void CloseMenu() => gameObject?.Dispose();
+        private void CloseMenu()
+        {
+            GameObject menuObject = gameObject;
+            if (menuObject == null) return;
+
+            menuObject.Dispose();
+        }
 
         public override void Update()
         {
-            if ((Input.RMB.IsDown || Input.LMB.IsDown) &&
-                !gameObject.IsParentFor(Input.MouseHoverTarget))
+            if (gameObject == null) return;
+
+            bool clickedOutsideMenu =
+                (Input.RMB.IsDown || Input.LMB.IsDown) &&
+                (Input.MouseHoverTarget == null || !gameObject.IsParentFor(Input.MouseHoverTarget));
+
+            if (clickedOutsideMenu)
             {
                 CloseMenu();
+                return;
             }
 
             if (Input.LMB.IsUp) CloseMenu();

@@ -9,6 +9,7 @@ namespace AkiGames.Scripts
     {
         private const float ScenePixelsPerTile = 30f;
         public float TileScale = 1f;
+        public Vector2 TileOffset = Vector2.Zero;
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -35,10 +36,14 @@ namespace AkiGames.Scripts
         {
             int tileWidth = Math.Max(1, (int)Math.Round(ScenePixelsPerTile * TileScale));
             int tileHeight = Math.Max(1, (int)Math.Round(ScenePixelsPerTile * TileScale));
-            Point center = rect.Center;
+            Vector2 center = rect.Center.ToVector2() + TileOffset;
 
-            int firstX = center.X - (int)Math.Ceiling((center.X - rect.Left) / (float)tileWidth) * tileWidth;
-            int firstY = center.Y - (int)Math.Ceiling((center.Y - rect.Top) / (float)tileHeight) * tileHeight;
+            int firstX = (int)Math.Floor(
+                center.X - Math.Ceiling((center.X - rect.Left) / tileWidth) * tileWidth
+            );
+            int firstY = (int)Math.Floor(
+                center.Y - Math.Ceiling((center.Y - rect.Top) / tileHeight) * tileHeight
+            );
 
             for (int x = firstX; x < rect.Right; x += tileWidth)
             {

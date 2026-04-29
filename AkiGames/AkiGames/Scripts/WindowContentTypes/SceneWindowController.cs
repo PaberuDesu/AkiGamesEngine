@@ -17,40 +17,34 @@ namespace AkiGames.Scripts.WindowContentTypes
         private static readonly Color PrefabBackgroundColor = new(215, 230, 255);
 
         private UITransform _container;
+        private GameObject _containerObject;
         private GameObject _content;
         private SceneGridImage _backgroundImage;
         private Rectangle _prevBounds;
         private float _scaleFactor = 1;
         private float _zoom = 1;
         private float _prevZoom = 1;
+        private Vector2 _panOffset = Vector2.Zero;
+        private Point? _previousPanMousePosition;
+        private bool _isPanning;
 
         public override void Awake()
         {
-            GameObject parent  = gameObject.Children[3];
-            _container = parent.uiTransform;
-            _backgroundImage = parent.Children[0].GetComponent<SceneGridImage>();
-            _content  = parent.Children[1];
+            _containerObject  = gameObject.Children[3];
+            _container = _containerObject.uiTransform;
+            _backgroundImage = _containerObject.Children[0].GetComponent<SceneGridImage>();
+            _content  = _containerObject.Children[1];
             base.Awake();
         }
         
         public override void Update()
         {
-            if (_container.Bounds != _prevBounds || _zoom != _prevZoom)
+            bool layoutChanged = _container.Bounds != _prevBounds || _zoom != _prevZoom;
+            bool panChanged = UpdatePan();
+
+            if (layoutChanged || panChanged)
             {
-                float baseScale = Math.Min(
-                    _container.Bounds.Width / (float)SceneContentWidth,
-                    _container.Bounds.Height / (float)SceneContentHeight
-                );
-                _scaleFactor = baseScale * _zoom;
-                _content.uiTransform.Width = (int)(SceneContentWidth * _scaleFactor);
-                _content.uiTransform.Height = (int)(SceneContentHeight * _scaleFactor);
-                _prevBounds = _container.Bounds;
-                _prevZoom = _zoom;
-                if (_backgroundImage != null) _backgroundImage.TileScale = _scaleFactor;
-
-                if (_content.Children.Count > 0) RescaleObjectsRecursive(_content.Children[0]);
-
-                _content.RefreshBounds();
+                UpdateSceneViewTransform(layoutChanged);
             }
 
             base.Update();
@@ -63,6 +57,68 @@ namespace AkiGames.Scripts.WindowContentTypes
             if (scrollValue > 0) zoomFactor = 1 / zoomFactor;
 
             _zoom = Math.Clamp(_zoom * zoomFactor, MinZoom, MaxZoom);
+        }
+
+        private bool UpdatePan()
+        {
+            if (Input.LMB.IsDown)
+            {
+                _isPanning = PressStartedInSceneContent();
+                _previousPanMousePosition = Input.mousePosition;
+                return false;
+            }
+
+            if (!Input.LMB.IsPressed || !_isPanning)
+            {
+                _isPanning = false;
+                _previousPanMousePosition = null;
+                return false;
+            }
+
+            Point previousMousePosition = _previousPanMousePosition ?? Input.mousePosition;
+            Point currentMousePosition = Input.mousePosition;
+            _previousPanMousePosition = currentMousePosition;
+
+            Vector2 delta = new(
+                currentMousePosition.X - previousMousePosition.X,
+                currentMousePosition.Y - previousMousePosition.Y
+            );
+            if (delta == Vector2.Zero) return false;
+
+            _panOffset += delta;
+            return true;
+        }
+
+        private bool PressStartedInSceneContent() =>
+            Input.MousePressTarget != null &&
+            _container.Contains(Input.mousePosition) &&
+            _containerObject.IsParentFor(Input.MousePressTarget);
+
+        private void UpdateSceneViewTransform(bool layoutChanged)
+        {
+            if (layoutChanged)
+            {
+                float baseScale = Math.Min(
+                    _container.Bounds.Width / (float)SceneContentWidth,
+                    _container.Bounds.Height / (float)SceneContentHeight
+                );
+                _scaleFactor = baseScale * _zoom;
+                _content.uiTransform.Width = (int)(SceneContentWidth * _scaleFactor);
+                _content.uiTransform.Height = (int)(SceneContentHeight * _scaleFactor);
+                _prevBounds = _container.Bounds;
+                _prevZoom = _zoom;
+
+                if (_content.Children.Count > 0) RescaleObjectsRecursive(_content.Children[0]);
+            }
+
+            _content.uiTransform.OffsetMin = _panOffset;
+            if (_backgroundImage != null)
+            {
+                _backgroundImage.TileScale = _scaleFactor;
+                _backgroundImage.TileOffset = _panOffset;
+            }
+
+            _content.RefreshBounds();
         }
         
         public void RefreshContent(GameObject gameObjectTree, bool isPrefab = false)

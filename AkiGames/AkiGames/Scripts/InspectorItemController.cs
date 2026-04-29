@@ -30,9 +30,12 @@ namespace AkiGames.Scripts
             Image image = title.Children[0].GetComponent<Image>();
 
             Type type = component.GetType();
-            title.Children[1].GetComponent<Text>().text = type.Name;
-            image.texture = type.Name switch
+            bool describesGameObject = component is InspectorGameObjectParameters;
+            string titleText = describesGameObject ? "GameObject" : type.Name;
+            title.Children[1].GetComponent<Text>().text = titleText;
+            image.texture = titleText switch
             {
+                "GameObject" => _icons["GameObject"],
                 "UITransform" => _icons["Transform"],
                 "Text" => _icons["Text"],
                 "Image" => _icons["Image"],
@@ -42,17 +45,13 @@ namespace AkiGames.Scripts
             height += 35;
             foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
-                if (field.GetCustomAttribute<HideInInspector>() != null) continue;
+                if (!CanShowMember(field, describesGameObject)) continue;
                 GameObject fieldObj = CreateFieldDescription(field, height, component);
                 if (fieldObj != null) height += fieldObj.uiTransform.Height + 5;
             }
             foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
             {
-                if (
-                    !property.CanRead || !property.GetMethod.IsPublic ||
-                    property.GetIndexParameters().Length > 0 ||
-                    property.GetCustomAttribute<HideInInspector>() != null
-                ) continue;
+                if (!CanShowMember(property, describesGameObject)) continue;
                 GameObject propertyObj = CreateFieldDescription(property, height, component);
                 if (propertyObj != null) height += propertyObj.uiTransform.Height + 5;
             }
@@ -62,10 +61,29 @@ namespace AkiGames.Scripts
         
         public static void LoadContent(ContentManager content)
         {
+            _icons.Add("GameObject", content.Load<Texture2D>("InspectorIcons/GameObjectDescription_Component"));
             _icons.Add("Transform", content.Load<Texture2D>("InspectorIcons/Transform_Component"));
             _icons.Add("Text", content.Load<Texture2D>("InspectorIcons/Text_Component"));
             _icons.Add("Image", content.Load<Texture2D>("InspectorIcons/Image_Component"));
             _icons.Add("Script", content.Load<Texture2D>("InspectorIcons/Script_Component"));
+        }
+
+        private static bool CanShowMember(MemberInfo memberInfo, bool describesGameObject)
+        {
+            if (memberInfo.GetCustomAttribute<HideInInspector>() != null)
+                return false;
+
+            if (describesGameObject && memberInfo.DeclaringType != typeof(InspectorGameObjectParameters))
+                return false;
+
+            if (memberInfo is PropertyInfo propertyInfo)
+            {
+                return propertyInfo.CanRead &&
+                    propertyInfo.GetMethod.IsPublic &&
+                    propertyInfo.GetIndexParameters().Length == 0;
+            }
+
+            return true;
         }
 
         private GameObject CreateFieldDescription(MemberInfo memberInfo, int yOffset, GameComponent gameComponent)

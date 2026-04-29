@@ -10,6 +10,7 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/folder_icon.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/image_icon.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/ExplorerIcons/text_file_icon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/GameObjectDescription_Component.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Image_Component.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Script_Component.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/InspectorIcons/Text_Component.png</File>
@@ -36,6 +37,7 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Round.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

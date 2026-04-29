@@ -37,6 +37,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             if (Game1.editableGameMainObject == null) return;
 
             Game1.editableGameMainObject.EnsureUniqueObjectIdsInTree();
+            RefreshContent(Game1.editableGameMainObject);
             _sceneWindow?.RefreshContent(Game1.editableGameMainObject, _showRootObject);
             _gameWindow?.RefreshContent(Game1.editableGameMainObject);
         }

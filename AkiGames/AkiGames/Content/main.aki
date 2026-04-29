@@ -1708,6 +1708,10 @@
                       "type": "SceneGridImage",
                       "IsMask": false,
                       "TileScale": 1,
+                      "TileOffset": {
+                        "x": 0,
+                        "y": 0
+                      },
                       "texture": "Content/scene_grid.png",
                       "fillColor": 4294967295,
                       "imageMode": "Tile",

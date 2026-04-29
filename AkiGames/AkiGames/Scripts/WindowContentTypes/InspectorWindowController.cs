@@ -1,4 +1,5 @@
 using AkiGames.Core;
+using AkiGames.Scripts.InspectorRedactor;
 using AkiGames.Scripts.Window;
 using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
@@ -20,6 +21,11 @@ namespace AkiGames.Scripts.WindowContentTypes
             _contentList.gameObject.Children = [];
             
             if (ObjToDescribe is null) return;
+
+            GameObject gameObjectParameters = Game1.Prefabs["InspectorContentItem"].Copy();
+            gameObjectParameters.GetComponent<InspectorItemController>().component =
+                InspectorGameObjectParameters.For(ObjToDescribe);
+            _contentList.gameObject.AddChild(gameObjectParameters);
 
             foreach (GameComponent component in ObjToDescribe.Components)
             {

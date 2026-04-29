@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AkiGames.UI
@@ -7,46 +8,60 @@ namespace AkiGames.UI
     public abstract class DrawableComponent : GameComponent
     {
         public int zIndex = 0;
-        protected Image FindParentMask()
+        private static readonly RasterizerState ScissorRasterizerState = new()
         {
-            GameObject currentParent = gameObject.Parent;
-            while (currentParent != null)
-            {
-                Image potentialMask = currentParent.GetComponent<Image>();
-                if (potentialMask != null && potentialMask.IsMask)
-                {
-                    return potentialMask;
-                }
-                currentParent = currentParent.Parent;
-            }
-            return null;
-        }
+            CullMode = CullMode.None,
+            ScissorTestEnable = true
+        };
 
-        protected static void SetupStencilTest(SpriteBatch spriteBatch, int maskId)
+        protected Rectangle? SetupMaskClip(SpriteBatch spriteBatch)
         {
+            Rectangle? maskBounds = FindParentMaskBounds();
+            if (maskBounds == null) return null;
+
+            Rectangle previousScissor = spriteBatch.GraphicsDevice.ScissorRectangle;
+            Rectangle clipBounds = Rectangle.Intersect(
+                maskBounds.Value,
+                spriteBatch.GraphicsDevice.Viewport.Bounds
+            );
+
             spriteBatch.End();
-
-            DepthStencilState stencilState = new()
-            {
-                StencilEnable = true,
-                StencilFunction = CompareFunction.Equal,
-                StencilPass = StencilOperation.Keep,
-                ReferenceStencil = maskId,
-                DepthBufferEnable = false
-            };
-
+            spriteBatch.GraphicsDevice.ScissorRectangle = clipBounds;
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 BlendState.AlphaBlend,
                 SamplerState.LinearClamp,
-                stencilState,
-                RasterizerState.CullNone
+                DepthStencilState.None,
+                ScissorRasterizerState
             );
+
+            return previousScissor;
         }
-        
-        protected static void RestoreSpriteBatch(SpriteBatch spriteBatch)
+
+        private Rectangle? FindParentMaskBounds()
+        {
+            Rectangle? maskBounds = null;
+            GameObject currentParent = gameObject.Parent;
+            while (currentParent != null)
+            {
+                Image potentialMask = currentParent.GetComponent<Image>();
+                if (potentialMask != null && potentialMask.Enabled && potentialMask.IsMask)
+                {
+                    maskBounds = maskBounds.HasValue ?
+                        Rectangle.Intersect(maskBounds.Value, potentialMask.uiTransform.Bounds) :
+                        potentialMask.uiTransform.Bounds;
+                }
+
+                currentParent = currentParent.Parent;
+            }
+
+            return maskBounds;
+        }
+
+        protected static void RestoreSpriteBatch(SpriteBatch spriteBatch, Rectangle previousScissor)
         {
             spriteBatch.End();
+            spriteBatch.GraphicsDevice.ScissorRectangle = previousScissor;
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,
                 BlendState.AlphaBlend,

@@ -173,10 +173,10 @@ namespace AkiGames.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Находим ближайшую родительскую маску (изображение)
-            Image parentMask = FindParentMask();
+            Rectangle? previousScissor = SetupMaskClip(spriteBatch);
 
             // Если есть родительская маска, настраиваем stencil test
-            if (parentMask != null) SetupStencilTest(spriteBatch, parentMask.maskId);
+
 
             // Рисуем текст
             Rectangle rect = uiTransform.Bounds;
@@ -221,7 +221,7 @@ namespace AkiGames.UI
             );
 
             // Восстанавливаем стандартный spriteBatch если был изменен
-            if (parentMask != null) RestoreSpriteBatch(spriteBatch);
+            if (previousScissor.HasValue) RestoreSpriteBatch(spriteBatch, previousScissor.Value);
         }
     }
 }

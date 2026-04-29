@@ -18,20 +18,16 @@ namespace AkiGames.Scripts
                 return;
             }
 
-            Image parentMask = FindParentMask();
-            if (parentMask != null)
-            {
-                SetupStencilTest(spriteBatch, parentMask.maskId);
-            }
+            Rectangle? previousScissor = SetupMaskClip(spriteBatch);
 
             if (fillColor.A != 0)
             {
                 DrawCenteredScaledTiles(spriteBatch, uiTransform.Bounds);
             }
 
-            if (parentMask != null)
+            if (previousScissor.HasValue)
             {
-                RestoreSpriteBatch(spriteBatch);
+                RestoreSpriteBatch(spriteBatch, previousScissor.Value);
             }
         }
 

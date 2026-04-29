@@ -31,10 +31,12 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/CheckboxApproved.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/CheckboxEmpty.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Checkmark.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/ImageFile.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/InputField.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Round.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

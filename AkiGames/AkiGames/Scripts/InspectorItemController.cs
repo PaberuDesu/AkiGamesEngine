@@ -71,15 +71,17 @@ namespace AkiGames.Scripts
         private GameObject CreateFieldDescription(MemberInfo memberInfo, int yOffset, GameComponent gameComponent)
         {
             string type = "";
+            Type memberType = null;
             object value = null;
             bool isSettable = false;
             Array enumValuesArray = Array.Empty<object>();
 
             if (memberInfo is FieldInfo fieldInfo)
             {
-                type = fieldInfo.FieldType.Name;
+                memberType = fieldInfo.FieldType;
+                type = memberType.Name;
                 isSettable = !fieldInfo.IsInitOnly;
-                if (fieldInfo.FieldType.IsEnum) enumValuesArray = Enum.GetValues(fieldInfo.FieldType);
+                if (memberType.IsEnum) enumValuesArray = Enum.GetValues(memberType);
                 if (!TryReadMemberValue(fieldInfo, gameComponent, out value))
                 {
                     return null;
@@ -87,9 +89,10 @@ namespace AkiGames.Scripts
             }
             if (memberInfo is PropertyInfo propertyInfo)
             {
-                type = propertyInfo.PropertyType.Name;
+                memberType = propertyInfo.PropertyType;
+                type = memberType.Name;
                 isSettable = propertyInfo.SetMethod != null && propertyInfo.SetMethod.IsPublic;
-                if (propertyInfo.PropertyType.IsEnum) enumValuesArray = Enum.GetValues(propertyInfo.PropertyType);
+                if (memberType.IsEnum) enumValuesArray = Enum.GetValues(memberType);
                 if (!TryReadMemberValue(propertyInfo, gameComponent, out value))
                 {
                     return null;
@@ -187,6 +190,32 @@ namespace AkiGames.Scripts
                     
                     if (!isSettable) image.fillColor = _inactiveColor;
                     break;
+                case var _ when memberType == typeof(Texture2D):
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+                    image.texture = Game1.UIImages["InputField"];
+
+                    Text textureValueText = image.gameObject.Children[0].GetComponent<Text>();
+                    textureValueText.text = GetTextureDisplayName(value as Texture2D);
+
+                    if (isSettable)
+                    {
+                        image.gameObject.AddComponent(new InspectorTextureDropField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            TextField = textureValueText
+                        });
+                    }
+                    else
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
+                    break;
                 default:
                     fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
                     fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
@@ -237,6 +266,12 @@ namespace AkiGames.Scripts
             }
             content.AddChild(fieldDescription);
             return fieldDescription;
+        }
+
+        private static string GetTextureDisplayName(Texture2D texture)
+        {
+            string textureLink = Game1.GetGameTextureLink(texture);
+            return ContentFileUtility.GetDisplayName(textureLink);
         }
 
         private static bool TryReadMemberValue(MemberInfo memberInfo, GameComponent gameComponent, out object value)

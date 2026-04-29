@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using AkiGames.Core;
+using AkiGames.Scripts;
 using AkiGames.Scripts.Window;
 using AkiGames.Events;
 using AkiGames.UI;
@@ -23,7 +24,6 @@ namespace AkiGames.Scripts.WindowContentTypes
         private string _displayPath = "";
 
         private static readonly Dictionary<string, Texture2D> _icons = [];
-        private static readonly string[] extImage = [".png", ".jpg", ".jpeg", ".bmp", ".gif"];
         
         private readonly Stack<string> _pathHistory = new();
 
@@ -133,7 +133,7 @@ namespace AkiGames.Scripts.WindowContentTypes
                     prefabCopy = Game1.Prefabs["ExplorerContentItem"].Copy();
                     prefabCopy.Children[0].GetComponent<Image>().texture =
                         _icons[hasContent ? "full folder" : "empty folder"];
-                    ContentItemController itemController = prefabCopy.GetComponent<ContentItemController>();
+                    ExplorerListItem itemController = prefabCopy.GetComponent<ExplorerListItem>();
                     itemController.Name = Path.GetFileName(folder);
                     itemController.SetActionOnDoubleClick(OpenFolder);
 
@@ -144,15 +144,11 @@ namespace AkiGames.Scripts.WindowContentTypes
                 var files = Directory.GetFiles(_currentPath);
                 foreach (var file in files)
                 {
-                    // TODO Определяем тип файла
-                    string ext = Path.GetExtension(file).ToLower();
+                    // TODO Определяем тип файла (пока только изображение или нет)
                     string fileType = "default";
 
-                    if (extImage.Contains(ext)) fileType = "image";
-                    //else if (new[] { ".cs", ".txt", ".json", ".xml" }.Contains(ext))
-                    //    fileType = "script";
-                    //else if (new[] { ".fbx", ".obj", ".gltf" }.Contains(ext))
-                    //    fileType = "model";
+                    bool isImageFile = ContentFileUtility.IsImageFile(file);
+                    if (isImageFile) fileType = "image";
 
                     // Получаем соответствующую текстуру
                     Texture2D icon = _icons.TryGetValue(fileType, out Texture2D value) ?
@@ -161,9 +157,12 @@ namespace AkiGames.Scripts.WindowContentTypes
 
                     prefabCopy = Game1.Prefabs["ExplorerContentItem"].Copy();
                     prefabCopy.Children[0].GetComponent<Image>().texture = icon;
-                    ContentItemController itemController = prefabCopy.GetComponent<ContentItemController>();
+                    ExplorerListItem itemController = prefabCopy.GetComponent<ExplorerListItem>();
                     itemController.Name = Path.GetFileName(file);
                     itemController.SetActionOnDoubleClick(OpenFile);
+                    itemController.isFile = true;
+                    itemController.FilePath = file;
+                    itemController.IsImageFile = isImageFile;
 
                     _contentList.gameObject.AddChild(prefabCopy);
                 }
@@ -171,7 +170,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             catch
             {
                 prefabCopy = Game1.Prefabs["ExplorerContentItem"].Copy();
-                prefabCopy.GetComponent<ContentItemController>().Name = "Access error";
+                prefabCopy.GetComponent<ExplorerListItem>().Name = "Access error";
                 prefabCopy.Children[0].GetComponent<Image>().fillColor = Color.Transparent;
 
                 _contentList.gameObject.AddChild(prefabCopy);
@@ -188,11 +187,9 @@ namespace AkiGames.Scripts.WindowContentTypes
             _icons.Add("empty folder", content.Load<Texture2D>("ExplorerIcons/folder_icon"));
             _icons.Add("full folder", content.Load<Texture2D>("ExplorerIcons/folder_full_icon"));
 
-            // TODO Загружаем иконки для разных типов файлов
+            // TODO Загружаем иконки для разных типов файлов (пока только для изображений)
             _icons.Add("default", content.Load<Texture2D>("ExplorerIcons/text_file_icon"));
             _icons.Add("image", content.Load<Texture2D>("ExplorerIcons/image_icon"));
-            //_icons.Add("script", content.Load<Texture2D>("script_icon"));
-            //_icons.Add("model", content.Load<Texture2D>("model_icon"));
         }
 
         internal void UpdateDisplayPath()

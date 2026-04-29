@@ -40,7 +40,7 @@
       "Enabled": true
     },
     {
-      "type": "ContentItemController",
+      "type": "ExplorerListItem",
       "Name": "",
       "Enabled": true
     }

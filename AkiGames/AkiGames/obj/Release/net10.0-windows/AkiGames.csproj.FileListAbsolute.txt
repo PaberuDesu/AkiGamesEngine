@@ -73,3 +73,4 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Release\net10.0
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Release\net10.0-windows\AkiGames.pdb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Release\net10.0-windows\AkiGames.genruntimeconfig.cache
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\obj\Release\net10.0-windows\ref\AkiGames.dll
+C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Release\net10.0-windows\Content\UI\Play.xnb

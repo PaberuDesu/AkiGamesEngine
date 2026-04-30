@@ -268,16 +268,14 @@ namespace AkiGames.UI
 
         public bool IsParentFor(GameObject pretendingChild)
         {
-            if (pretendingChild == this) return true;
-
-            GameObject FamilyTreeMember = pretendingChild.Parent;
-            while (FamilyTreeMember != null)
+            GameObject familyTreeMember = pretendingChild;
+            while (familyTreeMember != null)
             {
-                if (FamilyTreeMember == this)
+                if (familyTreeMember == this)
                 {
                     return true;
                 }
-                FamilyTreeMember = FamilyTreeMember.Parent;
+                familyTreeMember = familyTreeMember.Parent;
             }
             return false;
         }

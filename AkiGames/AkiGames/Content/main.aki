@@ -127,6 +127,7 @@
             },
             {
               "type": "GameWindowController",
+              "IsGameRunning": false,
               "scrollableContent": 0,
               "Enabled": true
             }
@@ -356,12 +357,63 @@
                     }
                   ],
                   "Children": []
+                },
+                {
+                  "ObjectName": "StartButton",
+                  "ObjectID": 9,
+                  "IsActive": true,
+                  "IsMouseTargetable": true,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "OffsetMax": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "Width": 32,
+                      "Height": 32,
+                      "HorizontalAlignment": "Center",
+                      "VerticalAlignment": "Top",
+                      "anchorLeftTop": {
+                        "x": 0.5,
+                        "y": 0
+                      },
+                      "anchorRightBottom": {
+                        "x": 0.5,
+                        "y": 0
+                      },
+                      "origin": {
+                        "x": 0.5,
+                        "y": 0
+                      },
+                      "LocalRotation": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Image",
+                      "IsMask": false,
+                      "texture": "Content/UI/Play.png",
+                      "fillColor": 4294967295,
+                      "imageMode": "Stretch",
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "GameStarter",
+                      "Enabled": true
+                    }
+                  ],
+                  "Children": []
                 }
               ]
             },
             {
               "ObjectName": "ResizeHandleLeft",
-              "ObjectID": 9,
+              "ObjectID": 10,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -413,7 +465,7 @@
             },
             {
               "ObjectName": "ResizeHandleRight",
-              "ObjectID": 10,
+              "ObjectID": 11,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -465,7 +517,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottom",
-              "ObjectID": 11,
+              "ObjectID": 12,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -517,7 +569,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomLeft",
-              "ObjectID": 12,
+              "ObjectID": 13,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -569,7 +621,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomRight",
-              "ObjectID": 13,
+              "ObjectID": 14,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -621,7 +673,7 @@
             },
             {
               "ObjectName": "TitleBar",
-              "ObjectID": 14,
+              "ObjectID": 15,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -684,7 +736,7 @@
         },
         {
           "ObjectName": "HierarchyWindow",
-          "ObjectID": 15,
+          "ObjectID": 16,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -728,14 +780,14 @@
             },
             {
               "type": "HierarchyWindowController",
-              "scrollableContent": 21,
+              "scrollableContent": 22,
               "Enabled": true
             }
           ],
           "Children": [
             {
               "ObjectName": "BorderLeft",
-              "ObjectID": 16,
+              "ObjectID": 17,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -782,7 +834,7 @@
             },
             {
               "ObjectName": "BorderBottom",
-              "ObjectID": 17,
+              "ObjectID": 18,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -829,7 +881,7 @@
             },
             {
               "ObjectName": "BorderRight",
-              "ObjectID": 18,
+              "ObjectID": 19,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -876,7 +928,7 @@
             },
             {
               "ObjectName": "WindowContent",
-              "ObjectID": 19,
+              "ObjectID": 20,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -913,7 +965,7 @@
               "Children": [
                 {
                   "ObjectName": "ContentList (Mask)",
-                  "ObjectID": 20,
+                  "ObjectID": 21,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -959,7 +1011,7 @@
                   "Children": [
                     {
                       "ObjectName": "ContentList",
-                      "ObjectID": 21,
+                      "ObjectID": 22,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -1002,7 +1054,7 @@
                     },
                     {
                       "ObjectName": "Scrollbar",
-                      "ObjectID": 22,
+                      "ObjectID": 23,
                       "IsActive": false,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -1053,7 +1105,7 @@
                       "Children": [
                         {
                           "ObjectName": "Thumb",
-                          "ObjectID": 23,
+                          "ObjectID": 24,
                           "IsActive": true,
                           "IsMouseTargetable": true,
                           "Components": [
@@ -1110,7 +1162,7 @@
             },
             {
               "ObjectName": "ResizeHandleLeft",
-              "ObjectID": 24,
+              "ObjectID": 25,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1162,7 +1214,7 @@
             },
             {
               "ObjectName": "ResizeHandleRight",
-              "ObjectID": 25,
+              "ObjectID": 26,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1214,7 +1266,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottom",
-              "ObjectID": 26,
+              "ObjectID": 27,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1266,7 +1318,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomLeft",
-              "ObjectID": 27,
+              "ObjectID": 28,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1318,7 +1370,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomRight",
-              "ObjectID": 28,
+              "ObjectID": 29,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1370,7 +1422,7 @@
             },
             {
               "ObjectName": "TitleBar",
-              "ObjectID": 29,
+              "ObjectID": 30,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1433,7 +1485,7 @@
         },
         {
           "ObjectName": "SceneWindow",
-          "ObjectID": 30,
+          "ObjectID": 31,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -1484,7 +1536,7 @@
           "Children": [
             {
               "ObjectName": "BorderLeft",
-              "ObjectID": 31,
+              "ObjectID": 32,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1531,7 +1583,7 @@
             },
             {
               "ObjectName": "BorderBottom",
-              "ObjectID": 32,
+              "ObjectID": 33,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1578,7 +1630,7 @@
             },
             {
               "ObjectName": "BorderRight",
-              "ObjectID": 33,
+              "ObjectID": 34,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1625,7 +1677,7 @@
             },
             {
               "ObjectName": "WindowContent",
-              "ObjectID": 34,
+              "ObjectID": 35,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1671,7 +1723,7 @@
               "Children": [
                 {
                   "ObjectName": "ContentBackground",
-                  "ObjectID": 35,
+                  "ObjectID": 36,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1723,7 +1775,7 @@
                 },
                 {
                   "ObjectName": "ContentContainer",
-                  "ObjectID": 36,
+                  "ObjectID": 37,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1763,7 +1815,7 @@
             },
             {
               "ObjectName": "ResizeHandleLeft",
-              "ObjectID": 37,
+              "ObjectID": 38,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1815,7 +1867,7 @@
             },
             {
               "ObjectName": "ResizeHandleRight",
-              "ObjectID": 38,
+              "ObjectID": 39,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1867,7 +1919,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottom",
-              "ObjectID": 39,
+              "ObjectID": 40,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1919,7 +1971,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomLeft",
-              "ObjectID": 40,
+              "ObjectID": 41,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -1971,7 +2023,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomRight",
-              "ObjectID": 41,
+              "ObjectID": 42,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2023,7 +2075,7 @@
             },
             {
               "ObjectName": "TitleBar",
-              "ObjectID": 42,
+              "ObjectID": 43,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2086,7 +2138,7 @@
         },
         {
           "ObjectName": "ExplorerWindow",
-          "ObjectID": 43,
+          "ObjectID": 44,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -2130,14 +2182,14 @@
             },
             {
               "type": "ExplorerWindowController",
-              "scrollableContent": 52,
+              "scrollableContent": 53,
               "Enabled": true
             }
           ],
           "Children": [
             {
               "ObjectName": "BorderLeft",
-              "ObjectID": 44,
+              "ObjectID": 45,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2184,7 +2236,7 @@
             },
             {
               "ObjectName": "BorderBottom",
-              "ObjectID": 45,
+              "ObjectID": 46,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2231,7 +2283,7 @@
             },
             {
               "ObjectName": "BorderRight",
-              "ObjectID": 46,
+              "ObjectID": 47,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2278,7 +2330,7 @@
             },
             {
               "ObjectName": "WindowContent",
-              "ObjectID": 47,
+              "ObjectID": 48,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2315,7 +2367,7 @@
               "Children": [
                 {
                   "ObjectName": "Header",
-                  "ObjectID": 48,
+                  "ObjectID": 49,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -2352,7 +2404,7 @@
                   "Children": [
                     {
                       "ObjectName": "title",
-                      "ObjectID": 49,
+                      "ObjectID": 50,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -2400,7 +2452,7 @@
                     },
                     {
                       "ObjectName": "BackButton",
-                      "ObjectID": 50,
+                      "ObjectID": 51,
                       "IsActive": false,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -2454,7 +2506,7 @@
                 },
                 {
                   "ObjectName": "ContentList (Mask)",
-                  "ObjectID": 51,
+                  "ObjectID": 52,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -2500,7 +2552,7 @@
                   "Children": [
                     {
                       "ObjectName": "ContentList",
-                      "ObjectID": 52,
+                      "ObjectID": 53,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -2543,7 +2595,7 @@
                     },
                     {
                       "ObjectName": "Scrollbar",
-                      "ObjectID": 53,
+                      "ObjectID": 54,
                       "IsActive": false,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -2594,7 +2646,7 @@
                       "Children": [
                         {
                           "ObjectName": "Thumb",
-                          "ObjectID": 54,
+                          "ObjectID": 55,
                           "IsActive": true,
                           "IsMouseTargetable": true,
                           "Components": [
@@ -2651,7 +2703,7 @@
             },
             {
               "ObjectName": "ResizeHandleLeft",
-              "ObjectID": 55,
+              "ObjectID": 56,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2703,7 +2755,7 @@
             },
             {
               "ObjectName": "ResizeHandleRight",
-              "ObjectID": 56,
+              "ObjectID": 57,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2755,7 +2807,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottom",
-              "ObjectID": 57,
+              "ObjectID": 58,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2807,7 +2859,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomLeft",
-              "ObjectID": 58,
+              "ObjectID": 59,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2859,7 +2911,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomRight",
-              "ObjectID": 59,
+              "ObjectID": 60,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2911,7 +2963,7 @@
             },
             {
               "ObjectName": "TitleBar",
-              "ObjectID": 60,
+              "ObjectID": 61,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -2974,7 +3026,7 @@
         },
         {
           "ObjectName": "ConsoleWindow",
-          "ObjectID": 61,
+          "ObjectID": 62,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -3018,14 +3070,14 @@
             },
             {
               "type": "ConsoleWindowController",
-              "scrollableContent": 67,
+              "scrollableContent": 68,
               "Enabled": true
             }
           ],
           "Children": [
             {
               "ObjectName": "BorderLeft",
-              "ObjectID": 62,
+              "ObjectID": 63,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3072,7 +3124,7 @@
             },
             {
               "ObjectName": "BorderBottom",
-              "ObjectID": 63,
+              "ObjectID": 64,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3119,7 +3171,7 @@
             },
             {
               "ObjectName": "BorderRight",
-              "ObjectID": 64,
+              "ObjectID": 65,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3166,7 +3218,7 @@
             },
             {
               "ObjectName": "WindowContent",
-              "ObjectID": 65,
+              "ObjectID": 66,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3203,7 +3255,7 @@
               "Children": [
                 {
                   "ObjectName": "ContentList (Mask)",
-                  "ObjectID": 66,
+                  "ObjectID": 67,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -3249,7 +3301,7 @@
                   "Children": [
                     {
                       "ObjectName": "ContentList",
-                      "ObjectID": 67,
+                      "ObjectID": 68,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -3291,7 +3343,7 @@
                       "Children": [
                         {
                           "ObjectName": "ConsoleOutput",
-                          "ObjectID": 68,
+                          "ObjectID": 69,
                           "IsActive": true,
                           "IsMouseTargetable": false,
                           "Components": [
@@ -3341,7 +3393,7 @@
                     },
                     {
                       "ObjectName": "Scrollbar",
-                      "ObjectID": 69,
+                      "ObjectID": 70,
                       "IsActive": false,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -3392,7 +3444,7 @@
                       "Children": [
                         {
                           "ObjectName": "Thumb",
-                          "ObjectID": 70,
+                          "ObjectID": 71,
                           "IsActive": true,
                           "IsMouseTargetable": true,
                           "Components": [
@@ -3449,7 +3501,7 @@
             },
             {
               "ObjectName": "ResizeHandleLeft",
-              "ObjectID": 71,
+              "ObjectID": 72,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3501,7 +3553,7 @@
             },
             {
               "ObjectName": "ResizeHandleRight",
-              "ObjectID": 72,
+              "ObjectID": 73,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3553,7 +3605,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottom",
-              "ObjectID": 73,
+              "ObjectID": 74,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3605,7 +3657,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomLeft",
-              "ObjectID": 74,
+              "ObjectID": 75,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3657,7 +3709,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomRight",
-              "ObjectID": 75,
+              "ObjectID": 76,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3709,7 +3761,7 @@
             },
             {
               "ObjectName": "TitleBar",
-              "ObjectID": 76,
+              "ObjectID": 77,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3772,7 +3824,7 @@
         },
         {
           "ObjectName": "InspectorWindow",
-          "ObjectID": 77,
+          "ObjectID": 78,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -3816,14 +3868,14 @@
             },
             {
               "type": "InspectorWindowController",
-              "scrollableContent": 83,
+              "scrollableContent": 84,
               "Enabled": true
             }
           ],
           "Children": [
             {
               "ObjectName": "BorderLeft",
-              "ObjectID": 78,
+              "ObjectID": 79,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3870,7 +3922,7 @@
             },
             {
               "ObjectName": "BorderBottom",
-              "ObjectID": 79,
+              "ObjectID": 80,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3917,7 +3969,7 @@
             },
             {
               "ObjectName": "BorderRight",
-              "ObjectID": 80,
+              "ObjectID": 81,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -3964,7 +4016,7 @@
             },
             {
               "ObjectName": "WindowContent",
-              "ObjectID": 81,
+              "ObjectID": 82,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4001,7 +4053,7 @@
               "Children": [
                 {
                   "ObjectName": "ContentList (Mask)",
-                  "ObjectID": 82,
+                  "ObjectID": 83,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -4047,7 +4099,7 @@
                   "Children": [
                     {
                       "ObjectName": "ContentList",
-                      "ObjectID": 83,
+                      "ObjectID": 84,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -4100,7 +4152,7 @@
                     },
                     {
                       "ObjectName": "Scrollbar",
-                      "ObjectID": 84,
+                      "ObjectID": 85,
                       "IsActive": false,
                       "IsMouseTargetable": true,
                       "Components": [
@@ -4151,7 +4203,7 @@
                       "Children": [
                         {
                           "ObjectName": "Thumb",
-                          "ObjectID": 85,
+                          "ObjectID": 86,
                           "IsActive": true,
                           "IsMouseTargetable": true,
                           "Components": [
@@ -4208,7 +4260,7 @@
             },
             {
               "ObjectName": "ResizeHandleLeft",
-              "ObjectID": 86,
+              "ObjectID": 87,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4260,7 +4312,7 @@
             },
             {
               "ObjectName": "ResizeHandleRight",
-              "ObjectID": 87,
+              "ObjectID": 88,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4312,7 +4364,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottom",
-              "ObjectID": 88,
+              "ObjectID": 89,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4364,7 +4416,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomLeft",
-              "ObjectID": 89,
+              "ObjectID": 90,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4416,7 +4468,7 @@
             },
             {
               "ObjectName": "ResizeHandleBottomRight",
-              "ObjectID": 90,
+              "ObjectID": 91,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4468,7 +4520,7 @@
             },
             {
               "ObjectName": "TitleBar",
-              "ObjectID": 91,
+              "ObjectID": 92,
               "IsActive": true,
               "IsMouseTargetable": true,
               "Components": [
@@ -4533,7 +4585,7 @@
     },
     {
       "ObjectName": "MenuBar",
-      "ObjectID": 92,
+      "ObjectID": 93,
       "IsActive": true,
       "IsMouseTargetable": true,
       "Components": [
@@ -4583,7 +4635,7 @@
       "Children": [
         {
           "ObjectName": "FileMenu",
-          "ObjectID": 93,
+          "ObjectID": 94,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -4644,7 +4696,7 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 94,
+              "ObjectID": 95,
               "IsActive": false,
               "IsMouseTargetable": true,
               "Components": [
@@ -4695,7 +4747,7 @@
               "Children": [
                 {
                   "ObjectName": "OpenProject",
-                  "ObjectID": 95,
+                  "ObjectID": 96,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -4756,7 +4808,7 @@
                 },
                 {
                   "ObjectName": "SaveProject",
-                  "ObjectID": 96,
+                  "ObjectID": 97,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -4817,7 +4869,7 @@
                 },
                 {
                   "ObjectName": "BuildProject",
-                  "ObjectID": 97,
+                  "ObjectID": 98,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -4882,7 +4934,7 @@
         },
         {
           "ObjectName": "WindowsMenu",
-          "ObjectID": 98,
+          "ObjectID": 99,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -4943,7 +4995,7 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 99,
+              "ObjectID": 100,
               "IsActive": false,
               "IsMouseTargetable": true,
               "Components": [
@@ -4994,7 +5046,7 @@
               "Children": [
                 {
                   "ObjectName": "Hierarchy",
-                  "ObjectID": 100,
+                  "ObjectID": 101,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5045,7 +5097,7 @@
                   "Children": [
                     {
                       "ObjectName": "Toggle",
-                      "ObjectID": 101,
+                      "ObjectID": 102,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [],
@@ -5055,7 +5107,7 @@
                 },
                 {
                   "ObjectName": "Project Files",
-                  "ObjectID": 102,
+                  "ObjectID": 103,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5107,7 +5159,7 @@
                 },
                 {
                   "ObjectName": "SceneView",
-                  "ObjectID": 103,
+                  "ObjectID": 104,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5159,7 +5211,7 @@
                 },
                 {
                   "ObjectName": "GameView",
-                  "ObjectID": 104,
+                  "ObjectID": 105,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5211,7 +5263,7 @@
                 },
                 {
                   "ObjectName": "Console",
-                  "ObjectID": 105,
+                  "ObjectID": 106,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5263,7 +5315,7 @@
                 },
                 {
                   "ObjectName": "Inspector",
-                  "ObjectID": 106,
+                  "ObjectID": 107,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5319,7 +5371,7 @@
         },
         {
           "ObjectName": "CreateMenu",
-          "ObjectID": 107,
+          "ObjectID": 108,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -5380,7 +5432,7 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 108,
+              "ObjectID": 109,
               "IsActive": false,
               "IsMouseTargetable": true,
               "Components": [
@@ -5431,7 +5483,7 @@
               "Children": [
                 {
                   "ObjectName": "GameObject",
-                  "ObjectID": 109,
+                  "ObjectID": 110,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5498,7 +5550,7 @@
     },
     {
       "ObjectName": "DraggedExplorerFile",
-      "ObjectID": 110,
+      "ObjectID": 111,
       "IsActive": false,
       "IsMouseTargetable": false,
       "Components": [

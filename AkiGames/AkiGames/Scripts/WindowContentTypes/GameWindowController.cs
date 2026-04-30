@@ -11,7 +11,10 @@ namespace AkiGames.Scripts.WindowContentTypes
         private UITransform _viewTransform;
         private Image _gameViewImage;
         private static GameObject _gameMainObject;
+        private GameObject _sourceTree;
         private Rectangle prevBounds = Rectangle.Empty;
+        public UITransform ViewTransform => _viewTransform;
+        public bool IsGameRunning { get; private set; }
 
         public override void Awake()
         {
@@ -53,6 +56,29 @@ namespace AkiGames.Scripts.WindowContentTypes
         public void RefreshContent(GameObject gameObjectTree)
         {
             // Получаем иерархию объектов
+            _sourceTree = gameObjectTree;
+            IsGameRunning = false;
+            BuildRuntimeTree(false);
+        }
+
+        public void StartGame()
+        {
+            if (_sourceTree == null) return;
+
+            BuildRuntimeTree(true);
+            IsGameRunning = true;
+        }
+
+        public void StopGame()
+        {
+            IsGameRunning = false;
+            BuildRuntimeTree(false);
+        }
+
+        private void BuildRuntimeTree(bool awakeForGame)
+        {
+            if (_sourceTree == null) return;
+
             Game1.gameMainObject?.Dispose();
 
             _gameMainObject = new("main")
@@ -61,10 +87,17 @@ namespace AkiGames.Scripts.WindowContentTypes
                 uiTransform = UITransform.TransformOfBounds(new Rectangle(0, 0, 1920, 1080))
             };
 
-            GameObject runtimeTree = gameObjectTree.Copy(preserveObjectId: true);
+            GameObject runtimeTree = _sourceTree.Copy(preserveObjectId: true);
             runtimeTree.SetObjectIdSpaceRecursive(ObjectIdSpace.Game);
             _gameMainObject.Children = [runtimeTree];
-            runtimeTree.AkiGamesEditorAwakeTree(ObjectIdSpace.Game);
+            if (awakeForGame)
+            {
+                _gameMainObject.AkiGamesAwakeTree(ObjectIdSpace.Game);
+            }
+            else
+            {
+                runtimeTree.AkiGamesEditorAwakeTree(ObjectIdSpace.Game);
+            }
             runtimeTree.RefreshBounds(_gameMainObject.uiTransform);
             Game1.gameMainObject = _gameMainObject;
         

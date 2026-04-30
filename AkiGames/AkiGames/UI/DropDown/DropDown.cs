@@ -75,7 +75,7 @@ namespace AkiGames.UI.DropDown
         }
         public override void Deactivate()
         {
-            if (!gameObject.IsParentFor(Input.MouseHoverTarget)) Hide();
+            if (Input.MouseHoverTarget == null || !gameObject.IsParentFor(Input.MouseHoverTarget)) Hide();
         }
     }
 }

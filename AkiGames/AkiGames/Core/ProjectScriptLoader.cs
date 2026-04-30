@@ -20,6 +20,8 @@ namespace AkiGames.Core
         private static readonly Dictionary<string, Type> _activeComponentTypes = new(StringComparer.Ordinal);
         private static string _activeProjectRoot;
         private static string _activeSignature;
+        private static bool _activeProjectIsRunningEditor;
+        public static bool ActiveProjectIsRunningEditor => _activeProjectIsRunningEditor;
 
         public static bool LoadProjectScripts(string projectRoot, ContentManager content)
         {
@@ -33,6 +35,7 @@ namespace AkiGames.Core
             if (IsRunningEditorProject(projectRoot))
             {
                 ClearActiveProject();
+                _activeProjectIsRunningEditor = true;
                 return false;
             }
 
@@ -77,6 +80,9 @@ namespace AkiGames.Core
                 null;
         }
 
+        public static IEnumerable<Type> GetActiveComponentTypes() =>
+            _activeComponentTypes.Values.Distinct();
+
         public static bool IsProjectScriptAssembly(Assembly assembly) =>
             assembly?.GetName().Name?.StartsWith(AssemblyNamePrefix, StringComparison.Ordinal) == true;
 
@@ -85,6 +91,7 @@ namespace AkiGames.Core
             _activeComponentTypes.Clear();
             _activeProjectRoot = null;
             _activeSignature = null;
+            _activeProjectIsRunningEditor = false;
             JsonProjectSerializer.ClearTypeCache();
         }
 

@@ -191,6 +191,16 @@
 /processor:AkiProcessor
 /build:Prefabs/InspectorContentItem.aki
 
+#begin Prefabs/InspectorAddComponent.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/InspectorAddComponent.aki
+
+#begin Prefabs/ScrollableList.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ScrollableList.aki
+
 #begin Prefabs/InspectorFieldDescriptor.aki
 /importer:AkiImporter
 /processor:AkiProcessor

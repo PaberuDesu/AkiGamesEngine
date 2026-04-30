@@ -54,10 +54,7 @@ namespace AkiGames.UI.ScrollableList
             Recolor(_highlightColor);
         }
 
-        private void Recolor(Color color)
-        {
-            if (_chosenItem != null) _chosenItem.fillColor = color;
-        }
+        private void Recolor(Color color) => _chosenItem?.fillColor = color;
 
         public override void Update()
         {

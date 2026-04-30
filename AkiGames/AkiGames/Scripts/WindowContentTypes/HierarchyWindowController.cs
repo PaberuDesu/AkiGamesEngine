@@ -22,7 +22,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         public override void Awake()
         {
             _activeController = this;
-            contentList = scrollableContent.GetComponent<ScrollableListController>();
+            contentList = ResolveScrollableContent();
             
             _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();
             _sceneWindow = gameObject.Parent.Children[2].GetComponent<SceneWindowController>();

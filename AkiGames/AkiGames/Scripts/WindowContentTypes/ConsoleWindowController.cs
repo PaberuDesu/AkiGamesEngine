@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using Microsoft.Xna.Framework;
 using AkiGames.Scripts.Window;
 using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
@@ -19,9 +20,42 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public override void Awake()
         {
-            _contentList = scrollableContent.GetComponent<ScrollableListController>();
-            _textComponent = _contentList.gameObject.Children[0].GetComponent<Text>();
+            _contentList = ResolveScrollableContent();
+            GameObject output = GetOrCreateOutputObject();
+            _textComponent = output.GetComponent<Text>();
             base.Awake();
+        }
+
+        private GameObject GetOrCreateOutputObject()
+        {
+            if (_contentList.gameObject.Children.Count > 0)
+                return _contentList.gameObject.Children[0];
+
+            GameObject output = new("ConsoleOutput")
+            {
+                IsMouseTargetable = false
+            };
+
+            output.AddComponent(new UITransform
+            {
+                OffsetMin = new Vector2(5, 5),
+                OffsetMax = new Vector2(5, 0),
+                Width = 0,
+                Height = 0,
+                HorizontalAlignment = UITransform.AlignmentH.Stretch,
+                VerticalAlignment = UITransform.AlignmentV.Stretch
+            });
+
+            output.AddComponent(new Text
+            {
+                HorizontalWrap = Text.WrapModeH.NewLineControlsHeigth,
+                HorizontalAlignment = Text.AlignmentH.Left,
+                VerticalAlignment = Text.AlignmentV.Top,
+                TextColor = Color.White
+            });
+
+            _contentList.gameObject.AddChild(output);
+            return output;
         }
 
         public static void Log(object line)

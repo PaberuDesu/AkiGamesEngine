@@ -191,12 +191,13 @@ namespace AkiGames.Events
         {
             if (parent == null) return;
             if (!parent.IsActive) return;
+            if (!IsInsideParentMasks(parent)) return;
             
             // Проверяем родителя
             if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
             {
                 Image image = parent.GetComponent<Image>();
-                if (image != null && image.Enabled && image.zIndex >= bestCandidate.zIndex)
+                if (image != null && image.Enabled && !image.IsMask && image.zIndex >= bestCandidate.zIndex)
                 {
                     bestCandidate = (parent, image.zIndex);
                 }
@@ -215,6 +216,28 @@ namespace AkiGames.Events
                     FindTargetInHierarchy(child, ref bestCandidate);
                 }
             }
+        }
+
+        private static bool IsInsideParentMasks(GameObject gameObject)
+        {
+            GameObject currentParent = gameObject.Parent;
+            while (currentParent != null)
+            {
+                Image mask = currentParent.GetComponent<Image>();
+                if (
+                    mask != null &&
+                    mask.Enabled &&
+                    mask.IsMask &&
+                    !mask.uiTransform.Contains(Input.mousePosition)
+                )
+                {
+                    return false;
+                }
+
+                currentParent = currentParent.Parent;
+            }
+
+            return true;
         }
 
         public static bool IsCursorInWindow()

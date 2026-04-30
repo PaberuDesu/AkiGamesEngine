@@ -13,7 +13,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public override void Awake()
         {
-            _contentList = scrollableContent.GetComponent<ScrollableListController>();
+            _contentList = ResolveScrollableContent();
             base.Awake();
         }
 
@@ -35,13 +35,21 @@ namespace AkiGames.Scripts.WindowContentTypes
                 newObj.GetComponent<InspectorItemController>().component = component;
                 _contentList.gameObject.AddChild(newObj);
             }
+            _contentList.gameObject.AddChild(CreateAddComponentRow(ObjToDescribe));
+
             _contentList.Refresh();
             _contentList.gameObject.RefreshBounds();
         }
 
-        public static void Select(GameObject selectedObject)
+        private static GameObject CreateAddComponentRow(GameObject targetObject)
         {
-            SelectedObject = selectedObject;
+            GameObject row = Game1.Prefabs["InspectorAddComponent"].Copy();
+            row.Children[0].GetComponent<InspectorAddComponentDropDown>().TargetObject = targetObject;
+
+            return row;
         }
+
+        public static void Select(GameObject selectedObject) =>
+            SelectedObject = selectedObject;
     }
 }

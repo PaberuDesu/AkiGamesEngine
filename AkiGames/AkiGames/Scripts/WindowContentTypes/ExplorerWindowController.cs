@@ -48,7 +48,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             _titleTransform = header.Children[0].uiTransform;
             _titleText = header.Children[0].GetComponent<Text>();
             _backButton = header.Children[1];
-            _contentList = scrollableContent.GetComponent<ScrollableListController>();
+            _contentList = ResolveScrollableContent();
 
             _hierarchyWindow = gameObject.Parent.Children[1].GetComponent<HierarchyWindowController>();
             _gameWindow = gameObject.Parent.Children[0].GetComponent<GameWindowController>();

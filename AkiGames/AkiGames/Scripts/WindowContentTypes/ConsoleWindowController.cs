@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using AkiGames.Scripts.Window;
 using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
@@ -9,6 +10,7 @@ namespace AkiGames.Scripts.WindowContentTypes
         private Text _textComponent = null;
         private static string _output = "";
         private static bool _logChanged = false;
+        private static readonly ConcurrentQueue<string> _pendingLogs = new();
         
         private ScrollableListController _contentList;
 
@@ -24,7 +26,11 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public static void Log(object line)
         {
-            string newOutput = $"{line}\n";
+            _pendingLogs.Enqueue($"{line}\n");
+        }
+
+        private static void AppendLog(string newOutput)
+        {
             _output += newOutput;
             _logChanged = true;
 
@@ -75,6 +81,11 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public override void Update()
         {
+            while (_pendingLogs.TryDequeue(out string logLine))
+            {
+                AppendLog(logLine);
+            }
+
             if (_logChanged)
             {
                 bool isListScrolledToBottom = _contentList.IsLimitReached;

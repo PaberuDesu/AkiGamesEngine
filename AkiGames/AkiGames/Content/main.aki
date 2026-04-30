@@ -4814,6 +4814,67 @@
                     }
                   ],
                   "Children": []
+                },
+                {
+                  "ObjectName": "BuildProject",
+                  "ObjectID": 97,
+                  "IsActive": true,
+                  "IsMouseTargetable": true,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "OffsetMax": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "Width": 0,
+                      "Height": 0,
+                      "HorizontalAlignment": "Stretch",
+                      "VerticalAlignment": "Top",
+                      "anchorLeftTop": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "anchorRightBottom": {
+                        "x": 1,
+                        "y": 0
+                      },
+                      "origin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "LocalRotation": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Image",
+                      "IsMask": false,
+                      "texture": "",
+                      "fillColor": 4281808695,
+                      "imageMode": "Stretch",
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Text",
+                      "HorizontalWrap": "None",
+                      "HorizontalAlignment": "Center",
+                      "VerticalAlignment": "Middle",
+                      "text": "Build Project",
+                      "TextColor": 4294967295,
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "BuildButton",
+                      "Enabled": true
+                    }
+                  ],
+                  "Children": []
                 }
               ]
             }
@@ -4821,7 +4882,7 @@
         },
         {
           "ObjectName": "WindowsMenu",
-          "ObjectID": 97,
+          "ObjectID": 98,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -4882,7 +4943,7 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 98,
+              "ObjectID": 99,
               "IsActive": false,
               "IsMouseTargetable": true,
               "Components": [
@@ -4933,7 +4994,7 @@
               "Children": [
                 {
                   "ObjectName": "Hierarchy",
-                  "ObjectID": 99,
+                  "ObjectID": 100,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -4984,7 +5045,7 @@
                   "Children": [
                     {
                       "ObjectName": "Toggle",
-                      "ObjectID": 100,
+                      "ObjectID": 101,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [],
@@ -4994,7 +5055,7 @@
                 },
                 {
                   "ObjectName": "Project Files",
-                  "ObjectID": 101,
+                  "ObjectID": 102,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5046,7 +5107,7 @@
                 },
                 {
                   "ObjectName": "SceneView",
-                  "ObjectID": 102,
+                  "ObjectID": 103,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5098,7 +5159,7 @@
                 },
                 {
                   "ObjectName": "GameView",
-                  "ObjectID": 103,
+                  "ObjectID": 104,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5150,7 +5211,7 @@
                 },
                 {
                   "ObjectName": "Console",
-                  "ObjectID": 104,
+                  "ObjectID": 105,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5202,7 +5263,7 @@
                 },
                 {
                   "ObjectName": "Inspector",
-                  "ObjectID": 105,
+                  "ObjectID": 106,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5258,7 +5319,7 @@
         },
         {
           "ObjectName": "CreateMenu",
-          "ObjectID": 106,
+          "ObjectID": 107,
           "IsActive": true,
           "IsMouseTargetable": true,
           "Components": [
@@ -5319,7 +5380,7 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 107,
+              "ObjectID": 108,
               "IsActive": false,
               "IsMouseTargetable": true,
               "Components": [
@@ -5370,7 +5431,7 @@
               "Children": [
                 {
                   "ObjectName": "GameObject",
-                  "ObjectID": 108,
+                  "ObjectID": 109,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -5437,7 +5498,7 @@
     },
     {
       "ObjectName": "DraggedExplorerFile",
-      "ObjectID": 109,
+      "ObjectID": 110,
       "IsActive": false,
       "IsMouseTargetable": false,
       "Components": [

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/main.aki</SourceFile>
-  <SourceTime>2026-04-29T16:41:57.1011056+03:00</SourceTime>
+  <SourceTime>2026-04-30T04:57:27.5190906+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/TicTacToe/Content/bin/Windows/Content/main.xnb</DestFile>
-  <DestTime>2026-04-29T16:46:46.7272583+03:00</DestTime>
+  <DestTime>2026-04-30T04:57:29.3529526+03:00</DestTime>
   <Importer>AkiImporter</Importer>
   <ImporterTime>2026-04-14T00:44:46.9498639+03:00</ImporterTime>
   <Processor>AkiProcessor</Processor>

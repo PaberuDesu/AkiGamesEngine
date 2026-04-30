@@ -9,6 +9,7 @@ namespace AkiGames.Scripts.WindowContentTypes
     public class InspectorWindowController : WindowController
     {
         private static ScrollableListController _contentList = new();
+        public static GameObject SelectedObject { get; private set; }
 
         public override void Awake()
         {
@@ -18,6 +19,7 @@ namespace AkiGames.Scripts.WindowContentTypes
 
         public static void LoadFor(GameObject ObjToDescribe)
         {
+            Select(ObjToDescribe);
             _contentList.gameObject.Children = [];
             
             if (ObjToDescribe is null) return;
@@ -35,6 +37,11 @@ namespace AkiGames.Scripts.WindowContentTypes
             }
             _contentList.Refresh();
             _contentList.gameObject.RefreshBounds();
+        }
+
+        public static void Select(GameObject selectedObject)
+        {
+            SelectedObject = selectedObject;
         }
     }
 }

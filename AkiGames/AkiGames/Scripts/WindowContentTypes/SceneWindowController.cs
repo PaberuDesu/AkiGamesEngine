@@ -159,10 +159,15 @@ namespace AkiGames.Scripts.WindowContentTypes
 
             SceneInteractableObject interactable = new()
             {
-                source = objectRealization.uiTransform
+                source = objectRealization.uiTransform,
+                sourceObject = objectRealization
             };
             interactable.SetActionOnDoubleClick(() => { InspectorWindowController.LoadFor(objectRealization); });
             objectConcept.AddComponent(interactable);
+            objectConcept.AddComponent(new SceneSelectionHighlight
+            {
+                SourceObject = objectRealization
+            });
 
             foreach (GameObject childRealization in objectRealization.Children)
             {

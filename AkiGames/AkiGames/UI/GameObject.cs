@@ -341,10 +341,12 @@ namespace AkiGames.UI
         
         public virtual void SortByLayers()
         {
-            Image image = GetComponent<Image>();
-            if (image != null && image.Enabled) image.AddToLayer();
-            Text text = GetComponent<Text>();
-            if (text != null && text.Enabled) text.AddToLayer();
+            foreach (DrawableComponent drawableComponent in Components.OfType<DrawableComponent>())
+            {
+                if (drawableComponent.Enabled)
+                    drawableComponent.AddToLayer();
+            }
+
             foreach (var child in Children)
             {
                 if (child.IsActive) child.SortByLayers();

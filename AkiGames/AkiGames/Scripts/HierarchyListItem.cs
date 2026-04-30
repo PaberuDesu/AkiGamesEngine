@@ -68,6 +68,7 @@ namespace AkiGames.Scripts
 
             _lastMouseDownMs = now;
             _selectedObject = RepresentedObject;
+            InspectorWindowController.Select(RepresentedObject);
             base.OnMouseDown();
         }
 

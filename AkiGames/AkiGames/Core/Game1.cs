@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using AkiGames.Core.Serialization;
 using AkiGames.Events;
-using AkiGames.UI;
-using System.Text.Json;
 using AkiGames.Scripts.WindowContentTypes;
-using AkiGames.Scripts;
+using AkiGames.Scripts.Inspector;
+using AkiGames.UI;
 
 namespace AkiGames.Core
 {

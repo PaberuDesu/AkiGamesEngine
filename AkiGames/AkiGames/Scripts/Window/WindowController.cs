@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using AkiGames.Events;
-using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
 
 namespace AkiGames.Scripts.Window

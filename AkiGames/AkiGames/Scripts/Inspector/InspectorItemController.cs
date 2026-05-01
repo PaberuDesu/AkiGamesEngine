@@ -1,0 +1,374 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using AkiGames.Core;
+using AkiGames.Core.Serialization;
+using AkiGames.Scripts.WindowContentTypes;
+using AkiGames.UI;
+
+namespace AkiGames.Scripts.Inspector
+{
+    public class InspectorItemController : GameComponent
+    {
+        public GameComponent component;
+        private GameObject content;
+
+        private Color _inactiveColor = Color.Gray;
+
+        private static readonly Dictionary<string, Texture2D> _icons = [];
+
+        public override void Awake()
+        {
+            GameObject title = gameObject.Children[4];
+            content = gameObject.Children[5];
+
+            int height = 8;
+            title.uiTransform.OffsetMin = new Vector2(0, height);
+            Image image = title.Children[0].GetComponent<Image>();
+
+            Type type = component.GetType();
+            bool describesGameObject = component is InspectorGameObjectParameters;
+            string titleText = describesGameObject ? "GameObject" : type.Name;
+            title.Children[1].GetComponent<Text>().text = titleText;
+            image.texture = titleText switch
+            {
+                "GameObject" => _icons["GameObject"],
+                "UITransform" => _icons["Transform"],
+                "Text" => _icons["Text"],
+                "Image" => _icons["Image"],
+                _ => _icons["Script"]
+            };
+
+            height += 35;
+            foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+            {
+                if (!CanShowMember(field, describesGameObject)) continue;
+                GameObject fieldObj = CreateFieldDescription(field, height, component);
+                if (fieldObj != null) height += fieldObj.uiTransform.Height + 5;
+            }
+            foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+            {
+                if (!CanShowMember(property, describesGameObject)) continue;
+                GameObject propertyObj = CreateFieldDescription(property, height, component);
+                if (propertyObj != null) height += propertyObj.uiTransform.Height + 5;
+            }
+            height += 8;
+            gameObject.uiTransform.Height = height;
+        }
+        
+        public static void LoadContent(ContentManager content)
+        {
+            _icons.Add("GameObject", content.Load<Texture2D>("InspectorIcons/GameObjectDescription_Component"));
+            _icons.Add("Transform", content.Load<Texture2D>("InspectorIcons/Transform_Component"));
+            _icons.Add("Text", content.Load<Texture2D>("InspectorIcons/Text_Component"));
+            _icons.Add("Image", content.Load<Texture2D>("InspectorIcons/Image_Component"));
+            _icons.Add("Script", content.Load<Texture2D>("InspectorIcons/Script_Component"));
+        }
+
+        private static bool CanShowMember(MemberInfo memberInfo, bool describesGameObject)
+        {
+            if (memberInfo.GetCustomAttribute<HideInInspector>() != null)
+                return false;
+
+            if (describesGameObject && memberInfo.DeclaringType != typeof(InspectorGameObjectParameters))
+                return false;
+
+            if (memberInfo is PropertyInfo propertyInfo)
+            {
+                return propertyInfo.CanRead &&
+                    propertyInfo.GetMethod.IsPublic &&
+                    propertyInfo.GetIndexParameters().Length == 0;
+            }
+
+            return true;
+        }
+
+        private GameObject CreateFieldDescription(MemberInfo memberInfo, int yOffset, GameComponent gameComponent)
+        {
+            string type = "";
+            Type memberType = null;
+            object value = null;
+            bool isSettable = false;
+            Array enumValuesArray = Array.Empty<object>();
+
+            if (memberInfo is FieldInfo fieldInfo)
+            {
+                memberType = fieldInfo.FieldType;
+                type = memberType.Name;
+                isSettable = !fieldInfo.IsInitOnly;
+                if (memberType.IsEnum) enumValuesArray = Enum.GetValues(memberType);
+                if (!TryReadMemberValue(fieldInfo, gameComponent, out value))
+                {
+                    return null;
+                }
+            }
+            if (memberInfo is PropertyInfo propertyInfo)
+            {
+                memberType = propertyInfo.PropertyType;
+                type = memberType.Name;
+                isSettable = propertyInfo.SetMethod != null && propertyInfo.SetMethod.IsPublic;
+                if (memberType.IsEnum) enumValuesArray = Enum.GetValues(memberType);
+                if (!TryReadMemberValue(propertyInfo, gameComponent, out value))
+                {
+                    return null;
+                }
+            }
+
+            GameObject fieldDescription;
+            switch (type)
+            {
+                case "Rectangle": return null;
+                case "Nullable`1": return null;
+                case "String":
+                    fieldDescription = Game1.Prefabs["InspectorStringDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    GameObject stringInputObject = fieldDescription.Children[1];
+                    Image image = stringInputObject.GetComponent<Image>();
+
+
+                    Text contentText = fieldDescription.Children[2].Children[0].Children[0].GetComponent<Text>();
+                    contentText.text = value?.ToString() ?? "";
+
+                    if (isSettable)
+                    {
+                        stringInputObject.AddComponent(new InspectorStringInputField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            TextField = contentText
+                        });
+                    }
+                    else
+                    {
+                        stringInputObject.IsMouseTargetable = false;
+                        image.fillColor = _inactiveColor;
+                    }
+                    break;
+                case "Vector2":
+                    fieldDescription = Game1.Prefabs["InspectorVector2Descriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    Image imageX = fieldDescription.Children[1].GetComponent<Image>();
+                    Image imageY = fieldDescription.Children[2].GetComponent<Image>();
+
+                    if (!isSettable)
+                    {
+                        imageX.gameObject.IsMouseTargetable = false;
+                        imageX.fillColor = _inactiveColor;
+                        imageY.gameObject.IsMouseTargetable = false;
+                        imageY.fillColor = _inactiveColor;
+                    }
+
+                    Vector2 valueV2 = (Vector2)value;
+                    imageX.gameObject.Children[0].GetComponent<Text>().text = $"{valueV2.X}";
+                    imageY.gameObject.Children[0].GetComponent<Text>().text = $"{valueV2.Y}";
+                    
+                    InspectorVector2InputField inputX = imageX.gameObject.GetComponent<InspectorVector2InputField>();
+                    inputX.Info = memberInfo;
+                    inputX.Component = gameComponent;
+                    inputX.coordinate = InspectorVector2InputField.Coordinate.X;
+                    InspectorVector2InputField inputY = imageY.gameObject.GetComponent<InspectorVector2InputField>();
+                    inputY.Info = memberInfo;
+                    inputY.Component = gameComponent;
+                    inputY.coordinate = InspectorVector2InputField.Coordinate.Y;
+                    break;
+                case "Color":
+                    fieldDescription = Game1.Prefabs["InspectorColorDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    fieldDescription.Children[1].GetComponent<Image>().
+                        fillColor = (Color)value;
+                    break;
+                case "Boolean":
+                    fieldDescription = Game1.Prefabs["InspectorBoolDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    GameObject checkboxObject = fieldDescription.Children[1];
+
+                    image = checkboxObject.GetComponent<Image>();
+                    image.texture = (bool)value ? Game1.UIImages["CheckboxApproved"] : Game1.UIImages["CheckboxEmpty"];
+                    
+                    InspectorCheckBox checkbox = checkboxObject.GetComponent<InspectorCheckBox>();
+                    checkbox.value = (bool)value;
+                    checkbox.Info = memberInfo;
+                    checkbox.Component = gameComponent;
+                    checkbox.gameObject.IsMouseTargetable = isSettable;
+                    
+                    if (!isSettable) image.fillColor = _inactiveColor;
+                    break;
+                case var _ when memberType == typeof(GameObject):
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+
+                    Text gameObjectValueText = image.gameObject.Children[0].GetComponent<Text>();
+                    gameObjectValueText.text =
+                        InspectorGameObjectDropField.GetDisplayName(value as GameObject);
+
+                    if (isSettable)
+                    {
+                        image.gameObject.AddComponent(new InspectorGameObjectDropField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            TextField = gameObjectValueText
+                        });
+                    }
+                    else
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
+                    break;
+                case var _ when typeof(GameComponent).IsAssignableFrom(memberType):
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+
+                    Text gameComponentValueText = image.gameObject.Children[0].GetComponent<Text>();
+                    gameComponentValueText.text =
+                        InspectorGameComponentDropField.GetDisplayName(value as GameComponent);
+
+                    if (isSettable)
+                    {
+                        image.gameObject.AddComponent(new InspectorGameComponentDropField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            ComponentType = memberType,
+                            TextField = gameComponentValueText
+                        });
+                    }
+                    else
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
+                    break;
+                case var _ when memberType == typeof(Texture2D):
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+
+                    Text textureValueText = image.gameObject.Children[0].GetComponent<Text>();
+                    textureValueText.text = GetTextureDisplayName(value as Texture2D);
+
+                    if (isSettable)
+                    {
+                        image.gameObject.AddComponent(new InspectorTextureDropField
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            TextField = textureValueText
+                        });
+                    }
+                    else
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
+                    break;
+                default:
+                    fieldDescription = Game1.Prefabs["InspectorFieldDescriptor"].Copy();
+                    fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
+                    fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
+
+                    image = fieldDescription.Children[1].GetComponent<Image>();
+                    if (!isSettable)
+                    {
+                        image.fillColor = _inactiveColor;
+                        image.gameObject.IsMouseTargetable = false;
+                    }
+
+                    image.gameObject.Children[0].GetComponent<Text>().text = value is null ? "null" : $"{value}";
+                    
+                    if (enumValuesArray.Length > 0)
+                    {
+                        List<string> menuItemNames = [];
+                        foreach (object itemName in enumValuesArray)
+                        {
+                            menuItemNames.Add($"{itemName}");
+                        }
+                        fieldDescription.Children[1].AddComponent(new InspectorDropDown()
+                        {
+                            menuItems = menuItemNames,
+                            Info = memberInfo,
+                            Component = gameComponent
+                        });
+                    }
+                    else if (type == "Single")
+                    {
+                        fieldDescription.Children[1].AddComponent(new InspectorNumberInputField()
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent
+                        });
+                    }
+                    else if (type == "Int32")
+                    {
+                        fieldDescription.Children[1].AddComponent(new InspectorNumberInputField()
+                        {
+                            Info = memberInfo,
+                            Component = gameComponent,
+                            isInteger = true
+                        });
+                    }
+                    break;
+            }
+            content.AddChild(fieldDescription);
+            return fieldDescription;
+        }
+
+        private static string GetTextureDisplayName(Texture2D texture)
+        {
+            string textureLink = Game1.GetGameTextureLink(texture);
+            return string.IsNullOrWhiteSpace(textureLink) ?
+                "null" :
+                ContentFileUtility.GetDisplayName(textureLink);
+        }
+
+        private static bool TryReadMemberValue(MemberInfo memberInfo, GameComponent gameComponent, out object value)
+        {
+            try
+            {
+                value = memberInfo switch
+                {
+                    FieldInfo fieldInfo => fieldInfo.GetValue(gameComponent),
+                    PropertyInfo propertyInfo => propertyInfo.GetValue(gameComponent),
+                    _ => null
+                };
+                return true;
+            }
+            catch (TargetInvocationException ex)
+            {
+                LogInspectorMemberError(memberInfo, gameComponent, ex.InnerException?.Message ?? ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LogInspectorMemberError(memberInfo, gameComponent, ex.Message);
+            }
+
+            value = null;
+            return false;
+        }
+
+        private static void LogInspectorMemberError(MemberInfo memberInfo, GameComponent gameComponent, string error) =>
+            ConsoleWindowController.Log(
+                $"{memberInfo.Name} field of component {gameComponent.GetType().Name} can't be shown in inspector because of an error: {error}"
+            );
+    }
+}

@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Reflection;
 using AkiGames.Events;
-using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
 
 namespace AkiGames.Scripts.Window

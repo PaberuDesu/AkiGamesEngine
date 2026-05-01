@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using AkiGames.Core;
+using AkiGames.Core.Serialization;
 using AkiGames.Events;
 
 namespace AkiGames.UI.ScrollableList

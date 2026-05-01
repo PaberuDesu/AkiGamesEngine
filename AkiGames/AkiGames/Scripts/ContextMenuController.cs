@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using AkiGames.Core;
 using AkiGames.Events;
 using AkiGames.Scripts.WindowContentTypes;
+using AkiGames.Scripts.Hierarchy;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts

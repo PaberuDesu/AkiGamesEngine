@@ -9,8 +9,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using AkiGames.Core;
-using AkiGames.Scripts.Window;
+using AkiGames.Core.Editor;
+using AkiGames.Core.Serialization;
 using AkiGames.Events;
+using AkiGames.Scripts.Window;
+using AkiGames.Scripts.Explorer;
 using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
 

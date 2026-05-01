@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AkiGames.Core;
+using AkiGames.Core.Serialization;
 using AkiGames.Events;
 
 namespace AkiGames.UI.DropDown

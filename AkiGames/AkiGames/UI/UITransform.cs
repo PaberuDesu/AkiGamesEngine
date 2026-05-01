@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using AkiGames.Core;
+using AkiGames.Core.Serialization;
 
 namespace AkiGames.UI
 {

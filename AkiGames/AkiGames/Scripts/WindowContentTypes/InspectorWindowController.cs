@@ -1,7 +1,6 @@
 using AkiGames.Core;
-using AkiGames.Scripts.InspectorRedactor;
+using AkiGames.Scripts.Inspector;
 using AkiGames.Scripts.Window;
-using AkiGames.UI;
 using AkiGames.UI.ScrollableList;
 
 namespace AkiGames.Scripts.WindowContentTypes

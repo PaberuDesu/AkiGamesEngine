@@ -1,5 +1,4 @@
 using AkiGames.Core;
-using AkiGames.UI;
 using AkiGames.UI.DropDown;
 
 namespace AkiGames.Scripts.Menu

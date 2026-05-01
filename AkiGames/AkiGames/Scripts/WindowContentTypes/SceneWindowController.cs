@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using AkiGames.Events;
 using AkiGames.Scripts.Window;
+using AkiGames.Scripts.Scene;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts.WindowContentTypes

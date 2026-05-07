@@ -35,6 +35,8 @@ namespace AkiGames.Scripts.Hierarchy
         private double _hoverStartTime = -1;
         private bool _pendingOpen = false;
         private const double HoverDelayMs = 600;
+        private static readonly Color PrefabLinkTextColor = new(120, 180, 255);
+        private static readonly Color DefaultTextColor = Color.White;
 
         public override void Start()
         {
@@ -42,6 +44,7 @@ namespace AkiGames.Scripts.Hierarchy
 
             Opener = gameObject.Children[0].GetComponent<HierarchyExpander>();
             Opener.gameObject.IsActive = childItems.Count > 0;
+            RefreshPrefabLinkHighlight();
         }
 
         public override void OnMouseDown()
@@ -357,6 +360,15 @@ namespace AkiGames.Scripts.Hierarchy
         {
             _hoverStartTime = -1;
             _pendingOpen = false;
+        }
+
+        private void RefreshPrefabLinkHighlight()
+        {
+            if (Title == null || RepresentedObject == null) return;
+
+            Title.TextColor = string.IsNullOrWhiteSpace(RepresentedObject.SourcePrefabLink) ?
+                DefaultTextColor :
+                PrefabLinkTextColor;
         }
 
         protected override bool CanStartRenaming() => RepresentedObject != null;

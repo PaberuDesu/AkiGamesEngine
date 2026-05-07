@@ -1,0 +1,52 @@
+{
+  "ObjectName": "ResizeHandleLeft",
+  "ObjectID": 1,
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 8,
+      "Height": 0,
+      "HorizontalAlignment": "Left",
+      "VerticalAlignment": "Stretch",
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 0,
+        "y": 1
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "ResizeHandleController",
+      "resizeDirection": "Left",
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "texture": "",
+      "fillColor": 0,
+      "imageMode": "Stretch",
+      "zIndex": 0,
+      "Enabled": true
+    }
+  ],
+  "Children": []
+}

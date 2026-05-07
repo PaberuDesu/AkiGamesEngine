@@ -166,6 +166,21 @@
 /processor:AkiProcessor
 /build:Prefabs/DropDownSubmenuItem.aki
 
+#begin Prefabs/EditorWindow.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/EditorWindow.aki
+
+#begin Prefabs/EditorWindowBorder.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/EditorWindowBorder.aki
+
+#begin Prefabs/EditorWindowResizeHandle.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/EditorWindowResizeHandle.aki
+
 #begin Prefabs/ExplorerContentItem.aki
 /importer:AkiImporter
 /processor:AkiProcessor
@@ -175,6 +190,11 @@
 /importer:AkiImporter
 /processor:AkiProcessor
 /build:Prefabs/HierarchyContentItem.aki
+
+#begin Prefabs/InspectorAddComponent.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/InspectorAddComponent.aki
 
 #begin Prefabs/InspectorBoolDescriptor.aki
 /importer:AkiImporter
@@ -191,16 +211,6 @@
 /processor:AkiProcessor
 /build:Prefabs/InspectorContentItem.aki
 
-#begin Prefabs/InspectorAddComponent.aki
-/importer:AkiImporter
-/processor:AkiProcessor
-/build:Prefabs/InspectorAddComponent.aki
-
-#begin Prefabs/ScrollableList.aki
-/importer:AkiImporter
-/processor:AkiProcessor
-/build:Prefabs/ScrollableList.aki
-
 #begin Prefabs/InspectorFieldDescriptor.aki
 /importer:AkiImporter
 /processor:AkiProcessor
@@ -215,6 +225,16 @@
 /importer:AkiImporter
 /processor:AkiProcessor
 /build:Prefabs/InspectorVector2Descriptor.aki
+
+#begin Prefabs/ScrollableList.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ScrollableList.aki
+
+#begin Prefabs/UpperMenuDropdown.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/UpperMenuDropdown.aki
 
 #begin scene_grid.png
 /importer:TextureImporter

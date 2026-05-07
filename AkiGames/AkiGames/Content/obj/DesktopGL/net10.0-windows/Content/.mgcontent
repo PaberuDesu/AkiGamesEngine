@@ -20,16 +20,20 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ContextMenuItem.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/DropDownSubmenu.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/DropDownSubmenuItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/EditorWindow.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/EditorWindowBorder.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/EditorWindowResizeHandle.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ExplorerContentItem.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/HierarchyContentItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorAddComponent.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorBoolDescriptor.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorColorDescriptor.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorContentItem.aki</File>
-    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorAddComponent.aki</File>
-    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ScrollableList.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorFieldDescriptor.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorStringDescriptor.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorVector2Descriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/ScrollableList.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/UpperMenuDropdown.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/scene_grid.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/CheckboxApproved.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/CheckboxEmpty.png</File>
@@ -41,6 +45,10 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/settings.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

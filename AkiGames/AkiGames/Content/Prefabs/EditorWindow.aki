@@ -1,0 +1,309 @@
+{
+  "ObjectName": "Window",
+  "ObjectID": 1,
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 200,
+      "Height": 200,
+      "HorizontalAlignment": "Left",
+      "VerticalAlignment": "Top",
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 0,
+        "y": 0
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "texture": "",
+      "fillColor": 4279505940,
+      "imageMode": "Stretch",
+      "zIndex": 0,
+      "Enabled": true
+    }
+  ],
+  "Children": [
+    {
+      "Link": "Content/Prefabs/EditorWindowBorder",
+      "ObjectName": "BorderLeft",
+      "ObjectID": 2,
+      "Components": [
+        {
+          "type": "UITransform",
+          "HorizontalAlignment": "Left",
+          "anchorRightBottom": {
+            "x": 0,
+            "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowBorder",
+      "ObjectName": "BorderBottom",
+      "ObjectID": 3,
+      "Components": [
+        {
+          "type": "UITransform",
+          "Width": 0,
+          "Height": 1,
+          "VerticalAlignment": "Bottom",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 1
+          }
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowBorder",
+      "ObjectName": "BorderRight",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "HorizontalAlignment": "Right",
+          "anchorLeftTop": {
+            "x": 1,
+            "y": 0
+          }
+        }
+      ]
+    },
+    {
+      "ObjectName": "WindowContent",
+      "ObjectID": 5,
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 8,
+            "y": 30
+          },
+          "OffsetMax": {
+            "x": 8,
+            "y": 8
+          },
+          "Width": 0,
+          "Height": 0,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowResizeHandle",
+      "ObjectName": "ResizeHandleLeft",
+      "ObjectID": 8
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowResizeHandle",
+      "ObjectName": "ResizeHandleRight",
+      "ObjectID": 9,
+      "Components": [
+        {
+          "type": "UITransform",
+          "HorizontalAlignment": "Right",
+          "anchorLeftTop": {
+            "x": 1,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 1,
+            "y": 0
+          }
+        },
+        {
+          "type": "ResizeHandleController",
+          "resizeDirection": "Right"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowResizeHandle",
+      "ObjectName": "ResizeHandleBottom",
+      "ObjectID": 10,
+      "Components": [
+        {
+          "type": "UITransform",
+          "Width": 0,
+          "Height": 8,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Bottom",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 1
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ResizeHandleController",
+          "resizeDirection": "Bottom"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowResizeHandle",
+      "ObjectName": "ResizeHandleBottomLeft",
+      "ObjectID": 11,
+      "Components": [
+        {
+          "type": "UITransform",
+          "Height": 8,
+          "VerticalAlignment": "Bottom",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 1
+          }
+        },
+        {
+          "type": "ResizeHandleController",
+          "resizeDirection": "BottomLeft"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/EditorWindowResizeHandle",
+      "ObjectName": "ResizeHandleBottomRight",
+      "ObjectID": 12,
+      "Components": [
+        {
+          "type": "UITransform",
+          "Height": 8,
+          "HorizontalAlignment": "Right",
+          "VerticalAlignment": "Bottom",
+          "anchorLeftTop": {
+            "x": 1,
+            "y": 1
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "type": "ResizeHandleController",
+          "resizeDirection": "BottomRight"
+        }
+      ]
+    },
+    {
+      "ObjectName": "TitleBar",
+      "ObjectID": 13,
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 25,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Top",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 0
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": false,
+          "texture": "",
+          "fillColor": 4282137660,
+          "imageMode": "Stretch",
+          "zIndex": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Text",
+          "HorizontalWrap": "None",
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "text": "Window",
+          "TextColor": 4294967295,
+          "zIndex": 0,
+          "Enabled": true
+        },
+        {
+          "type": "TitleBarController",
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    }
+  ]
+}

@@ -27,6 +27,7 @@ namespace AkiGames.Core.GameStructures
         public bool IsMouseTargetable = true;
 
         [DontSerialize, HideInInspector] public UITransform uiTransform = new();
+        [DontSerialize, HideInInspector] internal string SourcePrefabLink = "";
 
         private double _lastClickTime = -DoubleClickThreshold;
         private const double DoubleClickThreshold = 500; // ms

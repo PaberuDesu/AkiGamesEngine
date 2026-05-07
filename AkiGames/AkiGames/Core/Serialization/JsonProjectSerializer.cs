@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -14,6 +15,9 @@ namespace AkiGames.Core.Serialization
 {
     public static class JsonProjectSerializer
     {
+        private static readonly HashSet<string> _prefabLinksBeingLoaded =
+            new(StringComparer.OrdinalIgnoreCase);
+
         private static readonly JsonSerializerOptions _options = new()
         {
             Converters =
@@ -60,16 +64,222 @@ namespace AkiGames.Core.Serialization
 
         private static object ConvertGameObjectToJsonObject(GameObject gameObject)
         {
-            return new
+            if (!string.IsNullOrWhiteSpace(gameObject.SourcePrefabLink))
             {
-                gameObject.ObjectName,
-                gameObject.ObjectID,
-                gameObject.IsActive,
-                gameObject.IsMouseTargetable,
-                Components = gameObject.Components?.Select(ConvertComponentToJsonObject).ToArray(),
-                Children = gameObject.Children?.Select(ConvertGameObjectToJsonObject).ToArray()
+                GameObject prefabObject = CreatePrefabObjectFromLink(gameObject.SourcePrefabLink);
+                if (prefabObject != null)
+                    return ConvertLinkedGameObjectToJsonObject(gameObject, prefabObject);
+            }
+
+            return ConvertFullGameObjectToJsonObject(gameObject);
+        }
+
+        private static Dictionary<string, object> ConvertFullGameObjectToJsonObject(GameObject gameObject)
+        {
+            return new Dictionary<string, object>
+            {
+                ["ObjectName"] = gameObject.ObjectName,
+                ["ObjectID"] = gameObject.ObjectID,
+                ["IsActive"] = gameObject.IsActive,
+                ["IsMouseTargetable"] = gameObject.IsMouseTargetable,
+                ["Components"] = gameObject.Components?.Select(ConvertComponentToJsonObject).ToArray(),
+                ["Children"] = gameObject.Children?.Select(ConvertGameObjectToJsonObject).ToArray()
             };
         }
+
+        private static Dictionary<string, object> ConvertLinkedGameObjectToJsonObject(
+            GameObject gameObject,
+            GameObject sourceObject
+        )
+        {
+            Dictionary<string, object> dict = new()
+            {
+                ["Link"] = gameObject.SourcePrefabLink
+            };
+
+            AddGameObjectOverrideProperties(dict, gameObject, sourceObject, includeObjectName: true);
+
+            Dictionary<string, object>[] componentOverrides =
+                ConvertComponentOverridesToJsonObjects(gameObject, sourceObject);
+            if (componentOverrides.Length > 0)
+                dict["Components"] = componentOverrides;
+
+            object[] childOverrides = ConvertChildOverridesToJsonObjects(gameObject, sourceObject);
+            if (childOverrides != null)
+                dict["Children"] = childOverrides;
+
+            return dict;
+        }
+
+        private static Dictionary<string, object> ConvertGameObjectOverrideToJsonObject(
+            GameObject gameObject,
+            GameObject sourceObject
+        )
+        {
+            Dictionary<string, object> dict = new();
+            AddGameObjectOverrideProperties(dict, gameObject, sourceObject, includeObjectName: true);
+
+            Dictionary<string, object>[] componentOverrides =
+                ConvertComponentOverridesToJsonObjects(gameObject, sourceObject);
+            if (componentOverrides.Length > 0)
+                dict["Components"] = componentOverrides;
+
+            object[] childOverrides = ConvertChildOverridesToJsonObjects(gameObject, sourceObject);
+            if (childOverrides != null)
+                dict["Children"] = childOverrides;
+
+            return dict;
+        }
+
+        private static void AddGameObjectOverrideProperties(
+            Dictionary<string, object> dict,
+            GameObject gameObject,
+            GameObject sourceObject,
+            bool includeObjectName
+        )
+        {
+            if (includeObjectName || gameObject.ObjectName != sourceObject.ObjectName)
+                dict["ObjectName"] = gameObject.ObjectName;
+
+            if (gameObject.ObjectID > 0 && gameObject.ObjectID != sourceObject.ObjectID)
+                dict["ObjectID"] = gameObject.ObjectID;
+
+            if (gameObject.IsActive != sourceObject.IsActive)
+                dict["IsActive"] = gameObject.IsActive;
+
+            if (gameObject.IsMouseTargetable != sourceObject.IsMouseTargetable)
+                dict["IsMouseTargetable"] = gameObject.IsMouseTargetable;
+        }
+
+        private static Dictionary<string, object>[] ConvertComponentOverridesToJsonObjects(
+            GameObject gameObject,
+            GameObject sourceObject
+        )
+        {
+            List<Dictionary<string, object>> overrides = [];
+            HashSet<GameComponent> usedSourceComponents = [];
+
+            foreach (GameComponent component in gameObject.Components)
+            {
+                GameComponent sourceComponent = FindSourceComponentForSerialization(
+                    component,
+                    sourceObject.Components,
+                    usedSourceComponents
+                );
+
+                if (sourceComponent == null)
+                {
+                    overrides.Add(ConvertComponentToJsonObject(component));
+                    continue;
+                }
+
+                usedSourceComponents.Add(sourceComponent);
+                Dictionary<string, object> componentOverride =
+                    ConvertComponentOverrideToJsonObject(component, sourceComponent);
+                if (componentOverride.Count > 1)
+                    overrides.Add(componentOverride);
+            }
+
+            return [.. overrides];
+        }
+
+        private static GameComponent FindSourceComponentForSerialization(
+            GameComponent component,
+            List<GameComponent> sourceComponents,
+            HashSet<GameComponent> usedSourceComponents
+        )
+        {
+            Type componentType = component.GetType();
+            return sourceComponents.FirstOrDefault(sourceComponent =>
+                !usedSourceComponents.Contains(sourceComponent) &&
+                componentType.IsAssignableFrom(sourceComponent.GetType())
+            );
+        }
+
+        private static Dictionary<string, object> ConvertComponentOverrideToJsonObject(
+            GameComponent component,
+            GameComponent sourceComponent
+        )
+        {
+            Dictionary<string, object> componentJson = ConvertComponentToJsonObject(component);
+            Dictionary<string, object> sourceJson = ConvertComponentToJsonObject(sourceComponent);
+            Dictionary<string, object> overrideJson = new()
+            {
+                ["type"] = componentJson["type"]
+            };
+
+            foreach (KeyValuePair<string, object> pair in componentJson)
+            {
+                string key = pair.Key;
+                object value = pair.Value;
+                if (key == "type") continue;
+
+                if (
+                    !sourceJson.TryGetValue(key, out object sourceValue) ||
+                    !SerializedValuesEqual(value, sourceValue)
+                )
+                {
+                    overrideJson[key] = value;
+                }
+            }
+
+            return overrideJson;
+        }
+
+        private static object[] ConvertChildOverridesToJsonObjects(
+            GameObject gameObject,
+            GameObject sourceObject
+        )
+        {
+            List<GameObject> children = gameObject.Children;
+            List<GameObject> sourceChildren = sourceObject.Children;
+
+            if (children.Count == 0 && sourceChildren.Count > 0)
+                return [];
+
+            List<object> overrides = [];
+            HashSet<GameObject> usedSourceChildren = [];
+
+            foreach (GameObject child in children)
+            {
+                GameObject sourceChild = FindSourceChildForSerialization(
+                    child,
+                    sourceChildren,
+                    usedSourceChildren
+                );
+
+                if (sourceChild == null)
+                {
+                    overrides.Add(ConvertGameObjectToJsonObject(child));
+                    continue;
+                }
+
+                usedSourceChildren.Add(sourceChild);
+                Dictionary<string, object> childOverride =
+                    ConvertGameObjectOverrideToJsonObject(child, sourceChild);
+                if (childOverride.Count > 1)
+                    overrides.Add(childOverride);
+            }
+
+            if (overrides.Count == 0) return null;
+            return [.. overrides];
+        }
+
+        private static GameObject FindSourceChildForSerialization(
+            GameObject child,
+            List<GameObject> sourceChildren,
+            HashSet<GameObject> usedSourceChildren
+        )
+        {
+            return sourceChildren.FirstOrDefault(sourceChild =>
+                !usedSourceChildren.Contains(sourceChild) &&
+                string.Equals(sourceChild.ObjectName, child.ObjectName, StringComparison.Ordinal)
+            );
+        }
+
+        private static bool SerializedValuesEqual(object value, object sourceValue) =>
+            JsonSerializer.Serialize(value, _options) ==
+            JsonSerializer.Serialize(sourceValue, _options);
 
         private static Dictionary<string, object> ConvertComponentToJsonObject(GameComponent gameComponent)
         {
@@ -172,6 +382,165 @@ namespace AkiGames.Core.Serialization
 
         public static GameObject LoadFromJson(JsonElement rootElement) => ParseGameObject(rootElement);
 
+        private static bool TryGetJsonProperty(
+            JsonElement element,
+            string propertyName,
+            out JsonElement value
+        )
+        {
+            if (element.TryGetProperty(propertyName, out value))
+                return true;
+
+            foreach (JsonProperty property in element.EnumerateObject())
+            {
+                if (string.Equals(property.Name, propertyName, StringComparison.OrdinalIgnoreCase))
+                {
+                    value = property.Value;
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        private static string GetLink(JsonElement element)
+        {
+            if (
+                element.TryGetProperty("Link", out JsonElement linkElement) &&
+                linkElement.ValueKind == JsonValueKind.String
+            )
+            {
+                return linkElement.GetString();
+            }
+
+            return "";
+        }
+
+        private static GameObject CreatePrefabObjectFromLink(string prefabLink)
+        {
+            string normalizedLink = NormalizePrefabLink(prefabLink);
+            if (string.IsNullOrWhiteSpace(normalizedLink)) return null;
+
+            if (!_prefabLinksBeingLoaded.Add(normalizedLink))
+            {
+                ConsoleWindowController.Log($"Prefab link {normalizedLink} can't be loaded: cyclic prefab link.");
+                return null;
+            }
+
+            try
+            {
+                string jsonString = LoadAkiJsonString(normalizedLink);
+                if (!string.IsNullOrWhiteSpace(jsonString))
+                {
+                    JsonElement prefabElement = JsonSerializer.Deserialize<JsonElement>(jsonString);
+                    return LoadFromJson(prefabElement).Copy();
+                }
+
+                string prefabKey = GetPrefabDictionaryKey(normalizedLink);
+                if (!string.IsNullOrWhiteSpace(prefabKey) &&
+                    Game1.Prefabs.TryGetValue(prefabKey, out GameObject loadedPrefab))
+                {
+                    return loadedPrefab.Copy();
+                }
+
+                ConsoleWindowController.Log($"Prefab link {normalizedLink} can't be loaded: prefab wasn't found.");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Prefab link {normalizedLink} can't be loaded because of an error: {ex.Message}");
+                return null;
+            }
+            finally
+            {
+                _prefabLinksBeingLoaded.Remove(normalizedLink);
+            }
+        }
+
+        private static string LoadAkiJsonString(string prefabLink)
+        {
+            string contentRelativePath = GetContentRelativeAkiPath(prefabLink);
+            if (string.IsNullOrWhiteSpace(contentRelativePath)) return null;
+
+            string assetName = Path.ChangeExtension(contentRelativePath, null)
+                .Replace('\\', '/');
+
+            if (Game1.GameContent != null)
+            {
+                try { return Game1.GameContent.Load<string>(assetName); }
+                catch { }
+            }
+
+            if (Game1.EditorContent != null)
+            {
+                try { return Game1.EditorContent.Load<string>(assetName); }
+                catch { }
+            }
+
+            foreach (string contentRoot in new[] { Game1.GameContentRoot, Game1.EditorContentRoot })
+            {
+                if (string.IsNullOrWhiteSpace(contentRoot)) continue;
+
+                string rawPath = Path.Combine(
+                    contentRoot,
+                    contentRelativePath.Replace('/', Path.DirectorySeparatorChar)
+                );
+                if (File.Exists(rawPath))
+                    return File.ReadAllText(rawPath);
+            }
+
+            return null;
+        }
+
+        private static string NormalizePrefabLink(string prefabLink)
+        {
+            if (string.IsNullOrWhiteSpace(prefabLink)) return "";
+
+            string normalizedPath = prefabLink.Trim().Replace('\\', '/');
+            if (Path.IsPathRooted(normalizedPath))
+            {
+                int contentIndex = normalizedPath.LastIndexOf("/Content/", StringComparison.OrdinalIgnoreCase);
+                if (contentIndex >= 0)
+                    normalizedPath = normalizedPath[(contentIndex + 1)..];
+                else
+                    return "";
+            }
+
+            if (!normalizedPath.Contains('/'))
+                normalizedPath = $"Prefabs/{normalizedPath}";
+
+            if (normalizedPath.StartsWith("Content/", StringComparison.OrdinalIgnoreCase))
+                normalizedPath = normalizedPath["Content/".Length..];
+
+            if (string.Equals(Path.GetExtension(normalizedPath), ".aki", StringComparison.OrdinalIgnoreCase))
+                normalizedPath = Path.ChangeExtension(normalizedPath, null).Replace('\\', '/');
+
+            return $"Content/{normalizedPath.TrimStart('/')}";
+        }
+
+        private static string GetContentRelativeAkiPath(string prefabLink)
+        {
+            string normalizedLink = NormalizePrefabLink(prefabLink);
+            if (
+                !normalizedLink.StartsWith("Content/", StringComparison.OrdinalIgnoreCase) ||
+                normalizedLink.Length <= "Content/".Length
+            )
+            {
+                return "";
+            }
+
+            string relativePath = normalizedLink["Content/".Length..];
+
+            if (string.IsNullOrWhiteSpace(Path.GetExtension(relativePath)))
+                relativePath += ".aki";
+
+            return relativePath;
+        }
+
+        private static string GetPrefabDictionaryKey(string prefabLink) =>
+            Path.GetFileNameWithoutExtension(GetContentRelativeAkiPath(prefabLink));
+
         public static GameObject ParseGameObject(JsonElement element)
         {
             List<PendingGameObjectReference> pendingGameObjectReferences = [];
@@ -185,74 +554,214 @@ namespace AkiGames.Core.Serialization
             List<PendingGameObjectReference> pendingGameObjectReferences
         )
         {
+            string link = GetLink(element);
+            if (!string.IsNullOrWhiteSpace(link))
+            {
+                GameObject linkedObject = CreatePrefabObjectFromLink(link) ?? new(GetPrefabDictionaryKey(link));
+                string normalizedLink = NormalizePrefabLink(link);
+                linkedObject.SourcePrefabLink = string.IsNullOrWhiteSpace(normalizedLink) ? link : normalizedLink;
+                ApplyGameObjectOverrides(
+                    linkedObject,
+                    element,
+                    pendingGameObjectReferences,
+                    preserveExistingChildren: true
+                );
+                return linkedObject;
+            }
+
             // Parse name
-            GameObject obj =  new(
-                element.TryGetProperty("ObjectName", out JsonElement nameElement) ?
+            GameObject obj = new(
+                TryGetJsonProperty(element, "ObjectName", out JsonElement nameElement) ?
                     nameElement.GetString() : ""
             );
 
-            // Parse isActive
-            if (element.TryGetProperty("IsActive", out JsonElement activeElement))
-                obj.IsActive = activeElement.GetBoolean();
-
-            // Parse objectId
-            if (element.TryGetProperty("ObjectID", out JsonElement objectIdElement))
-                obj.ObjectID = objectIdElement.GetInt32();
-
-            // Parse isMouseTargetable
-            if (element.TryGetProperty("IsMouseTargetable", out JsonElement mouseTargetElement))
-                obj.IsMouseTargetable = mouseTargetElement.GetBoolean();
-
-            // Parse components
-            if (element.TryGetProperty("Components", out JsonElement componentsElement))
-            {
-                foreach (JsonElement componentElement in componentsElement.EnumerateArray())
-                {
-                    GameComponent component = ParseComponent(
-                        componentElement,
-                        pendingGameObjectReferences
-                    );
-
-                    if (component != null)
-                    {
-                        if (component is UITransform uiTransform)
-                        {
-                            obj.uiTransform = uiTransform.Copy();
-                            obj.uiTransform.gameObject = obj;
-                        }
-                        obj.AddComponent(component);
-                    }
-                }
-            }
-
-            // Parse children
-            if (element.TryGetProperty("Children", out JsonElement childrenElement))
-            {
-                foreach (JsonElement childElement in childrenElement.EnumerateArray())
-                {
-                    GameObject child = ParseGameObject(
-                        childElement,
-                        pendingGameObjectReferences
-                    );
-                    obj.AddChild(child);
-                }
-            }
+            ApplyGameObjectOverrides(
+                obj,
+                element,
+                pendingGameObjectReferences,
+                preserveExistingChildren: false
+            );
 
             return obj;
         }
 
-        private static GameComponent ParseComponent(
+        private static void ApplyGameObjectOverrides(
+            GameObject obj,
             JsonElement element,
+            List<PendingGameObjectReference> pendingGameObjectReferences,
+            bool preserveExistingChildren
+        )
+        {
+            if (TryGetJsonProperty(element, "ObjectName", out JsonElement nameElement))
+                obj.ObjectName = nameElement.GetString() ?? "";
+
+            if (TryGetJsonProperty(element, "IsActive", out JsonElement activeElement))
+                obj.IsActive = activeElement.GetBoolean();
+
+            if (TryGetJsonProperty(element, "ObjectID", out JsonElement objectIdElement))
+                obj.ObjectID = objectIdElement.GetInt32();
+
+            if (TryGetJsonProperty(element, "IsMouseTargetable", out JsonElement mouseTargetElement))
+                obj.IsMouseTargetable = mouseTargetElement.GetBoolean();
+
+            // Parse components
+            if (TryGetJsonProperty(element, "Components", out JsonElement componentsElement))
+            {
+                ApplyComponentOverrides(obj, componentsElement, pendingGameObjectReferences);
+            }
+
+            // Parse children
+            if (TryGetJsonProperty(element, "Children", out JsonElement childrenElement))
+            {
+                if (preserveExistingChildren)
+                    ApplyChildOverrides(obj, childrenElement, pendingGameObjectReferences);
+                else
+                    ReplaceChildren(obj, childrenElement, pendingGameObjectReferences);
+            }
+        }
+
+        private static void ReplaceChildren(
+            GameObject obj,
+            JsonElement childrenElement,
             List<PendingGameObjectReference> pendingGameObjectReferences
         )
         {
-            if (!element.TryGetProperty("type", out JsonElement typeElement)) return null;
+            obj.Children = [];
+            foreach (JsonElement childElement in childrenElement.EnumerateArray())
+            {
+                GameObject child = ParseGameObject(
+                    childElement,
+                    pendingGameObjectReferences
+                );
+                obj.AddChild(child);
+            }
+        }
 
-            GameComponent gameComponent = CreateComponentByType(typeElement.GetString());
-            if (gameComponent != null)
-                SetPropertiesFromJson(gameComponent, element, pendingGameObjectReferences);
-            
-            return gameComponent;
+        private static void ApplyChildOverrides(
+            GameObject obj,
+            JsonElement childrenElement,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
+        {
+            if (childrenElement.GetArrayLength() == 0)
+            {
+                obj.Children = [];
+                return;
+            }
+
+            HashSet<GameObject> usedChildren = [];
+            foreach (JsonElement childElement in childrenElement.EnumerateArray())
+            {
+                GameObject child = FindChildForOverride(obj.Children, childElement, usedChildren);
+                if (child == null)
+                {
+                    obj.AddChild(ParseGameObject(childElement, pendingGameObjectReferences));
+                    continue;
+                }
+
+                usedChildren.Add(child);
+                ApplyGameObjectOverrides(
+                    child,
+                    childElement,
+                    pendingGameObjectReferences,
+                    preserveExistingChildren: true
+                );
+            }
+        }
+
+        private static GameObject FindChildForOverride(
+            List<GameObject> children,
+            JsonElement childElement,
+            HashSet<GameObject> usedChildren
+        )
+        {
+            if (
+                TryGetJsonProperty(childElement, "ObjectName", out JsonElement nameElement) &&
+                nameElement.ValueKind == JsonValueKind.String
+            )
+            {
+                string objectName = nameElement.GetString() ?? "";
+                GameObject child = children.FirstOrDefault(existingChild =>
+                    !usedChildren.Contains(existingChild) &&
+                    string.Equals(existingChild.ObjectName, objectName, StringComparison.Ordinal)
+                );
+                if (child != null) return child;
+            }
+
+            if (
+                TryGetJsonProperty(childElement, "ObjectID", out JsonElement idElement) &&
+                idElement.ValueKind == JsonValueKind.Number
+            )
+            {
+                int objectId = idElement.GetInt32();
+                if (objectId <= 0) return null;
+
+                return children.FirstOrDefault(existingChild =>
+                    !usedChildren.Contains(existingChild) &&
+                    existingChild.ObjectID == objectId
+                );
+            }
+
+            return null;
+        }
+
+        private static void ApplyComponentOverrides(
+            GameObject obj,
+            JsonElement componentsElement,
+            List<PendingGameObjectReference> pendingGameObjectReferences
+        )
+        {
+            HashSet<GameComponent> usedComponents = [];
+
+            foreach (JsonElement componentElement in componentsElement.EnumerateArray())
+            {
+                if (!componentElement.TryGetProperty("type", out JsonElement typeElement)) continue;
+
+                string typeName = typeElement.GetString();
+                if (string.IsNullOrWhiteSpace(typeName)) continue;
+
+                Type componentType = ResolveComponentType(typeName);
+                GameComponent component = componentType == null ?
+                    null :
+                    obj.Components.FirstOrDefault(existingComponent =>
+                        !usedComponents.Contains(existingComponent) &&
+                        componentType.IsAssignableFrom(existingComponent.GetType())
+                    );
+                bool isNewComponent = component == null;
+
+                if (isNewComponent)
+                {
+                    component = CreateComponentByType(typeName);
+                    if (component == null) continue;
+                }
+                else
+                {
+                    usedComponents.Add(component);
+                }
+
+                SetPropertiesFromJson(component, componentElement, pendingGameObjectReferences);
+                if (isNewComponent)
+                {
+                    AddParsedComponent(obj, component);
+                    usedComponents.Add(component);
+                }
+                else if (component is UITransform uiTransform)
+                {
+                    obj.uiTransform = uiTransform;
+                    obj.uiTransform.gameObject = obj;
+                }
+            }
+        }
+
+        private static void AddParsedComponent(GameObject obj, GameComponent component)
+        {
+            if (component is UITransform uiTransform)
+            {
+                obj.uiTransform = uiTransform.Copy();
+                obj.uiTransform.gameObject = obj;
+            }
+
+            obj.AddComponent(component);
         }
 
         private static readonly Dictionary<string, Type> _typeCache = [];
@@ -279,6 +788,28 @@ namespace AkiGames.Core.Serialization
             }
 
             return componentType != null ? (GameComponent)Activator.CreateInstance(componentType) : null;
+        }
+
+        private static Type ResolveComponentType(string typeName)
+        {
+            if (string.IsNullOrWhiteSpace(typeName)) return null;
+
+            if (!_typeCache.TryGetValue(typeName, out Type componentType))
+            {
+                componentType = ProjectScriptLoader.ResolveComponentType(typeName);
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                componentType ??= assemblies
+                    .Where(assembly => !ProjectScriptLoader.IsProjectScriptAssembly(assembly))
+                    .SelectMany(GetLoadableTypes)
+                    .FirstOrDefault(t =>
+                        (t.Name == typeName || t.FullName == typeName) &&
+                        typeof(GameComponent).IsAssignableFrom(t) &&
+                        t.GetConstructor(Type.EmptyTypes) != null);
+
+                _typeCache[typeName] = componentType;
+            }
+
+            return componentType;
         }
 
         private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)

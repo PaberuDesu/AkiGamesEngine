@@ -382,6 +382,14 @@ namespace AkiGames.Scripts.WindowContentTypes
             }
         }
 
+        public bool TryAddPrefabToHierarchy(string filePath)
+        {
+            if (!TryGetPrefabLink(filePath, out string prefabLink))
+                return false;
+
+            return _hierarchyWindow?.TryAddPrefabLink(prefabLink, Input.MouseHoverTarget) == true;
+        }
+
         public void CompleteItemRename(
             string oldPath,
             string newBaseName,
@@ -447,7 +455,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             RefreshContent();
         }
 
-        public void RegisterCreatedScene(string filePath)
+        public static void RegisterCreatedScene(string filePath)
         {
             if (!string.Equals(Path.GetExtension(filePath), ".aki", StringComparison.OrdinalIgnoreCase))
                 return;
@@ -854,9 +862,12 @@ namespace AkiGames.Scripts.WindowContentTypes
                 Directory.GetParent(contentRoot)?.FullName ?? contentRoot;
         }
 
-        private static bool IsPrefabFile(string fullPath)
+        public static bool IsPrefabFile(string fullPath)
         {
-            DirectoryInfo directory = new(Path.GetDirectoryName(fullPath));
+            string directoryPath = Path.GetDirectoryName(fullPath);
+            if (string.IsNullOrWhiteSpace(directoryPath)) return false;
+
+            DirectoryInfo directory = new(directoryPath);
             while (directory != null)
             {
                 if (string.Equals(directory.Name, "Prefabs", StringComparison.OrdinalIgnoreCase))
@@ -868,6 +879,27 @@ namespace AkiGames.Scripts.WindowContentTypes
             }
             ConsoleWindowController.Log($"Warning: Could not determine if file '{fullPath}' is a prefab. Assuming it's not.");
             return false;
+        }
+
+        public static bool TryGetPrefabLink(string filePath, out string prefabLink)
+        {
+            prefabLink = "";
+            if (
+                string.IsNullOrWhiteSpace(filePath) ||
+                !File.Exists(filePath) ||
+                !string.Equals(Path.GetExtension(filePath), ".aki", StringComparison.OrdinalIgnoreCase) ||
+                !IsPrefabFile(filePath) ||
+                !TryGetContentRoot(filePath, out string contentRoot)
+            )
+            {
+                return false;
+            }
+
+            string relativePath = Path
+                .ChangeExtension(Path.GetRelativePath(contentRoot, filePath), null)
+                .Replace('\\', '/');
+            prefabLink = $"Content/{relativePath}";
+            return true;
         }
 
         internal void GoBack()

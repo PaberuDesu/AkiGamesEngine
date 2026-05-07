@@ -65,6 +65,10 @@ namespace AkiGames.Scripts.Explorer
 
         protected override void CompleteOuterDrag()
         {
+            ExplorerWindowController explorerWindow = FindExplorerWindow();
+            if (isFile && explorerWindow?.TryAddPrefabToHierarchy(FilePath) == true)
+                return;
+
             if (isFile && IsImageFile)
             {
                 InspectorTextureDropField textureDropField =

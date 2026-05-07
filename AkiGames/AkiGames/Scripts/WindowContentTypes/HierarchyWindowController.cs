@@ -46,7 +46,8 @@ namespace AkiGames.Scripts.WindowContentTypes
         public void RefreshContent(
             GameObject gameMainObject,
             string fullPath = "",
-            bool? showRootObject = null
+            bool? showRootObject = null,
+            GameObject objectToOpen = null
         )
         {
             bool openedNewFile = fullPath != "" && fullPath != _gamePath;
@@ -60,6 +61,9 @@ namespace AkiGames.Scripts.WindowContentTypes
 
             if (openedNewFile && _showRootObject)
                 _openedObjects.Add(gameMainObject);
+
+            if (objectToOpen != null)
+                _openedObjects.Add(objectToOpen);
             
             ClearContentItems();
             if (_showRootObject)
@@ -135,6 +139,40 @@ namespace AkiGames.Scripts.WindowContentTypes
             contentList.gameObject.AddChild(descriptorPrefabCopy);
             descriptingParentObject?.childItems.Add(itemController);
             return itemController;
+        }
+
+        public bool TryAddPrefabLink(string prefabLink, GameObject dropTarget)
+        {
+            if (string.IsNullOrWhiteSpace(prefabLink) || !IsHierarchyDropTarget(dropTarget))
+                return false;
+
+            GameObject parent = FindHierarchyItem(dropTarget)?.RepresentedObject ??
+                Game1.editableGameMainObject;
+            if (parent == null) return false;
+
+            GameObject prefabObject = JsonProjectSerializer.LoadPrefabLink(prefabLink);
+            if (prefabObject == null) return false;
+
+            parent.AddChild(prefabObject);
+            UpdateSceneOpening(parent == Game1.editableGameMainObject && !_showRootObject ? null : parent);
+            return true;
+        }
+
+        private bool IsHierarchyDropTarget(GameObject dropTarget) =>
+            gameObject.IsParentFor(dropTarget) ||
+            gameObject.uiTransform.Contains(Input.mousePosition);
+
+        private static HierarchyListItem FindHierarchyItem(GameObject target)
+        {
+            while (target != null)
+            {
+                HierarchyListItem item = target.GetComponent<HierarchyListItem>();
+                if (item != null) return item;
+
+                target = target.Parent;
+            }
+
+            return null;
         }
 
         private void SaveOpenedState()
@@ -225,6 +263,18 @@ namespace AkiGames.Scripts.WindowContentTypes
             gameObject.RefreshBounds();
 
             // Обновляем окно сцены
+            _sceneWindow?.RefreshContent(Game1.editableGameMainObject, _showRootObject);
+            _gameWindow?.RefreshContent(Game1.editableGameMainObject);
+        }
+
+        private void UpdateSceneOpening(GameObject objectToOpen)
+        {
+            if (Game1.editableGameMainObject == null) return;
+
+            Game1.editableGameMainObject.EnsureUniqueObjectIdsInTree();
+            RefreshContent(Game1.editableGameMainObject, objectToOpen: objectToOpen);
+            gameObject.RefreshBounds();
+
             _sceneWindow?.RefreshContent(Game1.editableGameMainObject, _showRootObject);
             _gameWindow?.RefreshContent(Game1.editableGameMainObject);
         }

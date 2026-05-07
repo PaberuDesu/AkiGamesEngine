@@ -382,6 +382,19 @@ namespace AkiGames.Core.Serialization
 
         public static GameObject LoadFromJson(JsonElement rootElement) => ParseGameObject(rootElement);
 
+        public static GameObject LoadPrefabLink(string prefabLink)
+        {
+            List<PendingGameObjectReference> pendingGameObjectReferences = [];
+            GameObject linkedObject = CreateGameObjectFromPrefabLink(
+                prefabLink,
+                createFallback: false
+            );
+            if (linkedObject == null) return null;
+
+            ResolveGameObjectReferences(linkedObject, pendingGameObjectReferences);
+            return linkedObject;
+        }
+
         private static bool TryGetJsonProperty(
             JsonElement element,
             string propertyName,
@@ -557,9 +570,10 @@ namespace AkiGames.Core.Serialization
             string link = GetLink(element);
             if (!string.IsNullOrWhiteSpace(link))
             {
-                GameObject linkedObject = CreatePrefabObjectFromLink(link) ?? new(GetPrefabDictionaryKey(link));
-                string normalizedLink = NormalizePrefabLink(link);
-                linkedObject.SourcePrefabLink = string.IsNullOrWhiteSpace(normalizedLink) ? link : normalizedLink;
+                GameObject linkedObject = CreateGameObjectFromPrefabLink(
+                    link,
+                    createFallback: true
+                );
                 ApplyGameObjectOverrides(
                     linkedObject,
                     element,
@@ -583,6 +597,26 @@ namespace AkiGames.Core.Serialization
             );
 
             return obj;
+        }
+
+        private static GameObject CreateGameObjectFromPrefabLink(
+            string prefabLink,
+            bool createFallback
+        )
+        {
+            GameObject linkedObject = CreatePrefabObjectFromLink(prefabLink);
+            if (linkedObject == null)
+            {
+                if (!createFallback) return null;
+                linkedObject = new(GetPrefabDictionaryKey(prefabLink));
+            }
+
+            string normalizedLink = NormalizePrefabLink(prefabLink);
+            linkedObject.SourcePrefabLink = string.IsNullOrWhiteSpace(normalizedLink) ?
+                prefabLink :
+                normalizedLink;
+
+            return linkedObject;
         }
 
         private static void ApplyGameObjectOverrides(

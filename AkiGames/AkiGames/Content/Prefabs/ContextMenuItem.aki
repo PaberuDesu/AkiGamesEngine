@@ -19,7 +19,7 @@
       "HorizontalAlignment": "Specific",
       "VerticalAlignment": "Top",
       "anchorLeftTop": {
-        "x": 0.1,
+        "x": 0,
         "y": 0
       },
       "anchorRightBottom": {
@@ -45,7 +45,7 @@
     {
       "type": "Text",
       "HorizontalWrap": "None",
-      "HorizontalAlignment": "Left",
+      "HorizontalAlignment": "Center",
       "VerticalAlignment": "Middle",
       "text": "",
       "TextColor": 4294967295,

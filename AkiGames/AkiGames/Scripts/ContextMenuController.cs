@@ -16,11 +16,39 @@ namespace AkiGames.Scripts
 
         public void Show(Vector2 screenPosition, HierarchyListItem targetItem)
         {
-            _contextMenuItemPrefab ??= Game1.Prefabs["ContextMenuItem"];
+            PrepareMenu(screenPosition);
             _targetItem = targetItem;
 
-            Game1.MainObject.AddChild(gameObject);
+            AddMenuItem("Rename", RenameObject);
+            AddMenuItem("Create Child", CreateChild);
+            AddMenuItem("Move Up", MoveUp);
+            AddMenuItem("Move Down", MoveDown);
+            AddMenuItem("Delete", DeleteObject);
 
+            gameObject.GetComponent<Column>()?.Refresh();
+            gameObject.RefreshBounds();
+        }
+
+        public void Show(Vector2 screenPosition, params (string Text, Action Action)[] items)
+        {
+            PrepareMenu(screenPosition);
+            _targetItem = null;
+
+            foreach ((string text, Action action) in items)
+                AddMenuItem(text, action);
+
+            gameObject.GetComponent<Column>()?.Refresh();
+            gameObject.RefreshBounds();
+        }
+
+        private void PrepareMenu(Vector2 screenPosition)
+        {
+            _contextMenuItemPrefab ??= Game1.Prefabs["ContextMenuItem"];
+
+            if (gameObject.Parent != Game1.MainObject)
+                Game1.MainObject.AddChild(gameObject);
+
+            gameObject.Children = [];
             uiTransform.OffsetMin = screenPosition;
             uiTransform.Width = 180;
             uiTransform.Height = 0;
@@ -32,15 +60,6 @@ namespace AkiGames.Scripts
                 column = new Column();
                 gameObject.AddComponent(column);
             }
-
-            AddMenuItem("Rename", RenameObject);
-            AddMenuItem("Create Child", CreateChild);
-            AddMenuItem("Move Up", MoveUp);
-            AddMenuItem("Move Down", MoveDown);
-            AddMenuItem("Delete", DeleteObject);
-
-            column.Refresh();
-            gameObject.RefreshBounds();
         }
 
         private void AddMenuItem(string text, Action action)

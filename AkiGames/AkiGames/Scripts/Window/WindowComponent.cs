@@ -28,6 +28,12 @@ namespace AkiGames.Scripts.Window
         }
 
         public override void OnMouseDown() => _windowController?.BringToFront();
+        public override void OnRMBUp()
+        {
+            if (_windowController != this)
+                _windowController?.OnRMBUp();
+        }
+
         public override void OnScroll(int scrollValue)
         {
             if (!IsScrollable) _windowController?.OnScroll(scrollValue);

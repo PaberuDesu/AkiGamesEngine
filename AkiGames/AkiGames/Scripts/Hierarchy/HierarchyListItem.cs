@@ -9,7 +9,7 @@ using AkiGames.Scripts.WindowContentTypes;
 
 namespace AkiGames.Scripts.Hierarchy
 {
-    public class HierarchyListItem() : ContentItemController
+    public class HierarchyListItem() : RenamableContentItemController
     {
         private GameObject transporter = null;
         private static GameObject draggedHierarchyObject = null;
@@ -28,8 +28,6 @@ namespace AkiGames.Scripts.Hierarchy
         private static GameObject _selectedObject = null;
         private bool _renameOnCurrentDoubleClick = false;
         private long _lastMouseDownMs = -RenameDoubleClickThresholdMs;
-        private bool _isRenaming = false;
-        private readonly TextEditSession _renameEditor = new();
         private const long RenameDoubleClickThresholdMs = 500;
 
         private static bool _isAnyDragging = false; // идёт ли сейчас перетаскивание какого-либо элемента
@@ -56,7 +54,7 @@ namespace AkiGames.Scripts.Hierarchy
             long now = Environment.TickCount64;
             bool clickedSelectedObject = _selectedObject == RepresentedObject;
 
-            if (clickedSelectedObject && !_isRenaming)
+            if (clickedSelectedObject && !IsRenaming)
             {
                 InspectorWindowController.LoadFor(RepresentedObject);
             }
@@ -74,6 +72,8 @@ namespace AkiGames.Scripts.Hierarchy
 
         public override void OnDoubleClick()
         {
+            if (IsRenaming) return;
+
             if (_renameOnCurrentDoubleClick)
             {
                 StartRenaming();
@@ -209,7 +209,7 @@ namespace AkiGames.Scripts.Hierarchy
                 transporter.Parent.RemoveChild(transporter);
         }
 
-        private void EnsureDraggedHierarchyObject()
+        private static void EnsureDraggedHierarchyObject()
         {
             if (draggedHierarchyObject != null) return;
             if (Game1.MainObject == null || Game1.MainObject.Children.Count <= 2) return;
@@ -237,11 +237,8 @@ namespace AkiGames.Scripts.Hierarchy
             draggedHierarchyObject.RefreshBounds();
         }
 
-        private void HideDraggedHierarchyObject()
-        {
-            if (draggedHierarchyObject != null)
-                draggedHierarchyObject.IsActive = false;
-        }
+        private static void HideDraggedHierarchyObject() =>
+            draggedHierarchyObject?.IsActive = false;
 
         private bool IsCursorInsideHierarchyWindow()
         {
@@ -357,7 +354,6 @@ namespace AkiGames.Scripts.Hierarchy
         public override void Update()
         {
             base.Update();
-            if (_isRenaming) UpdateRenaming();
 
             if (_pendingOpen && _hoverStartTime > 0 && gameTime != null)
             {
@@ -377,81 +373,31 @@ namespace AkiGames.Scripts.Hierarchy
             _pendingOpen = false;
         }
 
-        public void StartRenaming()
-        {
-            if (RepresentedObject == null) return;
+        protected override bool CanStartRenaming() => RepresentedObject != null;
 
+        protected override void BeforeStartRenaming()
+        {
             _selectedObject = RepresentedObject;
-            _isRenaming = true;
-            _renameEditor.Begin(RepresentedObject.ObjectName);
-            UpdateDisplayedName();
         }
 
-        private void UpdateRenaming()
+        protected override string GetRenameInitialValue() =>
+            RepresentedObject?.ObjectName ?? "";
+
+        protected override string GetDisplayName() =>
+            RepresentedObject?.ObjectName ?? "";
+
+        protected override string FormatDisplayedName(string visibleName) =>
+            new string(' ', Level * 3) + visibleName;
+
+        protected override bool OnRenameCommitted(string newName)
         {
-            if (
-                Events.Input.LMB.IsDown &&
-                Events.Input.MouseHoverTarget != gameObject &&
-                !gameObject.IsParentFor(Events.Input.MouseHoverTarget)
-            )
-            {
-                CommitRenaming();
-                return;
-            }
-
-            switch (_renameEditor.Update())
-            {
-                case TextEditAction.Cancel:
-                    CancelRenaming();
-                    return;
-                case TextEditAction.Commit:
-                    CommitRenaming();
-                    return;
-            }
-
-            UpdateDisplayedName();
-        }
-
-        private void CommitRenaming()
-        {
-            string newName = _renameEditor.Value.Trim();
             if (!string.IsNullOrWhiteSpace(newName))
             {
                 RepresentedObject.ObjectName = newName;
             }
 
-            _renameEditor.Finish();
-            _isRenaming = false;
-            UpdateDisplayedName();
             gameObject.GetAncestry()[2].GetComponent<HierarchyWindowController>().UpdateScene();
-        }
-
-        private void CancelRenaming()
-        {
-            _renameEditor.Cancel();
-            _isRenaming = false;
-            UpdateDisplayedName();
-        }
-
-        public override void Deactivate()
-        {
-            if (_isRenaming)
-            {
-                CommitRenaming();
-                return;
-            }
-
-            base.Deactivate();
-        }
-
-        private void UpdateDisplayedName()
-        {
-            Text title = gameObject.Children[1].GetComponent<Text>();
-            double timeMs = gameTime?.TotalGameTime.TotalMilliseconds ?? 0;
-            string visibleName = _isRenaming ?
-                _renameEditor.DisplayValue(timeMs) :
-                RepresentedObject?.ObjectName ?? "";
-            title.text = new string(' ', Level * 3) + visibleName;
+            return true;
         }
     }
 }

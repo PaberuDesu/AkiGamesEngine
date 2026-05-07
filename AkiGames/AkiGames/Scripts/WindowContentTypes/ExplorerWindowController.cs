@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using System.IO;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace AkiGames.Scripts.WindowContentTypes
         private Text _titleText;
         private ScrollableListController _contentList;
         private int _objWidth = 0;
+        private string _pathToRenameAfterRefresh = "";
+        private bool _registerAkiAfterRename = false;
+        private bool _writeScriptTemplateAfterRename = false;
 
         private GameObject _contentObject;
         private UITransform _contentTransform;
@@ -122,6 +126,7 @@ namespace AkiGames.Scripts.WindowContentTypes
             UpdateDisplayPath();
 
             GameObject prefabCopy;
+            ExplorerListItem itemToRenameAfterRefresh = null;
             try
             {
                 // Получаем все папки
@@ -135,8 +140,11 @@ namespace AkiGames.Scripts.WindowContentTypes
                     prefabCopy.Children[0].GetComponent<Image>().texture =
                         _icons[hasContent ? "full folder" : "empty folder"];
                     ExplorerListItem itemController = prefabCopy.GetComponent<ExplorerListItem>();
+                    itemController.FilePath = folder;
                     itemController.Name = Path.GetFileName(folder);
                     itemController.SetActionOnDoubleClick(OpenFolder);
+                    if (IsSamePath(folder, _pathToRenameAfterRefresh))
+                        itemToRenameAfterRefresh = itemController;
 
                     _contentList.gameObject.AddChild(prefabCopy);
                 }
@@ -164,6 +172,8 @@ namespace AkiGames.Scripts.WindowContentTypes
                     itemController.isFile = true;
                     itemController.FilePath = file;
                     itemController.IsImageFile = isImageFile;
+                    if (IsSamePath(file, _pathToRenameAfterRefresh))
+                        itemToRenameAfterRefresh = itemController;
 
                     _contentList.gameObject.AddChild(prefabCopy);
                 }
@@ -181,6 +191,14 @@ namespace AkiGames.Scripts.WindowContentTypes
             _backButton.IsActive = _pathHistory.Count != 0;
             // Обновляем содержимое
             _contentList.Refresh();
+            _contentList.gameObject.RefreshBounds();
+            itemToRenameAfterRefresh?.StartRenaming(
+                _registerAkiAfterRename,
+                _writeScriptTemplateAfterRename
+            );
+            _pathToRenameAfterRefresh = "";
+            _registerAkiAfterRename = false;
+            _writeScriptTemplateAfterRename = false;
         }
 
         public static void LoadContent(ContentManager content)
@@ -264,6 +282,430 @@ namespace AkiGames.Scripts.WindowContentTypes
                     catch { }
                 }
             }
+        }
+
+        public override void OnRMBUp()
+        {
+            if (string.IsNullOrWhiteSpace(_currentPath))
+                return;
+
+            if (FindExplorerItem(Input.MouseHoverTarget) != null)
+                return;
+
+            _contentList?.ChooseItem(null);
+
+            if (IsInContent(_currentPath))
+            {
+                ShowExplorerContext(
+                    ("Create scene", CreateScene),
+                    ("Create folder", CreateFolder)
+                );
+                return;
+            }
+
+            ShowExplorerContext(
+                ("Create folder", CreateFolder),
+                ("Create C# script", CreateCSharpScript)
+            );
+        }
+
+        public void ShowItemContext(ExplorerListItem item)
+        {
+            if (item == null) return;
+
+            if (item.isFile)
+            {
+                ShowExplorerContext(
+                    ("Rename", () => item.StartRenaming()),
+                    (GetDeleteMenuText(item.FilePath), () => DeleteFile(item.FilePath))
+                );
+                return;
+            }
+
+            ShowExplorerContext(
+                ("Rename", () => item.StartRenaming()),
+                ("Delete folder", () => DeleteFolder(item.FilePath))
+            );
+        }
+
+        public void CompleteItemRename(
+            string oldPath,
+            string newBaseName,
+            bool isFile,
+            string extension,
+            bool registerAkiAfterRename,
+            bool writeScriptTemplateAfterRename
+        )
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(newBaseName) || HasInvalidFileNameChars(newBaseName))
+                {
+                    FinishPendingCreatedFile(oldPath, registerAkiAfterRename, writeScriptTemplateAfterRename);
+                    RefreshContent();
+                    return;
+                }
+
+                string directoryPath = Path.GetDirectoryName(oldPath);
+                string finalName = isFile && !newBaseName.EndsWith(extension, StringComparison.OrdinalIgnoreCase) ?
+                    newBaseName + extension :
+                    newBaseName;
+                string newPath = Path.Combine(directoryPath, finalName);
+
+                if (!IsSamePath(oldPath, newPath))
+                {
+                    if (File.Exists(newPath) || Directory.Exists(newPath))
+                    {
+                        ConsoleWindowController.Log($"Explorer rename failed: '{finalName}' already exists.");
+                        FinishPendingCreatedFile(oldPath, registerAkiAfterRename, writeScriptTemplateAfterRename);
+                        RefreshContent();
+                        return;
+                    }
+
+                    if (isFile)
+                        File.Move(oldPath, newPath);
+                    else
+                        Directory.Move(oldPath, newPath);
+
+                    if (TryGetContentRoot(oldPath, out string contentRoot))
+                    {
+                        if (isFile && !registerAkiAfterRename)
+                            ContentMgcbRegistry.RenameFile(contentRoot, oldPath, newPath);
+                        if (!isFile)
+                            ContentMgcbRegistry.RenameFolder(contentRoot, oldPath, newPath);
+                    }
+                }
+
+                FinishPendingCreatedFile(newPath, registerAkiAfterRename, writeScriptTemplateAfterRename);
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer rename failed: {ex.Message}");
+                FinishPendingCreatedFile(oldPath, registerAkiAfterRename, writeScriptTemplateAfterRename);
+            }
+
+            RefreshContent();
+        }
+
+        public void RegisterCreatedScene(string filePath)
+        {
+            if (!string.Equals(Path.GetExtension(filePath), ".aki", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            if (TryGetContentRoot(filePath, out string contentRoot))
+                ContentMgcbRegistry.RegisterAkiFile(contentRoot, filePath);
+        }
+
+        public void WriteCreatedScriptTemplate(string filePath)
+        {
+            if (!string.Equals(Path.GetExtension(filePath), ".cs", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            string className = ToCSharpClassName(Path.GetFileNameWithoutExtension(filePath));
+            string scriptNamespace = GetScriptNamespace(filePath);
+            string template =
+                $"namespace {scriptNamespace}\r\n" +
+                "{\r\n" +
+                $"    public class {className} : GameComponent\r\n" +
+                "    {\r\n" +
+                "    }\r\n" +
+                "}\r\n";
+
+            File.WriteAllText(filePath, template, Encoding.UTF8);
+        }
+
+        private void ShowExplorerContext(params (string Text, Action Action)[] items)
+        {
+            GameObject contextMenu = Game1.Prefabs["ContextMenu"].Copy();
+            contextMenu
+                .GetComponent<ContextMenuController>()
+                ?.Show(Input.mousePosition.ToVector2(), items);
+        }
+
+        private void CreateScene()
+        {
+            try
+            {
+                if (!IsInContent(_currentPath)) return;
+
+                string filePath = GetUniqueFilePath(_currentPath, "New Scene", ".aki");
+                GameObject rootObject = new("RootObject");
+                rootObject.AddComponent(rootObject.uiTransform);
+                File.WriteAllText(filePath, JsonProjectSerializer.SerializeToJson(rootObject), Encoding.UTF8);
+
+                RefreshContentAndRename(filePath, registerAkiAfterRename: true);
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer create scene failed: {ex.Message}");
+            }
+        }
+
+        private void CreateFolder()
+        {
+            try
+            {
+                string folderPath = GetUniqueDirectoryPath(_currentPath, "New Folder");
+                Directory.CreateDirectory(folderPath);
+                RefreshContentAndRename(folderPath);
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer create folder failed: {ex.Message}");
+            }
+        }
+
+        private void CreateCSharpScript()
+        {
+            try
+            {
+                if (IsInContent(_currentPath)) return;
+
+                string filePath = GetUniqueFilePath(_currentPath, "NewScript", ".cs");
+                File.WriteAllText(filePath, "", Encoding.UTF8);
+                RefreshContentAndRename(filePath, writeScriptTemplateAfterRename: true);
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer create C# script failed: {ex.Message}");
+            }
+        }
+
+        private void DeleteFile(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath)) return;
+                TryGetContentRoot(filePath, out string contentRoot);
+
+                Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(
+                    filePath,
+                    Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                    Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin
+                );
+
+                if (!string.IsNullOrWhiteSpace(contentRoot))
+                    ContentMgcbRegistry.RemoveFile(contentRoot, filePath);
+
+                RefreshContent();
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer delete failed: {ex.Message}");
+            }
+        }
+
+        private void DeleteFolder(string folderPath)
+        {
+            try
+            {
+                if (!Directory.Exists(folderPath)) return;
+                TryGetContentRoot(folderPath, out string contentRoot);
+
+                Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(
+                    folderPath,
+                    Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                    Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin
+                );
+
+                if (!string.IsNullOrWhiteSpace(contentRoot))
+                    ContentMgcbRegistry.RemoveFolder(contentRoot, folderPath);
+
+                RefreshContent();
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer delete folder failed: {ex.Message}");
+            }
+        }
+
+        private void RefreshContentAndRename(
+            string path,
+            bool registerAkiAfterRename = false,
+            bool writeScriptTemplateAfterRename = false
+        )
+        {
+            _pathToRenameAfterRefresh = path;
+            _registerAkiAfterRename = registerAkiAfterRename;
+            _writeScriptTemplateAfterRename = writeScriptTemplateAfterRename;
+            RefreshContent();
+        }
+
+        private void FinishPendingCreatedFile(
+            string filePath,
+            bool registerAkiAfterRename,
+            bool writeScriptTemplateAfterRename
+        )
+        {
+            if (registerAkiAfterRename)
+                RegisterCreatedScene(filePath);
+            if (writeScriptTemplateAfterRename)
+                WriteCreatedScriptTemplate(filePath);
+        }
+
+        private ExplorerListItem FindExplorerItem(GameObject target)
+        {
+            GameObject current = target;
+            while (current != null)
+            {
+                ExplorerListItem item = current.GetComponent<ExplorerListItem>();
+                if (item != null)
+                    return item;
+
+                current = current.Parent;
+            }
+
+            return null;
+        }
+
+        private static string GetDeleteMenuText(string filePath)
+        {
+            if (string.Equals(Path.GetExtension(filePath), ".aki", StringComparison.OrdinalIgnoreCase))
+                return "Delete scene";
+
+            return "Delete file";
+        }
+
+        private static bool HasInvalidFileNameChars(string fileName) =>
+            fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
+
+        private static string GetUniqueFilePath(string directoryPath, string baseName, string extension)
+        {
+            string filePath = Path.Combine(directoryPath, baseName + extension);
+            int suffix = 1;
+            while (File.Exists(filePath) || Directory.Exists(filePath))
+            {
+                filePath = Path.Combine(directoryPath, $"{baseName} {suffix}{extension}");
+                suffix++;
+            }
+
+            return filePath;
+        }
+
+        private static string GetUniqueDirectoryPath(string directoryPath, string baseName)
+        {
+            string folderPath = Path.Combine(directoryPath, baseName);
+            int suffix = 1;
+            while (File.Exists(folderPath) || Directory.Exists(folderPath))
+            {
+                folderPath = Path.Combine(directoryPath, $"{baseName} {suffix}");
+                suffix++;
+            }
+
+            return folderPath;
+        }
+
+        private static bool IsSamePath(string firstPath, string secondPath)
+        {
+            if (string.IsNullOrWhiteSpace(firstPath) || string.IsNullOrWhiteSpace(secondPath))
+                return false;
+
+            string firstFullPath = Path.GetFullPath(firstPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            string secondFullPath = Path.GetFullPath(secondPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return string.Equals(firstFullPath, secondFullPath, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsInContent(string path) =>
+            TryGetContentRoot(path, out _);
+
+        private static bool TryGetContentRoot(string path, out string contentRoot)
+        {
+            contentRoot = null;
+            if (string.IsNullOrWhiteSpace(path))
+                return false;
+
+            string directoryPath = Directory.Exists(path) ? path : Path.GetDirectoryName(path);
+            if (string.IsNullOrWhiteSpace(directoryPath))
+                return false;
+
+            DirectoryInfo directory = new(directoryPath);
+            while (directory != null)
+            {
+                if (string.Equals(directory.Name, "Content", StringComparison.OrdinalIgnoreCase))
+                {
+                    contentRoot = directory.FullName;
+                    return true;
+                }
+
+                directory = directory.Parent;
+            }
+
+            return false;
+        }
+
+        private string GetScriptNamespace(string filePath)
+        {
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (string.IsNullOrWhiteSpace(directoryPath))
+                return "AkiGames";
+
+            string[] pathSegments = SplitPath(directoryPath);
+            int scriptsIndex = Array.FindLastIndex(
+                pathSegments,
+                segment => string.Equals(segment, "Scripts", StringComparison.OrdinalIgnoreCase)
+            );
+
+            IEnumerable<string> namespaceSegments;
+            if (scriptsIndex >= 0)
+            {
+                namespaceSegments = pathSegments.Skip(scriptsIndex);
+            }
+            else if (IsSamePath(directoryPath, _rootPath) || IsPathInside(directoryPath, _rootPath))
+            {
+                string relativeDirectory = Path.GetRelativePath(_rootPath, directoryPath);
+                namespaceSegments = string.Equals(relativeDirectory, ".", StringComparison.Ordinal) ?
+                    [] :
+                    SplitPath(relativeDirectory);
+            }
+            else
+            {
+                namespaceSegments = [];
+            }
+
+            List<string> namespaceParts = ["AkiGames"];
+            namespaceParts.AddRange(namespaceSegments
+                .Select(segment => ToCSharpIdentifier(segment, ""))
+                .Where(segment => !string.IsNullOrWhiteSpace(segment)));
+
+            return string.Join(".", namespaceParts);
+        }
+
+        private static string[] SplitPath(string path) =>
+            path
+                .Split([Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar], StringSplitOptions.RemoveEmptyEntries);
+
+        private static bool IsPathInside(string path, string rootPath)
+        {
+            if (string.IsNullOrWhiteSpace(path) || string.IsNullOrWhiteSpace(rootPath))
+                return false;
+
+            string fullPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            string fullRootPath = Path.GetFullPath(rootPath).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return fullPath.StartsWith(
+                fullRootPath + Path.DirectorySeparatorChar,
+                StringComparison.OrdinalIgnoreCase
+            );
+        }
+
+        private static string ToCSharpClassName(string value) =>
+            ToCSharpIdentifier(value, "NewScript");
+
+        private static string ToCSharpIdentifier(string value, string fallback)
+        {
+            StringBuilder builder = new();
+            foreach (char character in value ?? "")
+            {
+                if (char.IsLetterOrDigit(character) || character == '_')
+                    builder.Append(character);
+            }
+
+            if (builder.Length == 0)
+                builder.Append(fallback);
+
+            if (builder.Length > 0 && char.IsDigit(builder[0]))
+                builder.Insert(0, '_');
+
+            return builder.ToString();
         }
 
         private void RefreshEditor(string fullPath)

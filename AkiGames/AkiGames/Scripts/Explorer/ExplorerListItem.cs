@@ -1,12 +1,14 @@
+using System.IO;
 using AkiGames.Events;
 using AkiGames.Core;
 using AkiGames.Scripts.Inspector;
+using AkiGames.Scripts.WindowContentTypes;
 using AkiGames.UI;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace AkiGames.Scripts.Explorer
 {
-    public class ExplorerListItem : ContentItemController
+    public class ExplorerListItem : RenamableContentItemController
     {
         public bool isFile = false;
         public bool IsImageFile = false;
@@ -14,6 +16,9 @@ namespace AkiGames.Scripts.Explorer
 
         private static GameObject draggedFile;
         private bool _isDragging = false;
+        private bool _registerAkiAfterRename = false;
+        private bool _writeScriptTemplateAfterRename = false;
+        private string _renameExtension = "";
 
         public override void Awake()
         {
@@ -63,6 +68,97 @@ namespace AkiGames.Scripts.Explorer
 
             _isDragging = false;
             draggedFile.IsActive = false;
+        }
+
+        public override void OnRMBUp()
+        {
+            SelectItem();
+            FindExplorerWindow()?.ShowItemContext(this);
+        }
+
+        public override void StartRenaming()
+        {
+            _registerAkiAfterRename = false;
+            _writeScriptTemplateAfterRename = false;
+            base.StartRenaming();
+        }
+
+        public void StartRenaming(
+            bool registerAkiAfterRename,
+            bool writeScriptTemplateAfterRename
+        )
+        {
+            _registerAkiAfterRename = registerAkiAfterRename;
+            _writeScriptTemplateAfterRename = writeScriptTemplateAfterRename;
+            base.StartRenaming();
+        }
+
+        protected override void BeforeStartRenaming()
+        {
+            _renameExtension = isFile ? Path.GetExtension(FilePath) : "";
+        }
+
+        protected override string GetRenameInitialValue() =>
+            isFile ?
+                Path.GetFileNameWithoutExtension(FilePath) :
+                Path.GetFileName(FilePath);
+
+        protected override string GetRenameSuffix() => _renameExtension;
+
+        protected override string GetDisplayName() => Path.GetFileName(FilePath);
+
+        protected override bool OnRenameCommitted(string newName)
+        {
+            bool registerAkiAfterRename = _registerAkiAfterRename;
+            bool writeScriptTemplateAfterRename = _writeScriptTemplateAfterRename;
+            _registerAkiAfterRename = false;
+            _writeScriptTemplateAfterRename = false;
+
+            ExplorerWindowController explorerWindow = FindExplorerWindow();
+            if (explorerWindow != null)
+            {
+                explorerWindow.CompleteItemRename(
+                    FilePath,
+                    newName,
+                    isFile,
+                    _renameExtension,
+                    registerAkiAfterRename,
+                    writeScriptTemplateAfterRename
+                );
+                return false;
+            }
+
+            return true;
+        }
+
+        protected override bool OnRenameCancelled()
+        {
+            bool registerAkiAfterRename = _registerAkiAfterRename;
+            bool writeScriptTemplateAfterRename = _writeScriptTemplateAfterRename;
+            _registerAkiAfterRename = false;
+            _writeScriptTemplateAfterRename = false;
+
+            ExplorerWindowController explorerWindow = FindExplorerWindow();
+            if (registerAkiAfterRename)
+                explorerWindow?.RegisterCreatedScene(FilePath);
+            if (writeScriptTemplateAfterRename)
+                explorerWindow?.WriteCreatedScriptTemplate(FilePath);
+
+            return true;
+        }
+
+        private ExplorerWindowController FindExplorerWindow()
+        {
+            var ancestry = gameObject.GetAncestry();
+            for (int i = ancestry.Count - 1; i >= 0; i--)
+            {
+                ExplorerWindowController explorerWindow =
+                    ancestry[i].GetComponent<ExplorerWindowController>();
+                if (explorerWindow != null)
+                    return explorerWindow;
+            }
+
+            return null;
         }
     }
 }

@@ -1,13 +1,16 @@
 using AkiGames.Events;
 using AkiGames.UI;
+using Microsoft.Xna.Framework;
 
 namespace AkiGames.Scripts
 {
-    public class RenamableContentItemController : ContentItemController
+    public class EditableContentItemController : ContentItemController
     {
         private readonly TextEditSession _renameEditor = new();
+        private bool _isDragging;
 
         protected bool IsRenaming { get; private set; }
+        protected bool IsDragging => _isDragging;
 
         public override void Update() => UpdateRenaming();
 
@@ -26,6 +29,37 @@ namespace AkiGames.Scripts
             }
 
             base.Deactivate();
+        }
+
+        public override void Drag(Vector2 cursorPosOnObj)
+        {
+            if (IsRenaming || !CanStartDragging()) return;
+
+            if (!_isDragging)
+            {
+                _isDragging = true;
+                OnDragStarted();
+            }
+
+            if (IsCursorInsideLocalDragArea())
+                UpdateLocalDrag(cursorPosOnObj);
+            else
+                UpdateOuterDrag(cursorPosOnObj);
+        }
+
+        public override void OnMouseUpOutside() => OnMouseUp();
+
+        public override void OnMouseUp()
+        {
+            if (!_isDragging) return;
+
+            if (IsCursorInsideLocalDragArea())
+                CompleteLocalDrag();
+            else
+                CompleteOuterDrag();
+
+            _isDragging = false;
+            OnDragEnded();
         }
 
         public virtual void StartRenaming()
@@ -48,6 +82,15 @@ namespace AkiGames.Scripts
         protected virtual bool OnRenameCommitted(string newName) => true;
         protected virtual bool OnRenameCancelled() => true;
 
+        protected virtual bool CanStartDragging() => false;
+        protected virtual bool IsCursorInsideLocalDragArea() => false;
+        protected virtual void OnDragStarted() { }
+        protected virtual void UpdateLocalDrag(Vector2 cursorPosOnObj) { }
+        protected virtual void UpdateOuterDrag(Vector2 cursorPosOnObj) { }
+        protected virtual void CompleteLocalDrag() { }
+        protected virtual void CompleteOuterDrag() { }
+        protected virtual void OnDragEnded() { }
+
         protected void UpdateDisplayedName()
         {
             if (Title == null) return;
@@ -63,7 +106,7 @@ namespace AkiGames.Scripts
         private void UpdateRenaming()
         {
             if (!IsRenaming) return;
-            
+
             if (
                 Input.LMB.IsDown &&
                 Input.MouseHoverTarget != gameObject &&

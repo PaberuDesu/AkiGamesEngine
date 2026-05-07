@@ -8,14 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AkiGames.Scripts.Explorer
 {
-    public class ExplorerListItem : RenamableContentItemController
+    public class ExplorerListItem : EditableContentItemController
     {
         public bool isFile = false;
         public bool IsImageFile = false;
         public string FilePath = "";
 
         private static GameObject draggedFile;
-        private bool _isDragging = false;
         private bool _registerAkiAfterRename = false;
         private bool _writeScriptTemplateAfterRename = false;
         private string _renameExtension = "";
@@ -30,7 +29,14 @@ namespace AkiGames.Scripts.Explorer
             }
         }
 
-        private void StartDrag()
+        protected override bool CanStartDragging() =>
+            !string.IsNullOrWhiteSpace(FilePath) &&
+            (isFile ? File.Exists(FilePath) : Directory.Exists(FilePath));
+
+        protected override bool IsCursorInsideLocalDragArea() =>
+            FindExplorerWindow()?.IsCursorInsideExplorerWindow() ?? false;
+
+        protected override void OnDragStarted()
         {
             draggedFile.IsActive = true;
             Image draggedImage = draggedFile.GetComponent<Image>();
@@ -39,25 +45,27 @@ namespace AkiGames.Scripts.Explorer
                 IsImageFile && Game1.UIImages.TryGetValue("ImageFile", out Texture2D imageFileTexture) ?
                     imageFileTexture :
                     fallbackIcon;
-            _isDragging = true;
         }
 
-        public override void Drag(
-            Microsoft.Xna.Framework.Vector2 cursorPosOnObj
-        )
+        protected override void UpdateLocalDrag(Microsoft.Xna.Framework.Vector2 cursorPosOnObj) =>
+            UpdateDraggedFilePosition();
+
+        protected override void UpdateOuterDrag(Microsoft.Xna.Framework.Vector2 cursorPosOnObj) =>
+            UpdateDraggedFilePosition();
+
+        protected override void CompleteLocalDrag()
         {
-            if (!isFile) return;
-            StartDrag();
-            var mousePos = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
-            draggedFile.uiTransform.OffsetMin = mousePos;
-            draggedFile.RefreshBounds();
+            ExplorerWindowController explorerWindow = FindExplorerWindow();
+            ExplorerListItem targetItem = explorerWindow?.FindExplorerItemAt(Input.MouseHoverTarget);
+            if (targetItem == null || targetItem == this || targetItem.isFile)
+                return;
+
+            explorerWindow.MoveItemIntoFolder(FilePath, targetItem.FilePath);
         }
 
-        public override void OnMouseUpOutside() => OnMouseUp();
-
-        public override void OnMouseUp()
+        protected override void CompleteOuterDrag()
         {
-            if (_isDragging && IsImageFile)
+            if (isFile && IsImageFile)
             {
                 InspectorTextureDropField textureDropField =
                     InspectorDropFieldFinder.FindInAncestry<InspectorTextureDropField>(
@@ -65,9 +73,15 @@ namespace AkiGames.Scripts.Explorer
                     );
                 textureDropField?.TryApplyFile(FilePath);
             }
+        }
 
-            _isDragging = false;
-            draggedFile.IsActive = false;
+        protected override void OnDragEnded() => draggedFile.IsActive = false;
+
+        private static void UpdateDraggedFilePosition()
+        {
+            var mousePos = Microsoft.Xna.Framework.Input.Mouse.GetState().Position.ToVector2();
+            draggedFile.uiTransform.OffsetMin = mousePos;
+            draggedFile.RefreshBounds();
         }
 
         public override void OnRMBUp()
@@ -93,10 +107,8 @@ namespace AkiGames.Scripts.Explorer
             base.StartRenaming();
         }
 
-        protected override void BeforeStartRenaming()
-        {
+        protected override void BeforeStartRenaming() =>
             _renameExtension = isFile ? Path.GetExtension(FilePath) : "";
-        }
 
         protected override string GetRenameInitialValue() =>
             isFile ?

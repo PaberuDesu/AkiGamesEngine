@@ -9,7 +9,7 @@ namespace AkiGames.Scripts.Explorer
     {
         private const string MgcbFileName = "Content.mgcb";
 
-        public static void RegisterAkiFile(string contentRoot, string filePath)
+        public static void RegisterFile(string contentRoot, string filePath)
         {
             string relativePath = ToMgcbPath(contentRoot, filePath);
             string mgcbPath = GetMgcbPath(contentRoot);
@@ -18,15 +18,26 @@ namespace AkiGames.Scripts.Explorer
             if (ContainsBegin(lines, relativePath))
                 return;
 
+            List<string> block = GetBuildBlock(relativePath, filePath);
+            if (block.Count == 0)
+                return;
+
             if (lines.Count > 0 && !string.IsNullOrWhiteSpace(lines[^1]))
                 lines.Add("");
 
-            lines.Add($"#begin {relativePath}");
-            lines.Add("/importer:AkiImporter");
-            lines.Add("/processor:AkiProcessor");
-            lines.Add($"/build:{relativePath}");
+            lines.AddRange(block);
 
             File.WriteAllLines(mgcbPath, lines);
+        }
+
+        public static void RegisterFolder(string contentRoot, string folderPath)
+        {
+            if (!Directory.Exists(folderPath)) return;
+
+            foreach (string filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
+            {
+                RegisterFile(contentRoot, filePath);
+            }
         }
 
         public static void RemoveFile(string contentRoot, string filePath)
@@ -160,6 +171,40 @@ namespace AkiGames.Scripts.Explorer
 
         private static List<string> ReadLines(string mgcbPath) =>
             File.Exists(mgcbPath) ? File.ReadAllLines(mgcbPath).ToList() : [];
+
+        private static List<string> GetBuildBlock(string relativePath, string filePath)
+        {
+            if (string.Equals(Path.GetExtension(filePath), ".aki", StringComparison.OrdinalIgnoreCase))
+            {
+                return
+                [
+                    $"#begin {relativePath}",
+                    "/importer:AkiImporter",
+                    "/processor:AkiProcessor",
+                    $"/build:{relativePath}"
+                ];
+            }
+
+            if (ContentFileUtility.IsImageFile(filePath))
+            {
+                return
+                [
+                    $"#begin {relativePath}",
+                    "/importer:TextureImporter",
+                    "/processor:TextureProcessor",
+                    "/processorParam:ColorKeyColor=255,0,255,255",
+                    "/processorParam:ColorKeyEnabled=True",
+                    "/processorParam:GenerateMipmaps=False",
+                    "/processorParam:PremultiplyAlpha=True",
+                    "/processorParam:ResizeToPowerOfTwo=False",
+                    "/processorParam:MakeSquare=False",
+                    "/processorParam:TextureFormat=Color",
+                    $"/build:{relativePath}"
+                ];
+            }
+
+            return [];
+        }
 
         private static string GetMgcbPath(string contentRoot) =>
             Path.Combine(contentRoot, MgcbFileName);

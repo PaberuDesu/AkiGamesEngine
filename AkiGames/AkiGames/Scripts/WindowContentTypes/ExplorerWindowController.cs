@@ -328,6 +328,60 @@ namespace AkiGames.Scripts.WindowContentTypes
             );
         }
 
+        public bool IsCursorInsideExplorerWindow() =>
+            gameObject.uiTransform.Contains(Input.mousePosition);
+
+        public ExplorerListItem FindExplorerItemAt(GameObject target) =>
+            FindExplorerItem(target);
+
+        public void MoveItemIntoFolder(string sourcePath, string targetFolderPath)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(sourcePath) ||
+                    string.IsNullOrWhiteSpace(targetFolderPath) ||
+                    !Directory.Exists(targetFolderPath))
+                {
+                    return;
+                }
+
+                bool sourceIsFile = File.Exists(sourcePath);
+                bool sourceIsFolder = Directory.Exists(sourcePath);
+                if (!sourceIsFile && !sourceIsFolder) return;
+
+                if (sourceIsFolder &&
+                    (IsSamePath(sourcePath, targetFolderPath) || IsPathInside(targetFolderPath, sourcePath)))
+                {
+                    return;
+                }
+
+                string destinationPath = Path.Combine(targetFolderPath, Path.GetFileName(sourcePath));
+                if (File.Exists(destinationPath) || Directory.Exists(destinationPath))
+                {
+                    ConsoleWindowController.Log(
+                        $"Explorer move failed: '{Path.GetFileName(sourcePath)}' already exists in target folder."
+                    );
+                    return;
+                }
+
+                TryGetContentRoot(sourcePath, out string oldContentRoot);
+
+                if (sourceIsFile)
+                    File.Move(sourcePath, destinationPath);
+                else
+                    Directory.Move(sourcePath, destinationPath);
+
+                TryGetContentRoot(destinationPath, out string newContentRoot);
+                UpdateMgcbForMove(sourcePath, destinationPath, sourceIsFile, oldContentRoot, newContentRoot);
+                RefreshContent();
+            }
+            catch (Exception ex)
+            {
+                ConsoleWindowController.Log($"Explorer move failed: {ex.Message}");
+                RefreshContent();
+            }
+        }
+
         public void CompleteItemRename(
             string oldPath,
             string newBaseName,
@@ -370,9 +424,15 @@ namespace AkiGames.Scripts.WindowContentTypes
                     if (TryGetContentRoot(oldPath, out string contentRoot))
                     {
                         if (isFile && !registerAkiAfterRename)
+                        {
                             ContentMgcbRegistry.RenameFile(contentRoot, oldPath, newPath);
+                            ContentMgcbRegistry.RegisterFile(contentRoot, newPath);
+                        }
                         if (!isFile)
+                        {
                             ContentMgcbRegistry.RenameFolder(contentRoot, oldPath, newPath);
+                            ContentMgcbRegistry.RegisterFolder(contentRoot, newPath);
+                        }
                     }
                 }
 
@@ -393,7 +453,7 @@ namespace AkiGames.Scripts.WindowContentTypes
                 return;
 
             if (TryGetContentRoot(filePath, out string contentRoot))
-                ContentMgcbRegistry.RegisterAkiFile(contentRoot, filePath);
+                ContentMgcbRegistry.RegisterFile(contentRoot, filePath);
         }
 
         public void WriteCreatedScriptTemplate(string filePath)
@@ -516,6 +576,52 @@ namespace AkiGames.Scripts.WindowContentTypes
             catch (Exception ex)
             {
                 ConsoleWindowController.Log($"Explorer delete folder failed: {ex.Message}");
+            }
+        }
+
+        private static void UpdateMgcbForMove(
+            string oldPath,
+            string newPath,
+            bool isFile,
+            string oldContentRoot,
+            string newContentRoot
+        )
+        {
+            bool oldIsInContent = !string.IsNullOrWhiteSpace(oldContentRoot);
+            bool newIsInContent = !string.IsNullOrWhiteSpace(newContentRoot);
+
+            if (!oldIsInContent && !newIsInContent)
+                return;
+
+            if (oldIsInContent && newIsInContent && IsSamePath(oldContentRoot, newContentRoot))
+            {
+                if (isFile)
+                {
+                    ContentMgcbRegistry.RenameFile(oldContentRoot, oldPath, newPath);
+                    ContentMgcbRegistry.RegisterFile(oldContentRoot, newPath);
+                }
+                else
+                {
+                    ContentMgcbRegistry.RenameFolder(oldContentRoot, oldPath, newPath);
+                    ContentMgcbRegistry.RegisterFolder(oldContentRoot, newPath);
+                }
+                return;
+            }
+
+            if (oldIsInContent)
+            {
+                if (isFile)
+                    ContentMgcbRegistry.RemoveFile(oldContentRoot, oldPath);
+                else
+                    ContentMgcbRegistry.RemoveFolder(oldContentRoot, oldPath);
+            }
+
+            if (newIsInContent)
+            {
+                if (isFile)
+                    ContentMgcbRegistry.RegisterFile(newContentRoot, newPath);
+                else
+                    ContentMgcbRegistry.RegisterFolder(newContentRoot, newPath);
             }
         }
 

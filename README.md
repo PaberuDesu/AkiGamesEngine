@@ -16,7 +16,11 @@ The core idea behind the project is a self-similar workflow: the editor is built
 - Custom UI framework with layout/anchor support through `UITransform`
 - Event-driven input and dispatch system
 - JSON-based scene and prefab serialization
+- Prefab links with sparse overrides inside `.aki` files
+- Path-based scene/prefab convention where `.aki` files under `Content/Prefabs` are reusable prefabs
 - Editor-style windows for hierarchy, inspector, scene, explorer, console, and related tools
+- Inspector editing for common values including text, colors, textures, object links, and component links
+- Explorer workflows for creating, renaming, deleting, moving, and registering content assets
 
 ## Requirements
 
@@ -38,3 +42,5 @@ dotnet run
 - The main project targets `net10.0-windows`.
 - Windows Forms is enabled for DPI handling.
 - MonoGame content build tooling is restored as part of the project setup.
+- Breaking `.aki` or component API changes can require manual project migration or staying on the previous compatible editor version.
+- Automated test coverage is a known need across the engine; manual editor validation is still important for now.

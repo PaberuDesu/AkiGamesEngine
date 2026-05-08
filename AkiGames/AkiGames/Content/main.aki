@@ -1100,8 +1100,69 @@
                   "Children": []
                 },
                 {
-                  "ObjectName": "SaveProject",
+                  "ObjectName": "CreateProject",
                   "ObjectID": 100,
+                  "IsActive": true,
+                  "IsMouseTargetable": true,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "OffsetMax": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "Width": 0,
+                      "Height": 0,
+                      "HorizontalAlignment": "Stretch",
+                      "VerticalAlignment": "Top",
+                      "anchorLeftTop": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "anchorRightBottom": {
+                        "x": 1,
+                        "y": 0
+                      },
+                      "origin": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "LocalRotation": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Image",
+                      "IsMask": false,
+                      "texture": "",
+                      "fillColor": 4281808695,
+                      "imageMode": "Stretch",
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "Text",
+                      "HorizontalWrap": "None",
+                      "HorizontalAlignment": "Center",
+                      "VerticalAlignment": "Middle",
+                      "text": "Create Project",
+                      "TextColor": 4294967295,
+                      "zIndex": 0,
+                      "Enabled": true
+                    },
+                    {
+                      "type": "ProjectCreator",
+                      "Enabled": true
+                    }
+                  ],
+                  "Children": []
+                },
+                {
+                  "ObjectName": "SaveProject",
+                  "ObjectID": 101,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1162,7 +1223,7 @@
                 },
                 {
                   "ObjectName": "BuildProject",
-                  "ObjectID": 101,
+                  "ObjectID": 102,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1228,7 +1289,7 @@
         {
           "Link": "Content/Prefabs/UpperMenuDropdown",
           "ObjectName": "WindowsMenu",
-          "ObjectID": 102,
+          "ObjectID": 103,
           "Components": [
             {
               "type": "Text",
@@ -1238,11 +1299,11 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 103,
+              "ObjectID": 104,
               "Children": [
                 {
                   "ObjectName": "Hierarchy",
-                  "ObjectID": 104,
+                  "ObjectID": 105,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1293,7 +1354,7 @@
                   "Children": [
                     {
                       "ObjectName": "Toggle",
-                      "ObjectID": 105,
+                      "ObjectID": 106,
                       "IsActive": true,
                       "IsMouseTargetable": true,
                       "Components": [],
@@ -1303,7 +1364,7 @@
                 },
                 {
                   "ObjectName": "Project Files",
-                  "ObjectID": 106,
+                  "ObjectID": 107,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1355,7 +1416,7 @@
                 },
                 {
                   "ObjectName": "SceneView",
-                  "ObjectID": 107,
+                  "ObjectID": 108,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1407,7 +1468,7 @@
                 },
                 {
                   "ObjectName": "GameView",
-                  "ObjectID": 108,
+                  "ObjectID": 109,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1459,7 +1520,7 @@
                 },
                 {
                   "ObjectName": "Console",
-                  "ObjectID": 109,
+                  "ObjectID": 110,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1511,7 +1572,7 @@
                 },
                 {
                   "ObjectName": "Inspector",
-                  "ObjectID": 110,
+                  "ObjectID": 111,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1568,7 +1629,7 @@
         {
           "Link": "Content/Prefabs/UpperMenuDropdown",
           "ObjectName": "CreateMenu",
-          "ObjectID": 111,
+          "ObjectID": 112,
           "Components": [
             {
               "type": "Text",
@@ -1578,11 +1639,11 @@
           "Children": [
             {
               "ObjectName": "submenu",
-              "ObjectID": 112,
+              "ObjectID": 113,
               "Children": [
                 {
                   "ObjectName": "GameObject",
-                  "ObjectID": 113,
+                  "ObjectID": 114,
                   "IsActive": true,
                   "IsMouseTargetable": true,
                   "Components": [
@@ -1649,7 +1710,7 @@
     },
     {
       "ObjectName": "DraggedExplorerFile",
-      "ObjectID": 114,
+      "ObjectID": 115,
       "IsActive": false,
       "IsMouseTargetable": false,
       "Components": [

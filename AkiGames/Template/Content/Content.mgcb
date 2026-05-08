@@ -1,0 +1,42 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:DesktopGL
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+/reference:..\libs\AkiContentPipeline.dll
+
+#---------------------------------- Content ---------------------------------#
+
+#begin EditorFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:EditorFont.spritefont
+
+#begin main.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:main.aki
+
+#begin Prefabs/DropDownSubmenu.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/DropDownSubmenu.aki
+
+#begin Prefabs/DropDownSubmenuItem.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/DropDownSubmenuItem.aki
+
+#begin Prefabs/ScrollableList.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ScrollableList.aki

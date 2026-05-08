@@ -3,11 +3,11 @@
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorAddComponent.aki</SourceFile>
   <SourceTime>2026-04-30T14:52:34.3628419+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/bin/DesktopGL/Content/Prefabs/InspectorAddComponent.xnb</DestFile>
-  <DestTime>2026-04-30T14:52:40.6417442+03:00</DestTime>
+  <DestTime>2026-05-08T16:50:26.9619677+03:00</DestTime>
   <Importer>AkiImporter</Importer>
-  <ImporterTime>2026-04-17T19:27:58.7937273+03:00</ImporterTime>
+  <ImporterTime>2026-05-08T16:46:49.3337419+03:00</ImporterTime>
   <Processor>AkiProcessor</Processor>
-  <ProcessorTime>2026-04-17T19:27:58.7937273+03:00</ProcessorTime>
+  <ProcessorTime>2026-05-08T16:46:49.3337419+03:00</ProcessorTime>
   <Dependencies />
   <BuildAsset />
   <BuildOutput />

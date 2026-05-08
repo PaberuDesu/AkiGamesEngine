@@ -4,15 +4,11 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-w
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\ExplorerIcons\folder_icon.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\ExplorerIcons\image_icon.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\ExplorerIcons\text_file_icon.xnb
-C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\folder_full_icon.xnb
-C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\folder_icon.xnb
-C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\image_icon.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\InspectorIcons\Image_Component.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\InspectorIcons\Script_Component.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\InspectorIcons\Text_Component.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\InspectorIcons\Transform_Component.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\main.xnb
-C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\ContentItem.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\DropDownSubmenu.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\DropDownSubmenuItem.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\ExplorerContentItem.xnb
@@ -24,7 +20,6 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-w
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\InspectorStringDescriptor.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\InspectorVector2Descriptor.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\scene_grid.xnb
-C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\text_file_icon.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\UI\CheckboxApproved.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\UI\CheckboxEmpty.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\UI\InputField.xnb

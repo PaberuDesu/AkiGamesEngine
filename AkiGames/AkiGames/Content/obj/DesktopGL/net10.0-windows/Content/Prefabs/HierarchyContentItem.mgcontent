@@ -3,11 +3,11 @@
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/HierarchyContentItem.aki</SourceFile>
   <SourceTime>2026-04-29T18:36:18.8078726+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/bin/DesktopGL/Content/Prefabs/HierarchyContentItem.xnb</DestFile>
-  <DestTime>2026-04-29T18:42:36.8213635+03:00</DestTime>
+  <DestTime>2026-05-08T16:50:26.9608982+03:00</DestTime>
   <Importer>AkiImporter</Importer>
-  <ImporterTime>2026-04-17T19:27:58.7937273+03:00</ImporterTime>
+  <ImporterTime>2026-05-08T16:46:49.3337419+03:00</ImporterTime>
   <Processor>AkiProcessor</Processor>
-  <ProcessorTime>2026-04-17T19:27:58.7937273+03:00</ProcessorTime>
+  <ProcessorTime>2026-05-08T16:46:49.3337419+03:00</ProcessorTime>
   <Dependencies />
   <BuildAsset />
   <BuildOutput />

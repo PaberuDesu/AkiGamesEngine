@@ -3,11 +3,11 @@
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorColorDescriptor.aki</SourceFile>
   <SourceTime>2026-05-08T13:23:17.0545272+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/bin/DesktopGL/Content/Prefabs/InspectorColorDescriptor.xnb</DestFile>
-  <DestTime>2026-05-08T13:23:29.040435+03:00</DestTime>
+  <DestTime>2026-05-08T16:50:26.9619677+03:00</DestTime>
   <Importer>AkiImporter</Importer>
-  <ImporterTime>2026-04-17T19:27:58.7937273+03:00</ImporterTime>
+  <ImporterTime>2026-05-08T16:46:49.3337419+03:00</ImporterTime>
   <Processor>AkiProcessor</Processor>
-  <ProcessorTime>2026-04-17T19:27:58.7937273+03:00</ProcessorTime>
+  <ProcessorTime>2026-05-08T16:46:49.3337419+03:00</ProcessorTime>
   <Dependencies />
   <BuildAsset />
   <BuildOutput />

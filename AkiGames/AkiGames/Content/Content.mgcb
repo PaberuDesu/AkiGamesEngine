@@ -206,6 +206,11 @@
 /processor:AkiProcessor
 /build:Prefabs/InspectorColorDescriptor.aki
 
+#begin Prefabs/InspectorColorSlider.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/InspectorColorSlider.aki
+
 #begin Prefabs/InspectorContentItem.aki
 /importer:AkiImporter
 /processor:AkiProcessor
@@ -331,6 +336,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Round.png
+
+#begin UI/RoundInvisible.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/RoundInvisible.png
 
 #begin UI/settings.png
 /importer:TextureImporter

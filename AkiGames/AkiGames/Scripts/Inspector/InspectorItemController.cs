@@ -183,8 +183,16 @@ namespace AkiGames.Scripts.Inspector
                     fieldDescription.uiTransform.OffsetMin = new Vector2(0, yOffset);
                     fieldDescription.Children[0].GetComponent<Text>().text = memberInfo.Name;
 
-                    fieldDescription.Children[1].GetComponent<Image>().
-                        fillColor = (Color)value;
+                    GameObject colorInputObject = fieldDescription.Children[1].Children[1];
+                    InspectorColorInputField colorInput =
+                        colorInputObject.GetComponent<InspectorColorInputField>();
+                    colorInput.Info = memberInfo;
+                    colorInput.Component = gameComponent;
+                    colorInput.IsEditable = isSettable;
+                    colorInput.Value = (Color)value;
+
+                    if (!isSettable)
+                        colorInputObject.IsMouseTargetable = false;
                     break;
                 case "Boolean":
                     fieldDescription = Game1.Prefabs["InspectorBoolDescriptor"].Copy();

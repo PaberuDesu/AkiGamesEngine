@@ -80,3 +80,5 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-w
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\EditorWindowBorder.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\EditorWindowResizeHandle.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\EditorWindow.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\Prefabs\InspectorColorSlider.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\Content\UI\RoundInvisible.xnb

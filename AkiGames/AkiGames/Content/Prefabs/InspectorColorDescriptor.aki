@@ -84,7 +84,7 @@
       "Children": []
     },
     {
-      "ObjectName": "ValueContainer",
+      "ObjectName": "ValueContainerWrap",
       "ObjectID": 3,
       "IsActive": true,
       "IsMouseTargetable": true,
@@ -99,8 +99,8 @@
             "x": 10,
             "y": 0
           },
-          "Width": 25,
-          "Height": 25,
+          "Width": 26,
+          "Height": 26,
           "HorizontalAlignment": "Right",
           "VerticalAlignment": "Middle",
           "anchorLeftTop": {
@@ -122,13 +122,349 @@
           "type": "Image",
           "IsMask": false,
           "texture": "Content/UI/Round",
-          "fillColor": 4294967295,
+          "fillColor": 4282137660,
           "imageMode": "Stretch",
           "zIndex": 0,
           "Enabled": true
         }
       ],
-      "Children": []
+      "Children": [
+        {
+          "ObjectName": "ValueContainer",
+          "ObjectID": 4,
+          "IsActive": true,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": 0
+              },
+              "Width": 20,
+              "Height": 20,
+              "HorizontalAlignment": "Center",
+              "VerticalAlignment": "Middle",
+              "anchorLeftTop": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "anchorRightBottom": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "origin": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Image",
+              "IsMask": false,
+              "texture": "Content/UI/RoundInvisible",
+              "fillColor": 4294967295,
+              "imageMode": "Stretch",
+              "zIndex": 0,
+              "Enabled": true
+            }
+          ],
+          "Children": []
+        },
+        {
+          "ObjectName": "ValueContainer",
+          "ObjectID": 5,
+          "IsActive": true,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": 0
+              },
+              "Width": 20,
+              "Height": 20,
+              "HorizontalAlignment": "Center",
+              "VerticalAlignment": "Middle",
+              "anchorLeftTop": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "anchorRightBottom": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "origin": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Image",
+              "IsMask": false,
+              "texture": "Content/UI/Round",
+              "fillColor": 4294967295,
+              "imageMode": "Stretch",
+              "zIndex": 0,
+              "Enabled": true
+            },
+            {
+              "type": "InspectorColorInputField",
+              "Enabled": true
+            }
+          ],
+          "Children": [
+            {
+              "ObjectName": "ColorMenu",
+              "ObjectID": 6,
+              "IsActive": false,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 190,
+                  "Height": 112,
+                  "HorizontalAlignment": "Right",
+                  "VerticalAlignment": "Bottom",
+                  "anchorLeftTop": {
+                    "x": 1,
+                    "y": 1
+                  },
+                  "anchorRightBottom": {
+                    "x": 1,
+                    "y": 1
+                  },
+                  "origin": {
+                    "x": 1,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "texture": "",
+                  "fillColor": 4281808695,
+                  "imageMode": "Stretch",
+                  "zIndex": 20,
+                  "Enabled": true
+                }
+              ],
+              "Children": [
+                {
+                  "Link": "Content/Prefabs/InspectorColorSlider",
+                  "ObjectName": "RRow",
+                  "ObjectID": 7,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 8,
+                        "y": 8
+                      }
+                    }
+                  ],
+                  "Children": [
+                    {
+                      "ObjectName": "Label",
+                      "ObjectID": 8
+                    },
+                    {
+                      "ObjectName": "Track",
+                      "ObjectID": 9,
+                      "Children": [
+                        {
+                          "ObjectName": "Fill",
+                          "ObjectID": 10
+                        },
+                        {
+                          "ObjectName": "Thumb",
+                          "ObjectID": 11
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Value",
+                      "ObjectID": 12
+                    }
+                  ]
+                },
+                {
+                  "Link": "Content/Prefabs/InspectorColorSlider",
+                  "ObjectName": "GRow",
+                  "ObjectID": 13,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 8,
+                        "y": 34
+                      }
+                    }
+                  ],
+                  "Children": [
+                    {
+                      "ObjectName": "Label",
+                      "ObjectID": 14,
+                      "Components": [
+                        {
+                          "type": "Text",
+                          "text": "G"
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Track",
+                      "ObjectID": 15,
+                      "Components": [
+                        {
+                          "type": "InspectorColorSlider",
+                          "channel": "G"
+                        }
+                      ],
+                      "Children": [
+                        {
+                          "ObjectName": "Fill",
+                          "ObjectID": 16
+                        },
+                        {
+                          "ObjectName": "Thumb",
+                          "ObjectID": 17
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Value",
+                      "ObjectID": 18
+                    }
+                  ]
+                },
+                {
+                  "Link": "Content/Prefabs/InspectorColorSlider",
+                  "ObjectName": "BRow",
+                  "ObjectID": 19,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 8,
+                        "y": 60
+                      }
+                    }
+                  ],
+                  "Children": [
+                    {
+                      "ObjectName": "Label",
+                      "ObjectID": 20,
+                      "Components": [
+                        {
+                          "type": "Text",
+                          "text": "B"
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Track",
+                      "ObjectID": 21,
+                      "Components": [
+                        {
+                          "type": "InspectorColorSlider",
+                          "channel": "B"
+                        }
+                      ],
+                      "Children": [
+                        {
+                          "ObjectName": "Fill",
+                          "ObjectID": 22
+                        },
+                        {
+                          "ObjectName": "Thumb",
+                          "ObjectID": 23
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Value",
+                      "ObjectID": 24
+                    }
+                  ]
+                },
+                {
+                  "Link": "Content/Prefabs/InspectorColorSlider",
+                  "ObjectName": "ARow",
+                  "ObjectID": 25,
+                  "Components": [
+                    {
+                      "type": "UITransform",
+                      "OffsetMin": {
+                        "x": 8,
+                        "y": 86
+                      }
+                    }
+                  ],
+                  "Children": [
+                    {
+                      "ObjectName": "Label",
+                      "ObjectID": 26,
+                      "Components": [
+                        {
+                          "type": "Text",
+                          "text": "A"
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Track",
+                      "ObjectID": 27,
+                      "Components": [
+                        {
+                          "type": "InspectorColorSlider",
+                          "channel": "A"
+                        }
+                      ],
+                      "Children": [
+                        {
+                          "ObjectName": "Fill",
+                          "ObjectID": 28
+                        },
+                        {
+                          "ObjectName": "Thumb",
+                          "ObjectID": 29
+                        }
+                      ]
+                    },
+                    {
+                      "ObjectName": "Value",
+                      "ObjectID": 30
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -156,7 +156,7 @@ namespace AkiGames.Scripts.Explorer
 
             ExplorerWindowController explorerWindow = FindExplorerWindow();
             if (registerAkiAfterRename)
-                explorerWindow?.RegisterCreatedScene(FilePath);
+                ExplorerWindowController.RegisterCreatedScene(FilePath);
             if (writeScriptTemplateAfterRename)
                 explorerWindow?.WriteCreatedScriptTemplate(FilePath);
 

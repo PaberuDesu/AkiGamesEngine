@@ -28,6 +28,7 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorAddComponent.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorBoolDescriptor.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorColorDescriptor.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorColorSlider.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorContentItem.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorFieldDescriptor.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/Prefabs/InspectorStringDescriptor.aki</File>
@@ -42,9 +43,12 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/InputField.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Play.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/Round.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/RoundInvisible.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/AkiGames/AkiGames/Content/UI/settings.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

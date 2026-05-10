@@ -161,6 +161,11 @@ namespace AkiGames.Scripts.Menu
             ReplaceInFile(Path.Combine(projectPath, ".vscode", "launch.json"), "AkiGames.csproj", projectFileName);
             ReplaceInFile(Path.Combine(projectPath, ".vscode", "launch.json"), "C#: AkiGames Debug", $"C#: {projectName} Debug");
             ReplaceInFile(
+                Path.Combine(projectPath, "Core", "Game1.cs"),
+                "Window.Title = \"Template\";",
+                $"Window.Title = \"{EscapeCSharpString(projectName)}\";"
+            );
+            ReplaceInFile(
                 Path.Combine(projectPath, "app.manifest"),
                 "name=\"AkiGames\"",
                 $"name=\"{EscapeXmlAttribute(projectName)}\""
@@ -192,6 +197,13 @@ namespace AkiGames.Scripts.Menu
                 .Replace("\"", "&quot;")
                 .Replace("<", "&lt;")
                 .Replace(">", "&gt;");
+        }
+
+        private static string EscapeCSharpString(string value)
+        {
+            return value
+                .Replace("\\", "\\\\")
+                .Replace("\"", "\\\"");
         }
     }
 }

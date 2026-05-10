@@ -44,6 +44,7 @@ namespace AkiGames.Core
             ProjectContent = Content;
             ContentRoot = Content.RootDirectory;
             IsMouseVisible = true;
+            Window.Title = "Template";
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnWindowSizeChanged;
         }

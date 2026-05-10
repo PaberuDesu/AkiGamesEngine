@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using AkiGames.Core;
+using AkiGames.Core.Serialization;
 using AkiGames.Events;
 
 namespace AkiGames.UI.ScrollableList
@@ -21,6 +21,7 @@ namespace AkiGames.UI.ScrollableList
         [DontSerialize, HideInInspector] public int PixelOffset => _scrollbar.Offset * (itemHeight+Spacing);
 
         [DontSerialize, HideInInspector] public bool IsLimitReached => _scrollbar.IsLimitReached;
+        public void ScrollToTop() => _scrollbar.ScrollToTop();
         public void ScrollToBottom() => _scrollbar.ScrollToBottom();
 
         public override void Awake()
@@ -53,10 +54,7 @@ namespace AkiGames.UI.ScrollableList
             Recolor(_highlightColor);
         }
 
-        private void Recolor(Color color)
-        {
-            if (_chosenItem != null) _chosenItem.fillColor = color;
-        }
+        private void Recolor(Color color) => _chosenItem?.fillColor = color;
 
         public override void Update()
         {

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using AkiGames.Core;
+using AkiGames.Core.Serialization;
 using AkiGames.Events;
 
 namespace AkiGames.UI.DropDown
 {
     public class DropDown : InteractableComponent
     {
-        public List<string> menuItems = [];
+        [HideInInspector] public List<string> menuItems = [];
         public List<string> MenuItems
         {
             private get => menuItems;
@@ -75,7 +76,7 @@ namespace AkiGames.UI.DropDown
         }
         public override void Deactivate()
         {
-            if (!gameObject.IsParentFor(Input.MouseHoverTarget)) Hide();
+            if (Input.MouseHoverTarget == null || !gameObject.IsParentFor(Input.MouseHoverTarget)) Hide();
         }
     }
 }

@@ -1,7 +1,8 @@
-using AkiGames.UI;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using AkiGames.UI;
 
 namespace AkiGames.Events
 {
@@ -11,6 +12,15 @@ namespace AkiGames.Events
         private static Point? _previousPosition;
         private static GameObject _previousTarget = null;
         public static GameObject MainObject { private get; set; } = null;
+
+        public static void ResetPointerState()
+        {
+            Input.MouseHoverTarget?.OnMouseExit();
+            Input.MouseHoverTarget = null;
+            Input.EndPressing();
+            _previousTarget = null;
+            _previousPosition = null;
+        }
 
         public static void Update()
         {
@@ -34,14 +44,21 @@ namespace AkiGames.Events
                 Input.LMB.IsPressed = mouseState.LeftButton == ButtonState.Pressed;
                 Input.RMB.IsPressed = mouseState.RightButton == ButtonState.Pressed;
                 Input.Scroll = mouseState.ScrollWheelValue;
-                Input.mousePosition = mouseState.Position;
+                Input.ScreenMousePosition = mouseState.Position;
 
-                GameObject currentTarget = FindTarget();
+                GameObject inputRoot = ResolveInputRoot(mouseState.Position);
+                if (inputRoot == null)
+                {
+                    ResetPointerState();
+                    return;
+                }
+
+                GameObject currentTarget = FindTarget(inputRoot);
                 if (Input.MouseHoverTarget != currentTarget)
                 {
                     Input.MouseHoverTarget?.OnMouseExit();
                     Input.MouseHoverTarget = currentTarget;
-                    currentTarget.OnMouseEnter();
+                    currentTarget?.OnMouseEnter();
                 }
 
                 if (Input.LMB.IsDown)//here pressing starts, also OnDown events
@@ -69,46 +86,54 @@ namespace AkiGames.Events
                         ) > _moveThreshold
                     )//Drag
                     {
-                        Input.MousePressTarget.Drag(Input.MousePressTargetOffset);
+                        Input.MousePressTarget?.Drag(Input.MousePressTargetOffset);
                     }
                 }
                 else if (Input.LMB.IsUp)//OnUp
                 {
                     if (Input.MousePressTarget != currentTarget)
                         Input.MousePressTarget?.OnMouseUpOutside(); // if pressed on something, dragged out of it and stopped pressing
-                    else currentTarget.OnMouseUp();
+                    else currentTarget?.OnMouseUp();
                     Input.EndPressing();
                 }
                 else if (Input.LMB.IsReleased)
                 {
-                    if (Input.DeltaScroll != 0) currentTarget.OnScroll(Input.DeltaScroll);
+                    if (Input.DeltaScroll != 0) currentTarget?.OnScroll(Input.DeltaScroll);
                 }
 
                 if (Input.RMB.IsUp) //OmRMBUp
                 {
-                    currentTarget.OnRMBUp();
+                    currentTarget?.OnRMBUp();
                 }
 
                 _previousPosition = Input.mousePosition;
             }
         }
 
-        private static GameObject FindTarget()
+        private static GameObject ResolveInputRoot(Point screenPosition)
+        {
+            Input.mousePosition = screenPosition;
+            return MainObject;
+        }
+
+        private static GameObject FindTarget(GameObject root)
         {
             (GameObject obj, int zIndex) bestCandidate = (null, int.MinValue);
-            FindTargetInHierarchy(MainObject, ref bestCandidate);
+            FindTargetInHierarchy(root, ref bestCandidate);
             return bestCandidate.obj;
         }
         
         private static void FindTargetInHierarchy(GameObject parent, ref (GameObject obj, int zIndex) bestCandidate)
         {
+            if (parent == null) return;
             if (!parent.IsActive) return;
+            if (!IsInsideParentMasks(parent)) return;
             
             // Проверяем родителя
             if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
             {
                 Image image = parent.GetComponent<Image>();
-                if (image != null && image.Enabled && image.zIndex >= bestCandidate.zIndex)
+                if (image != null && image.Enabled && !image.IsMask && image.zIndex >= bestCandidate.zIndex)
                 {
                     bestCandidate = (parent, image.zIndex);
                 }
@@ -127,6 +152,28 @@ namespace AkiGames.Events
                     FindTargetInHierarchy(child, ref bestCandidate);
                 }
             }
+        }
+
+        private static bool IsInsideParentMasks(GameObject gameObject)
+        {
+            GameObject currentParent = gameObject.Parent;
+            while (currentParent != null)
+            {
+                Image mask = currentParent.GetComponent<Image>();
+                if (
+                    mask != null &&
+                    mask.Enabled &&
+                    mask.IsMask &&
+                    !mask.uiTransform.Contains(Input.mousePosition)
+                )
+                {
+                    return false;
+                }
+
+                currentParent = currentParent.Parent;
+            }
+
+            return true;
         }
 
         public static bool IsCursorInWindow()
@@ -165,6 +212,7 @@ namespace AkiGames.Events
         }
 
         public static Point mousePosition;
+        public static Point ScreenMousePosition { get; internal set; }
 
         private static GameObject _mouseHoverTarget = null;
         public static GameObject MouseHoverTarget // what object is cursor on now
@@ -182,6 +230,12 @@ namespace AkiGames.Events
         public static void StartPressing()
         {
             _mousePressTarget = _mouseHoverTarget;
+            if (_mousePressTarget == null)
+            {
+                MousePressTargetOffset = Vector2.Zero;
+                return;
+            }
+
             MousePressTargetOffset = new Vector2(
                 mousePosition.X - _mousePressTarget.uiTransform.Bounds.X,
                 mousePosition.Y - _mousePressTarget.uiTransform.Bounds.Y

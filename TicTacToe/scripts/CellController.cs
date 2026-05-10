@@ -1,5 +1,5 @@
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using AkiGames.Core;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts
@@ -17,15 +17,16 @@ namespace AkiGames.Scripts
 
         public override void Awake()
         {
+            LoadTextures();
             _image = gameObject.GetComponent<Image>();
             _image.texture = _idle;
         }
 
-        public static void LoadContent(ContentManager content)
+        private static void LoadTextures()
         {
-            _idle = content.Load<Texture2D>("invis");
-            _cross = content.Load<Texture2D>("cross");
-            _circle = content.Load<Texture2D>("circle");
+            _idle ??= Game1.LoadGameTexture("Content/invis.png");
+            _cross ??= Game1.LoadGameTexture("Content/cross.png");
+            _circle ??= Game1.LoadGameTexture("Content/circle.png");
         }
 
         public int Sign

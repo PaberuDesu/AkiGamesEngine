@@ -1,5 +1,5 @@
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using AkiGames.Core;
 using AkiGames.UI;
 
 namespace AkiGames.Scripts
@@ -13,15 +13,16 @@ namespace AkiGames.Scripts
 
         public override void Awake()
         {
+            LoadTextures();
             _image = gameObject.Children[0].GetComponent<Image>();
             Close();
         }
 
-        public static void LoadContent(ContentManager content)
+        private static void LoadTextures()
         {
-            _win = content.Load<Texture2D>("win");
-            _lose = content.Load<Texture2D>("lose");
-            _draw = content.Load<Texture2D>("draw");
+            _win ??= Game1.LoadGameTexture("Content/win.png");
+            _lose ??= Game1.LoadGameTexture("Content/lose.png");
+            _draw ??= Game1.LoadGameTexture("Content/draw.png");
         }
         
         public void ShowEndScreen(int winner, int player)

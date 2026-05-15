@@ -5,6 +5,7 @@ using System.Text.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using AkiGames.Core.Serialization;
 using AkiGames.Events;
 using AkiGames.UI;
@@ -47,6 +48,7 @@ namespace AkiGames.Core
             Window.Title = "Template";
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += OnWindowSizeChanged;
+            Window.TextInput += OnWindowTextInput;
         }
 
         public static Texture2D LoadGameTexture(string assetPath)
@@ -149,6 +151,11 @@ namespace AkiGames.Core
         {
             base.OnDeactivated(sender, args);
             _isWindowActive = false;
+        }
+
+        private void OnWindowTextInput(object sender, TextInputEventArgs e)
+        {
+            TextInputBuffer.Enqueue(e.Character);
         }
 
         private static void RegisterTexture(Texture2D texture, string assetPath)

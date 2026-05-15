@@ -115,6 +115,8 @@ namespace AkiGames.Core.Editor
             Directory.CreateDirectory(buildRoot);
 
             string projectFile = Path.Combine(buildRoot, $"{assemblyName}.csproj");
+            string globalUsingsFile = Path.Combine(buildRoot, "ProjectScriptLoader.GlobalUsings.g.cs");
+            File.WriteAllText(globalUsingsFile, CreateGlobalUsingsFile(), Encoding.UTF8);
             File.WriteAllText(projectFile, CreateProjectFile(projectRoot, scriptFiles, assemblyName), Encoding.UTF8);
 
             string output = RunDotnetBuild(projectFile);
@@ -141,6 +143,7 @@ namespace AkiGames.Core.Editor
             builder.AppendLine("    <UseWindowsForms>true</UseWindowsForms>");
             builder.AppendLine("  </PropertyGroup>");
             builder.AppendLine("  <ItemGroup>");
+            builder.AppendLine("    <Compile Include=\"ProjectScriptLoader.GlobalUsings.g.cs\" Link=\"ProjectScriptLoader.GlobalUsings.g.cs\" />");
 
             foreach (string scriptFile in scriptFiles)
             {
@@ -161,6 +164,14 @@ namespace AkiGames.Core.Editor
 
             builder.AppendLine("  </ItemGroup>");
             builder.AppendLine("</Project>");
+            return builder.ToString();
+        }
+
+        private static string CreateGlobalUsingsFile()
+        {
+            StringBuilder builder = new();
+            builder.AppendLine("global using AkiGames.Core.GameStructures;");
+            builder.AppendLine("global using GameComponent = AkiGames.Core.GameStructures.GameComponent;");
             return builder.ToString();
         }
 

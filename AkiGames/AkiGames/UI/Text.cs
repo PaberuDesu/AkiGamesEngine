@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,6 +16,8 @@ namespace AkiGames.UI
         private string _prevText = "";
         private WrapModeH _prevWrap = WrapModeH.None;
         private float _prevTextScale = 1f;
+        private SpriteFont _cachedFont = null;
+        private HashSet<char> _supportedCharacters = null;
         protected virtual float TextScale => 1f;
 
         public WrapModeH HorizontalWrap { private get; set; } = WrapModeH.None;
@@ -59,12 +62,12 @@ namespace AkiGames.UI
         private readonly Dictionary<string, Vector2> _measureCache = [];
         protected Vector2 MeasureStringCached(string text)
         {
-            text ??= "";
-            if (_measureCache.TryGetValue(text, out var size))
+            string renderableText = ToRenderableText(text);
+            if (_measureCache.TryGetValue(renderableText, out var size))
                 return size;
 
-            size = Fonts.main.MeasureString(text);
-            _measureCache[text] = size;
+            size = Fonts.main.MeasureString(renderableText);
+            _measureCache[renderableText] = size;
             return size;
         }
 
@@ -180,7 +183,8 @@ namespace AkiGames.UI
 
             // Рисуем текст
             Rectangle rect = uiTransform.Bounds;
-            Vector2 stringSize = MeasureStringScaled(TextWithCurrentWrapping);
+            string renderableText = ToRenderableText(TextWithCurrentWrapping);
+            Vector2 stringSize = MeasureStringScaled(renderableText);
             int x = rect.X;
             int y = rect.Y;
 
@@ -212,7 +216,7 @@ namespace AkiGames.UI
 
             spriteBatch.DrawString(
                 Fonts.main,
-                TextWithCurrentWrapping,
+                renderableText,
                 new Vector2(x,y),
                 TextColor,
                 uiTransform.Rotation,
@@ -222,6 +226,49 @@ namespace AkiGames.UI
 
             // Восстанавливаем стандартный spriteBatch если был изменен
             if (previousScissor.HasValue) RestoreSpriteBatch(spriteBatch, previousScissor.Value);
+        }
+
+        private string ToRenderableText(string value)
+        {
+            value ??= "";
+            if (Fonts.main == null || string.IsNullOrEmpty(value))
+                return value;
+
+            EnsureSupportedCharacters();
+
+            char fallbackCharacter = Fonts.main.DefaultCharacter ?? '?';
+            StringBuilder builder = null;
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                char character = value[i];
+                if (character == '\r' || character == '\n' || character == '\t')
+                    continue;
+
+                if (_supportedCharacters.Contains(character))
+                    continue;
+
+                builder ??= new StringBuilder(value);
+                builder[i] = fallbackCharacter;
+            }
+
+            return builder?.ToString() ?? value;
+        }
+
+        private void EnsureSupportedCharacters()
+        {
+            if (ReferenceEquals(_cachedFont, Fonts.main) && _supportedCharacters != null)
+                return;
+
+            _cachedFont = Fonts.main;
+            _supportedCharacters = _cachedFont?.Characters != null ?
+                [.. _cachedFont.Characters] :
+                [];
+
+            if (_cachedFont?.DefaultCharacter is char fallbackCharacter)
+                _supportedCharacters.Add(fallbackCharacter);
+
+            _measureCache.Clear();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using AkiGames.Core.Serialization;
 using AkiGames.Events;
 using AkiGames.Scripts.WindowContentTypes;
@@ -16,6 +17,7 @@ namespace AkiGames.Core
     public class Game1 : Game
     {
         private bool _isWindowActive = true;
+        private static Game1 _instance;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -45,6 +47,7 @@ namespace AkiGames.Core
 
         public Game1()
         {
+            _instance = this;
             _graphics = new GraphicsDeviceManager(this)
             {
                 PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8
@@ -59,7 +62,10 @@ namespace AkiGames.Core
 
             // Устанавливаем обработчик изменения размера окна
             Window.ClientSizeChanged += OnWindowSizeChanged;
+            Window.TextInput += OnWindowTextInput;
         }
+
+        public static void ExitGame() => _instance?.Exit();
 
         public static void SetGameContentRoot(string contentRoot)
         {
@@ -353,6 +359,11 @@ namespace AkiGames.Core
         {
             base.OnDeactivated(sender, args);
             _isWindowActive = false;
+        }
+
+        private void OnWindowTextInput(object sender, TextInputEventArgs e)
+        {
+            TextInputBuffer.Enqueue(e.Character);
         }
 
         protected override void Draw(GameTime gameTime)

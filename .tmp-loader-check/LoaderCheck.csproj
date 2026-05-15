@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ProjectScriptLoader.GlobalUsings.g.cs" Link="ProjectScriptLoader.GlobalUsings.g.cs" />
+    <Compile Include="C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\Scripts\JeopardyButton.cs" Link="Scripts/JeopardyButton.cs" />
+    <Compile Include="C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\Scripts\JeopardyGame.cs" Link="Scripts/JeopardyGame.cs" />
+    <Compile Include="C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\Scripts\JeopardyModels.cs" Link="Scripts/JeopardyModels.cs" />
+    <Compile Include="C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\Scripts\JeopardyTextInput.cs" Link="Scripts/JeopardyTextInput.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AkiGames">
+      <HintPath>C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\AkiGames.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ImGui.NET">
+      <HintPath>C:\Users\wintake\GameEngine\AkiGamesEngine\AkiGames\AkiGames\bin\Debug\net10.0-windows\ImGui.NET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,115 @@
+{
+  "Link": "Content/Prefabs/JeopardyScreen",
+  "ObjectName": "MainMenu",
+  "ObjectID": 1,
+  "Children": [
+    {
+      "ObjectName": "Title",
+      "ObjectID": 2,
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -130
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 760,
+          "Height": 90,
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "anchorLeftTop": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Text",
+          "HorizontalWrap": "None",
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "text": "\u0421\u0412\u041E\u042F \u0418\u0413\u0420\u0410",
+          "TextColor": 4294967295,
+          "zIndex": 2,
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "StartButton",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -40
+          },
+          "Width": 320,
+          "Height": 70
+        },
+        {
+          "type": "Text",
+          "text": "\u0421\u0442\u0430\u0440\u0442"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "AddTeamButton",
+      "ObjectID": 5,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 50
+          },
+          "Width": 320,
+          "Height": 70
+        },
+        {
+          "type": "Text",
+          "text": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u043C\u0430\u043D\u0434\u0443"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "ExitButton",
+      "ObjectID": 6,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 140
+          },
+          "Width": 320,
+          "Height": 70
+        },
+        {
+          "type": "Text",
+          "text": "\u0412\u044B\u0439\u0442\u0438"
+        }
+      ]
+    }
+  ]
+}

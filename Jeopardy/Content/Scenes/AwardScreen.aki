@@ -1,0 +1,140 @@
+{
+  "Link": "Content/Prefabs/JeopardyScreen",
+  "ObjectName": "AwardScreen",
+  "ObjectID": 1,
+  "Children": [
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "AwardTitle",
+      "ObjectID": 2,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -345
+          },
+          "Width": 980,
+          "Height": 72
+        },
+        {
+          "type": "Text",
+          "text": "\u0412\u044B\u0431\u043E\u0440 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044F"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "AnswerText",
+      "ObjectID": 3,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -235
+          },
+          "Width": 980,
+          "Height": 90
+        },
+        {
+          "type": "Text",
+          "HorizontalWrap": "NewLineControlsHeigth"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "ShowAnswer",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -125
+          },
+          "Width": 300,
+          "Height": 58
+        },
+        {
+          "type": "Text",
+          "text": "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043E\u0442\u0432\u0435\u0442"
+        }
+      ]
+    },
+    {
+      "ObjectName": "AwardButtons",
+      "ObjectID": 5,
+      "IsActive": true,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 145
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 700,
+          "Height": 430,
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "anchorLeftTop": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyButton",
+          "ObjectName": "AwardNoOne",
+          "ObjectID": 6,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 90,
+                "y": 18
+              },
+              "Width": 520,
+              "Height": 62,
+              "HorizontalAlignment": "Left",
+              "VerticalAlignment": "Top",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 0,
+                "y": 0
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "Text",
+              "text": "\u041D\u0438\u043A\u0442\u043E"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

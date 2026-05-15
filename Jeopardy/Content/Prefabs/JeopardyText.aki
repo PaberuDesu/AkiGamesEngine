@@ -1,0 +1,32 @@
+{
+  "ObjectName": "JeopardyText",
+  "IsActive": true,
+  "IsMouseTargetable": false,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": { "x": 0, "y": 0 },
+      "OffsetMax": { "x": 0, "y": 0 },
+      "Width": 400,
+      "Height": 60,
+      "HorizontalAlignment": "Center",
+      "VerticalAlignment": "Middle",
+      "anchorLeftTop": { "x": 0.5, "y": 0.5 },
+      "anchorRightBottom": { "x": 0.5, "y": 0.5 },
+      "origin": { "x": 0.5, "y": 0.5 },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Text",
+      "text": "",
+      "TextColor": 4294967295,
+      "HorizontalWrap": "DotsAfter",
+      "HorizontalAlignment": "Center",
+      "VerticalAlignment": "Middle",
+      "zIndex": 2,
+      "Enabled": true
+    }
+  ],
+  "Children": []
+}

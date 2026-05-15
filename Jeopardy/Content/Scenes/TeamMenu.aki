@@ -1,0 +1,431 @@
+{
+  "Link": "Content/Prefabs/JeopardyScreen",
+  "ObjectName": "TeamMenu",
+  "ObjectID": 1,
+  "Children": [
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "TeamMenuTitle",
+      "ObjectID": 2,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -20,
+            "y": -335
+          },
+          "Width": 900
+        },
+        {
+          "type": "Text",
+          "text": "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u043A\u043E\u043C\u0430\u043D\u0434\u0443"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyTextInput",
+      "ObjectName": "TeamNameInput",
+      "ObjectID": 3,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -20,
+            "y": -255
+          }
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyImage",
+      "ObjectName": "LogoPreviewImage",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -360,
+            "y": -255
+          },
+          "Width": 96,
+          "Height": 96
+        },
+        {
+          "type": "Image",
+          "texture": "Content/TeamLogos/Sahur.png",
+          "zIndex": 2
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "LogoSahur",
+      "ObjectID": 5,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -205,
+            "y": -165
+          },
+          "Width": 120,
+          "Height": 92
+        },
+        {
+          "type": "Text",
+          "text": "",
+          "Enabled": false
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyImage",
+          "ObjectName": "LogoImage",
+          "ObjectID": 6,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": -17
+              },
+              "Width": 56,
+              "Height": 56
+            },
+            {
+              "type": "Image",
+              "texture": "Content/TeamLogos/Sahur.png",
+              "zIndex": 3
+            }
+          ]
+        },
+        {
+          "Link": "Content/Prefabs/JeopardyText",
+          "ObjectName": "LogoLabel",
+          "ObjectID": 7,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 31
+              },
+              "Width": 112,
+              "Height": 24
+            },
+            {
+              "type": "Text",
+              "text": "\u0421\u0430\u0433\u0443\u0440\u0447\u0438\u043A",
+              "zIndex": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "LogoLirili",
+      "ObjectID": 8,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -70,
+            "y": -165
+          },
+          "Width": 120,
+          "Height": 92
+        },
+        {
+          "type": "Text",
+          "text": "",
+          "Enabled": false
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyImage",
+          "ObjectName": "LogoImage",
+          "ObjectID": 9,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": -17
+              },
+              "Width": 56,
+              "Height": 56
+            },
+            {
+              "type": "Image",
+              "texture": "Content/TeamLogos/Lirili.png",
+              "zIndex": 3
+            }
+          ]
+        },
+        {
+          "Link": "Content/Prefabs/JeopardyText",
+          "ObjectName": "LogoLabel",
+          "ObjectID": 10,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 31
+              },
+              "Width": 112,
+              "Height": 24
+            },
+            {
+              "type": "Text",
+              "text": "\u041B\u0438\u0440\u0438\u0440\u0438",
+              "zIndex": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "LogoCrocodilo",
+      "ObjectID": 11,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 65,
+            "y": -165
+          },
+          "Width": 120,
+          "Height": 92
+        },
+        {
+          "type": "Text",
+          "text": "",
+          "Enabled": false
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyImage",
+          "ObjectName": "LogoImage",
+          "ObjectID": 12,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": -17
+              },
+              "Width": 56,
+              "Height": 56
+            },
+            {
+              "type": "Image",
+              "texture": "Content/TeamLogos/Crocodilo.png",
+              "zIndex": 3
+            }
+          ]
+        },
+        {
+          "Link": "Content/Prefabs/JeopardyText",
+          "ObjectName": "LogoLabel",
+          "ObjectID": 13,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 31
+              },
+              "Width": 112,
+              "Height": 24
+            },
+            {
+              "type": "Text",
+              "text": "\u041A\u0440\u043E\u043A\u043E\u0434\u0438\u043B\u043E",
+              "zIndex": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "LogoPatapim",
+      "ObjectID": 14,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 200,
+            "y": -165
+          },
+          "Width": 120,
+          "Height": 92
+        },
+        {
+          "type": "Text",
+          "text": "",
+          "Enabled": false
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyImage",
+          "ObjectName": "LogoImage",
+          "ObjectID": 15,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": -17
+              },
+              "Width": 56,
+              "Height": 56
+            },
+            {
+              "type": "Image",
+              "texture": "Content/TeamLogos/Patapim.png",
+              "zIndex": 3
+            }
+          ]
+        },
+        {
+          "Link": "Content/Prefabs/JeopardyText",
+          "ObjectName": "LogoLabel",
+          "ObjectID": 16,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 31
+              },
+              "Width": 112,
+              "Height": 24
+            },
+            {
+              "type": "Text",
+              "text": "\u041F\u0430\u0442\u0430\u043F\u0438\u043C",
+              "zIndex": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "AddTeamConfirm",
+      "ObjectID": 17,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -120,
+            "y": -75
+          },
+          "Width": 230,
+          "Height": 58
+        },
+        {
+          "type": "Text",
+          "text": "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "BackToMain",
+      "ObjectID": 18,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 140,
+            "y": -75
+          },
+          "Width": 230,
+          "Height": 58
+        },
+        {
+          "type": "Text",
+          "text": "\u041D\u0430\u0437\u0430\u0434"
+        }
+      ]
+    },
+    {
+      "ObjectName": "TeamList",
+      "ObjectID": 19,
+      "IsActive": true,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 465,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 470,
+          "Height": 560,
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "anchorLeftTop": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyText",
+          "ObjectName": "NoTeams",
+          "ObjectID": 20,
+          "Components": [
+            {
+              "type": "UITransform",
+              "Width": 470,
+              "Height": 44,
+              "HorizontalAlignment": "Left",
+              "VerticalAlignment": "Top",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 0,
+                "y": 0
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "Text",
+              "HorizontalAlignment": "Left",
+              "text": "\u041F\u043E\u043A\u0430 \u043A\u043E\u043C\u0430\u043D\u0434 \u043D\u0435\u0442"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

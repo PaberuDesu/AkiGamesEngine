@@ -1,0 +1,45 @@
+{
+  "ObjectName": "JeopardyButton",
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": { "x": 0, "y": 0 },
+      "OffsetMax": { "x": 0, "y": 0 },
+      "Width": 240,
+      "Height": 60,
+      "HorizontalAlignment": "Center",
+      "VerticalAlignment": "Middle",
+      "anchorLeftTop": { "x": 0.5, "y": 0.5 },
+      "anchorRightBottom": { "x": 0.5, "y": 0.5 },
+      "origin": { "x": 0.5, "y": 0.5 },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "texture": "",
+      "fillColor": 4281808695,
+      "imageMode": "Stretch",
+      "zIndex": 1,
+      "Enabled": true
+    },
+    {
+      "type": "Text",
+      "text": "Button",
+      "TextColor": 4294967295,
+      "HorizontalWrap": "DotsAfter",
+      "HorizontalAlignment": "Center",
+      "VerticalAlignment": "Middle",
+      "zIndex": 2,
+      "Enabled": true
+    },
+    {
+      "type": "JeopardyButton",
+      "Enabled": true
+    }
+  ],
+  "Children": []
+}

@@ -1,0 +1,214 @@
+{
+  "Themes": [
+    {
+      "Title": "History",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "This ancient civilization built the pyramids at Giza.",
+          "Answer": "Ancient Egypt",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "This document, signed in 1776, announced the independence of the United States.",
+          "Answer": "The Declaration of Independence",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "This wall divided a European capital city from 1961 to 1989.",
+          "Answer": "The Berlin Wall",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "This empire was ruled by Julius Caesar before it became an empire in the formal sense.",
+          "Answer": "Rome",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "This 1215 English charter limited royal power and influenced later constitutional law.",
+          "Answer": "Magna Carta",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Science",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "This planet is known as the Red Planet.",
+          "Answer": "Mars",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "This gas do plants absorb from the atmosphere during photosynthesis.",
+          "Answer": "Carbon dioxide",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "This particle has a negative electric charge and orbits an atom's nucleus.",
+          "Answer": "Electron",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "This force keeps planets in orbit around the Sun.",
+          "Answer": "Gravity",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "This branch of physics studies heat, work, temperature, and energy transfer.",
+          "Answer": "Thermodynamics",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Literature",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "This author wrote Romeo and Juliet.",
+          "Answer": "William Shakespeare",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "This novel begins with the line 'Call me Ishmael.'",
+          "Answer": "Moby-Dick",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "This detective lives at 221B Baker Street.",
+          "Answer": "Sherlock Holmes",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "This dystopian novel features Big Brother and Newspeak.",
+          "Answer": "Nineteen Eighty-Four",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "This epic poem follows Odysseus on his long journey home after the Trojan War.",
+          "Answer": "The Odyssey",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Geography",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "This is the largest ocean on Earth.",
+          "Answer": "The Pacific Ocean",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "This river runs through Egypt and is often called the longest river in the world.",
+          "Answer": "The Nile",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "This country has cities named Sydney, Melbourne, and Perth.",
+          "Answer": "Australia",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "This mountain range separates Europe from Asia in western Russia.",
+          "Answer": "The Ural Mountains",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "This landlocked Asian country contains the Gobi Desert with China.",
+          "Answer": "Mongolia",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Movies",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "This movie franchise features Jedi, Sith, and lightsabers.",
+          "Answer": "Star Wars",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "This 1997 film ends with Rose remembering Jack after the sinking of a famous ship.",
+          "Answer": "Titanic",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "This actor played Iron Man in the Marvel Cinematic Universe.",
+          "Answer": "Robert Downey Jr.",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "This animated studio released Toy Story in 1995.",
+          "Answer": "Pixar",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "This director is known for Spirited Away, My Neighbor Totoro, and Princess Mononoke.",
+          "Answer": "Hayao Miyazaki",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Games",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "This Nintendo plumber often rescues Princess Peach.",
+          "Answer": "Mario",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "This game asks players to place blocks and survive creepers.",
+          "Answer": "Minecraft",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "This blue hedgehog is Sega's classic mascot.",
+          "Answer": "Sonic the Hedgehog",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "This Valve puzzle game features portals, test chambers, and GLaDOS.",
+          "Answer": "Portal",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "This strategy series by Sid Meier lets players guide a nation from ancient times to the future.",
+          "Answer": "Civilization",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    }
+  ]
+}

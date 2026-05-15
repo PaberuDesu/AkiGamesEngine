@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/EditorFont.spritefont</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/main.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/AwardScreen.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/GameBoard.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/MainMenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/QuestionScreen.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/TeamMenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Backgrounds/main.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/placeholder.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Crocodilo.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Lirili.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Patapim.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Sahur.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/DropDownSubmenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/DropDownSubmenuItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/AwardTeamButton.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/JeopardyButton.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/JeopardyImage.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/JeopardyScreen.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/JeopardyText.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/JeopardyTextInput.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/ScrollableList.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/ScoreboardTeam.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/TeamListRow.aki</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

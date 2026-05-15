@@ -1,0 +1,179 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:DesktopGL
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+/reference:..\libs\AkiContentPipeline.dll
+
+#---------------------------------- Content ---------------------------------#
+
+#begin EditorFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:EditorFont.spritefont
+
+#begin main.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:main.aki
+
+#begin Scenes/AwardScreen.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Scenes/AwardScreen.aki
+
+#begin Scenes/GameBoard.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Scenes/GameBoard.aki
+
+#begin Scenes/MainMenu.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Scenes/MainMenu.aki
+
+#begin Scenes/QuestionScreen.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Scenes/QuestionScreen.aki
+
+#begin Scenes/TeamMenu.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Scenes/TeamMenu.aki
+
+#begin Backgrounds/main.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Backgrounds/main.png
+
+#begin QuestionImages/placeholder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:QuestionImages/placeholder.png
+
+#begin TeamLogos/Crocodilo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TeamLogos/Crocodilo.png
+
+#begin TeamLogos/Lirili.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TeamLogos/Lirili.png
+
+#begin TeamLogos/Patapim.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TeamLogos/Patapim.png
+
+#begin TeamLogos/Sahur.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TeamLogos/Sahur.png
+
+#begin Prefabs/DropDownSubmenu.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/DropDownSubmenu.aki
+
+#begin Prefabs/DropDownSubmenuItem.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/DropDownSubmenuItem.aki
+
+#begin Prefabs/AwardTeamButton.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/AwardTeamButton.aki
+
+#begin Prefabs/JeopardyButton.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/JeopardyButton.aki
+
+#begin Prefabs/JeopardyImage.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/JeopardyImage.aki
+
+#begin Prefabs/JeopardyScreen.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/JeopardyScreen.aki
+
+#begin Prefabs/JeopardyText.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/JeopardyText.aki
+
+#begin Prefabs/JeopardyTextInput.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/JeopardyTextInput.aki
+
+#begin Prefabs/ScrollableList.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ScrollableList.aki
+
+#begin Prefabs/ScoreboardTeam.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ScoreboardTeam.aki
+
+#begin Prefabs/TeamListRow.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/TeamListRow.aki

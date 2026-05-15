@@ -1,0 +1,6 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/AwardScreen.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/bin/DesktopGL/Content/Scenes/AwardScreen.xnb","AkiProcessor","string",3346,3410,0,0884936
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/GameBoard.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/bin/DesktopGL/Content/Scenes/GameBoard.xnb","AkiProcessor","string",17869,17934,0,0019112
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/MainMenu.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/bin/DesktopGL/Content/Scenes/MainMenu.xnb","AkiProcessor","string",2702,2766,0,0016198
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/QuestionScreen.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/bin/DesktopGL/Content/Scenes/QuestionScreen.xnb","AkiProcessor","string",4285,4349,0,0016108
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/TeamMenu.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/bin/DesktopGL/Content/Scenes/TeamMenu.xnb","AkiProcessor","string",10423,10487,0,0014687

@@ -1,0 +1,243 @@
+{
+  "ObjectName": "ScrollableList",
+  "ObjectID": 1,
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 0,
+      "Height": 0,
+      "HorizontalAlignment": "Stretch",
+      "VerticalAlignment": "Stretch",
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 1,
+        "y": 1
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "texture": "",
+      "fillColor": 4279505940,
+      "imageMode": "Stretch",
+      "zIndex": 0,
+      "Enabled": true
+    }
+  ],
+  "Children": [
+    {
+      "ObjectName": "ContentList (Mask)",
+      "ObjectID": 2,
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 0,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": true,
+          "texture": "",
+          "fillColor": 4278190180,
+          "imageMode": "Stretch",
+          "zIndex": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": [
+        {
+          "ObjectName": "ContentList",
+          "ObjectID": 3,
+          "IsActive": true,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": 0
+              },
+              "Width": 0,
+              "Height": 0,
+              "HorizontalAlignment": "Stretch",
+              "VerticalAlignment": "Top",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 1,
+                "y": 0
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "ScrollableListController",
+              "Spacing": 0,
+              "Enabled": true
+            }
+          ],
+          "Children": []
+        },
+        {
+          "ObjectName": "Scrollbar",
+          "ObjectID": 4,
+          "IsActive": false,
+          "IsMouseTargetable": true,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": 0
+              },
+              "Width": 8,
+              "Height": 0,
+              "HorizontalAlignment": "Right",
+              "VerticalAlignment": "Stretch",
+              "anchorLeftTop": {
+                "x": 1,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 1,
+                "y": 1
+              },
+              "origin": {
+                "x": 1,
+                "y": 0
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Image",
+              "IsMask": false,
+              "texture": "",
+              "fillColor": 4280821800,
+              "imageMode": "Stretch",
+              "zIndex": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Scrollbar",
+              "ScrollStep": 0,
+              "Enabled": true
+            }
+          ],
+          "Children": [
+            {
+              "ObjectName": "Thumb",
+              "ObjectID": 5,
+              "IsActive": true,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 0,
+                  "Height": 16,
+                  "HorizontalAlignment": "Stretch",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 1,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "texture": "",
+                  "fillColor": 4286611584,
+                  "imageMode": "Stretch",
+                  "zIndex": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Thumb",
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

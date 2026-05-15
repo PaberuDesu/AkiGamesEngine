@@ -1,0 +1,31 @@
+{
+  "ObjectName": "JeopardyScreen",
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": { "x": 0, "y": 0 },
+      "OffsetMax": { "x": 0, "y": 0 },
+      "Width": 0,
+      "Height": 0,
+      "HorizontalAlignment": "Stretch",
+      "VerticalAlignment": "Stretch",
+      "anchorLeftTop": { "x": 0, "y": 0 },
+      "anchorRightBottom": { "x": 1, "y": 1 },
+      "origin": { "x": 0, "y": 0 },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "Image",
+      "IsMask": false,
+      "texture": "Content/Backgrounds/main",
+      "fillColor": 4294967295,
+      "imageMode": "Stretch",
+      "zIndex": 0,
+      "Enabled": true
+    }
+  ],
+  "Children": []
+}

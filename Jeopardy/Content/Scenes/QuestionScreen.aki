@@ -1,0 +1,187 @@
+{
+  "Link": "Content/Prefabs/JeopardyScreen",
+  "ObjectName": "QuestionScreen",
+  "ObjectID": 1,
+  "Children": [
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "EscapeQuestion",
+      "ObjectID": 2,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 30,
+            "y": 28
+          },
+          "Width": 150,
+          "Height": 48,
+          "HorizontalAlignment": "Left",
+          "VerticalAlignment": "Top",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "type": "Text",
+          "text": "\u0412\u044B\u0439\u0442\u0438"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "SkipTimer",
+      "ObjectID": 3,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 200,
+            "y": 28
+          },
+          "Width": 180,
+          "Height": 48,
+          "HorizontalAlignment": "Left",
+          "VerticalAlignment": "Top",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 0,
+            "y": 0
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "type": "Text",
+          "text": "\u041E\u0442\u0432\u0435\u0442\u0438\u0442\u044C"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "QuestionText",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -245
+          },
+          "Width": 1080,
+          "Height": 190
+        },
+        {
+          "type": "Text",
+          "HorizontalWrap": "NewLineControlsHeigth"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyImage",
+      "ObjectName": "QuestionImage",
+      "ObjectID": 5,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 20
+          },
+          "Width": 560,
+          "Height": 280
+        },
+        {
+          "type": "Image",
+          "texture": "Content/QuestionImages/placeholder"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyImage",
+      "ObjectName": "TimerTrack",
+      "ObjectID": 6,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 220
+          },
+          "Width": 720,
+          "Height": 26
+        },
+        {
+          "type": "Image",
+          "fillColor": 4281808695
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyImage",
+          "ObjectName": "TimerFill",
+          "ObjectID": 7,
+          "Components": [
+            {
+              "type": "UITransform",
+              "Width": 0,
+              "Height": 0,
+              "HorizontalAlignment": "Stretch",
+              "VerticalAlignment": "Stretch",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 1,
+                "y": 1
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "Image",
+              "zIndex": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "Timer",
+      "ObjectID": 8,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 260
+          },
+          "Width": 320,
+          "Height": 40
+        },
+        {
+          "type": "Text",
+          "text": "60 \u0441\u0435\u043A\u0443\u043D\u0434"
+        }
+      ]
+    }
+  ]
+}

@@ -1,211 +1,230 @@
 {
   "Themes": [
     {
-      "Title": "History",
+      "Title": "ЕГЭ по тик-току",
       "Questions": [
         {
           "Points": 100,
-          "Text": "This ancient civilization built the pyramids at Giza.",
-          "Answer": "Ancient Egypt",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Ехал Пепе через шнейне, видит Пепе - в шнейне фа. Сунул Пепе руку в шнейне... продолжите высказывание",
+          "Answer": "Пепе шнейне ватафа",
+          "Image": "Content/QuestionImages/Ganvest.png"
         },
         {
           "Points": 200,
-          "Text": "This document, signed in 1776, announced the independence of the United States.",
-          "Answer": "The Declaration of Independence",
+          "Text": "Продолжите мемную строку: «Я клубника, ты клубника, как у нас мог родиться...»",
+          "Answer": "Банан",
+          "Image": "Content/QuestionImages/Strawberry.png"
+        },
+        {
+          "Points": 300,
+          "Text": "Какую фразу чаще всего говорит Роза Барбоскина в нейрослоп-видео",
+          "Answer": "Да ты шуешь",
+          "Options": ["Ты - туда, в угуд", "Я хочу быть как газан", "Да ты шуешь", "Но мне же не хочется"],
+          "Image": "Content/QuestionImages/Barboskiny.png"
+        },
+        {
+          "Points": 400,
+          "Text": "Как сказать 'Я, дед и кот' на Муринском языке",
+          "Answer": "Ч, дод и котость",
+          "Options": ["Ч, дод и котость", "Ч, дедость и котость", "Ч, дедость и котич", "Ч, дедо и котость"],
+          "Image": "QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "Кто из перечисленных персонажей похож на кирпичи",
+          "Answer": "Ти Ти Ти Сагур",
+          "Options": ["Фрули Фрула", "Матео", "Трик Трак Барабум", "Ти Ти Ти Сагур"],
+          "Image": "Content/QuestionImages/Mellstroy.png"
+        }
+      ]
+    },
+    {
+      "Title": "Тракторы",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Какого цвета трактор в известном детском мультсериале?",
+          "Answer": "Синий",
+          "Options": ["Красный", "Желтый", "Синий", "Зеленый"],
+          "Image": "Content/QuestionImages/TractorColor.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Какого типа двигатель чаще всего стоит в современных тракторах?",
+          "Answer": "Дизельный",
           "Image": "Content/QuestionImages/placeholder.png"
         },
         {
           "Points": 300,
-          "Text": "This wall divided a European capital city from 1961 to 1989.",
-          "Answer": "The Berlin Wall",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Кто управляет трактором?",
+          "Answer": "Тракторист/Машинист",
+          "Image": "Content/QuestionImages/tractorist.png"
         },
         {
           "Points": 400,
-          "Text": "This empire was ruled by Julius Caesar before it became an empire in the formal sense.",
-          "Answer": "Rome",
+          "Text": "МТЗ - ... тракторный завод",
+          "Answer": "Минский",
+          "Options": ["Московский", "Минский", "Могилёвский", "Магнитогорский"],
           "Image": "Content/QuestionImages/placeholder.png"
         },
         {
           "Points": 500,
-          "Text": "This 1215 English charter limited royal power and influenced later constitutional law.",
-          "Answer": "Magna Carta",
+          "Text": "Как называется устройство сзади трактора для крепления плуга?",
+          "Answer": "Трёхточечная навеска",
+          "Options": ["Сцепная петля", "Трёхточечная навеска", "Фаркоп", "Лемех"],
           "Image": "Content/QuestionImages/placeholder.png"
         }
       ]
     },
     {
-      "Title": "Science",
+      "Title": "Аниме",
       "Questions": [
         {
           "Points": 100,
-          "Text": "This planet is known as the Red Planet.",
-          "Answer": "Mars",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "В каком аниме герой мечтает стать Хокаге?",
+          "Answer": "Наруто",
+          "Options": ["Наруто", "Блич", "Тетрадь смерти", "Доктор Стоун"],
+          "Image": "Content/QuestionImages/Naruto.png"
         },
         {
           "Points": 200,
-          "Text": "This gas do plants absorb from the atmosphere during photosynthesis.",
-          "Answer": "Carbon dioxide",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Как зовут сестру Тандзиро, которая стала демоном?",
+          "Answer": "Недзуко",
+          "Options": ["Недзуко", "Шинобу", "Ренгаку", "Мицури"],
+          "Image": "Content/QuestionImages/Nedzuko.png"
         },
         {
           "Points": 300,
-          "Text": "This particle has a negative electric charge and orbits an atom's nucleus.",
-          "Answer": "Electron",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Как зовут карманного робокота из будущего, друга Нобиты?",
+          "Answer": "Дораэмон",
+          "Options": ["Тоторо", "Ророноа", "Манеки Неко", "Дораэмон"],
+          "Image": "Content/QuestionImages/Doraemon.png"
         },
         {
           "Points": 400,
-          "Text": "This force keeps planets in orbit around the Sun.",
-          "Answer": "Gravity",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Какой персонаж изображен на картинке",
+          "Answer": "Тоторо",
+          "Image": "Content/QuestionImages/anime_totoro.png"
         },
         {
           "Points": 500,
-          "Text": "This branch of physics studies heat, work, temperature, and energy transfer.",
-          "Answer": "Thermodynamics",
+          "Text": "Какое из этих аниме не является сёненом?",
+          "Answer": "Сага о Винланде",
+          "Options": ["Ван Пис", "Твоя апрельская ложь", "Атака Титанов", "Сага о Винланде"],
           "Image": "Content/QuestionImages/placeholder.png"
         }
       ]
     },
     {
-      "Title": "Literature",
+      "Title": "Спорт",
       "Questions": [
         {
           "Points": 100,
-          "Text": "This author wrote Romeo and Juliet.",
-          "Answer": "William Shakespeare",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Сколько игроков одной команды одновременно на поле в футболе?",
+          "Answer": "11",
+          "Image": "Content/QuestionImages/Football.png"
         },
         {
           "Points": 200,
-          "Text": "This novel begins with the line 'Call me Ishmael.'",
-          "Answer": "Moby-Dick",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Как называется бросок сверху, когда игрок буквально вколачивает мяч в кольцо?",
+          "Answer": "Данк",
+          "Image": "Content/QuestionImages/Dunk.png"
         },
         {
           "Points": 300,
-          "Text": "This detective lives at 221B Baker Street.",
-          "Answer": "Sherlock Holmes",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Как называется турнирная система, где проигравший сразу выбывает?",
+          "Answer": "Плей-офф",
+          "Image": "Content/QuestionImages/PlayOff.png"
         },
         {
           "Points": 400,
-          "Text": "This dystopian novel features Big Brother and Newspeak.",
-          "Answer": "Nineteen Eighty-Four",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Сколько длится один период в хоккее с шайбой в НХЛ (чистое время)?",
+          "Answer": "20 минут",
+          "Options": ["15 минут", "20 минут", "25 минут", "30 минут"],
+          "Image": "Content/QuestionImages/Hockey.png"
         },
         {
           "Points": 500,
-          "Text": "This epic poem follows Odysseus on his long journey home after the Trojan War.",
-          "Answer": "The Odyssey",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Какая страна выиграла чемпионат мира по футболу 2018 года?",
+          "Answer": "Франция",
+          "Options": ["Франция", "Хорватия", "Бельгия", "Англия"],
+          "Image": "Content/QuestionImages/FootballLeague.png"
         }
       ]
     },
     {
-      "Title": "Geography",
+      "Title": "Игры",
       "Questions": [
         {
           "Points": 100,
-          "Text": "This is the largest ocean on Earth.",
-          "Answer": "The Pacific Ocean",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Как называется жанр игр вроде Counter-Strike и Valorant?",
+          "Answer": "Шутер",
+          "Image": "Content/QuestionImages/CS.png"
         },
         {
           "Points": 200,
-          "Text": "This river runs through Egypt and is often called the longest river in the world.",
-          "Answer": "The Nile",
+          "Text": "Как зовут водопроводчика в красной кепке от Nintendo?",
+          "Answer": "Марио",
           "Image": "Content/QuestionImages/placeholder.png"
         },
         {
           "Points": 300,
-          "Text": "This country has cities named Sydney, Melbourne, and Perth.",
-          "Answer": "Australia",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Какой город служит местом действия GTA V",
+          "Answer": "Лос-Сантос",
+          "Options": ["Либерти-Сити", "Вайс-Сити", "Лос-Сантос", "Сан-Фиерро"],
+          "Image": "Content/QuestionImages/GTAV.png"
         },
         {
           "Points": 400,
-          "Text": "This mountain range separates Europe from Asia in western Russia.",
-          "Answer": "The Ural Mountains",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Какое количество книжных полок нужно для зачарования 30 уровня на столе зачарований в Minecraft?",
+          "Answer": "15",
+          "Options": ["10", "15", "18", "20"],
+          "Image": "Content/QuestionImages/MinecraftEnchant.png"
         },
         {
           "Points": 500,
-          "Text": "This landlocked Asian country contains the Gobi Desert with China.",
-          "Answer": "Mongolia",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Расшифруйте аббревиатуру DOTA",
+          "Answer": "Defence of the ancients",
+          "Image": "Content/QuestionImages/DOTA.png"
         }
       ]
     },
     {
-      "Title": "Movies",
+      "Title": "Ну это, как его там",
       "Questions": [
         {
           "Points": 100,
-          "Text": "This movie franchise features Jedi, Sith, and lightsabers.",
-          "Answer": "Star Wars",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Философское учение о прекрасном и о законах художественного восприятия",
+          "Answer": "Эстетика",
+          "Options": ["Онтология", "Гносеология", "Аксиология", "Эстетика"],
+          "Image": "Content/QuestionImages/DanilStepanov.png"
         },
         {
           "Points": 200,
-          "Text": "This 1997 film ends with Rose remembering Jack after the sinking of a famous ship.",
-          "Answer": "Titanic",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Предмет, передаваемый по наследству и имеющий историческую или семейную ценность",
+          "Answer": "Реликвия",
+          "Options": ["Реликвия", "Артефакт", "Сувенир", "Раритет"],
+          "Image": "Content/QuestionImages/Relic.png"
         },
         {
           "Points": 300,
-          "Text": "This actor played Iron Man in the Marvel Cinematic Universe.",
-          "Answer": "Robert Downey Jr.",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Человек, который любит книги и собирает редкие издания",
+          "Answer": "Библиофил",
+          "Options": ["Библиотекарь", "Библиограф", "Библиофил", "Библиомант"],
+          "Image": "Content/QuestionImages/Books.png"
         },
         {
           "Points": 400,
-          "Text": "This animated studio released Toy Story in 1995.",
-          "Answer": "Pixar",
-          "Image": "Content/QuestionImages/placeholder.png"
+          "Text": "Тот, кто примиряет противников, посредник в споре",
+          "Answer": "Медиатор",
+          "Options": ["Медиатор", "Арбитр", "Прокурист", "Ликвидатор"],
+          "Image": "Content/QuestionImages/Deal.png"
         },
         {
           "Points": 500,
-          "Text": "This director is known for Spirited Away, My Neighbor Totoro, and Princess Mononoke.",
-          "Answer": "Hayao Miyazaki",
-          "Image": "Content/QuestionImages/placeholder.png"
-        }
-      ]
-    },
-    {
-      "Title": "Games",
-      "Questions": [
-        {
-          "Points": 100,
-          "Text": "This Nintendo plumber often rescues Princess Peach.",
-          "Answer": "Mario",
-          "Image": "Content/QuestionImages/placeholder.png"
-        },
-        {
-          "Points": 200,
-          "Text": "This game asks players to place blocks and survive creepers.",
-          "Answer": "Minecraft",
-          "Image": "Content/QuestionImages/placeholder.png"
-        },
-        {
-          "Points": 300,
-          "Text": "This blue hedgehog is Sega's classic mascot.",
-          "Answer": "Sonic the Hedgehog",
-          "Image": "Content/QuestionImages/placeholder.png"
-        },
-        {
-          "Points": 400,
-          "Text": "This Valve puzzle game features portals, test chambers, and GLaDOS.",
-          "Answer": "Portal",
-          "Image": "Content/QuestionImages/placeholder.png"
-        },
-        {
-          "Points": 500,
-          "Text": "This strategy series by Sid Meier lets players guide a nation from ancient times to the future.",
-          "Answer": "Civilization",
+          "Text": "Что означает слово «куртуазный»?",
+          "Answer": "Изысканно-вежливый",
+          "Options": ["Очень шумный", "Изысканно-вежливый", "Слишком быстрый", "Нелепо одетый"],
           "Image": "Content/QuestionImages/placeholder.png"
         }
       ]

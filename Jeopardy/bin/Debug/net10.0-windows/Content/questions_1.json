@@ -1,0 +1,236 @@
+{
+  "Themes": [
+    {
+      "Title": "Программирование",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Как называется ошибка в коде, из-за которой программа работает не так, как ожидалось?",
+          "Answer": "Баг",
+          "Options": ["Баг", "Коммит", "Шрифт", "Плагин"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Как называется структура данных LIFO, где последним пришел - первым вышел?",
+          "Answer": "Стек",
+          "Options": ["Очередь", "Стек", "Граф", "Словарь"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "Ситуация в многопоточном программировании, когда несколько потоков читают и записывают общие данные, а результат зависит от непредсказуемого порядка выполнения?",
+          "Answer": "Состояние гонки",
+          "Options": ["Дедлок", "Состояние гонки", "Приоритетная инверсия", "Взаимная блокировка"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "SQL - ... Query Language",
+          "Answer": "Structured",
+          "Options": ["Standard", "Simple", "Structured", "Sequential"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "Какая команда Git создает коммит, отменяющий действия предыдущего?",
+          "Answer": "git revert",
+          "Options": ["git reset --hard", "git revert", "git checkout", "git rebase"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Кино и сериалы",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Как зовут волшебника со шрамом-молнией?",
+          "Answer": "Гарри Поттер",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Как называется сериал про учителя химии, ставшего наркобароном?",
+          "Answer": "Во все тяжкие",
+          "Options": ["Во все тяжкие", "Лучше звоните Солу", "Шерлок", "Игра в кальмара"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "Как называется киновселенная с Железным человеком, Тором и Мстителями?",
+          "Answer": "Marvel",
+          "Options": ["DC", "Pixar", "Marvel", "Warner Bros."],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "Кадр из какого сериала изображен на картинке?",
+          "Answer": "Очень странные дела",
+          "Options": ["Во все тяжкие", "Очень странные дела", "Шерлок", "Ведьмак"],
+          "Image": "Content/QuestionImages/movie_frame.png"
+        },
+        {
+          "Points": 500,
+          "Text": "Как называется сцена после титров, которая показывает шутку или затравку на продолжение?",
+          "Answer": "Посткредитная сцена",
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Наука",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Какая планета известна как Красная планета?",
+          "Answer": "Марс",
+          "Options": ["Марс", "Юпитер", "Венера", "Сатурн"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Два основных газа в составе Солнца",
+          "Answer": "Водород и гелий",
+          "Image": "Content/QuestionImages/Sun.png"
+        },
+        {
+          "Points": 300,
+          "Text": "Сладкий, горький, кислый, солёный. Какой еще вкус ставят японцы наравне с главной четверкой?",
+          "Answer": "Умами",
+          "Options": ["Острый", "Маримо", "Пикантный", "Умами"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "В каком году человек впервые ступил на Луну?",
+          "Answer": "1969",
+          "Options": ["1967", "1959", "1969", "1973"],
+          "Image": "Content/QuestionImages/ManOnTheMoon.png"
+        },
+        {
+          "Points": 500,
+          "Text": "Какой запах не чувствуют люди, но отлично различают комары?",
+          "Answer": "Запах углекислого газа",
+          "Options": ["Запах пота", "Запах углекислого газа", "Запах ацетона", "Запах озона"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Галопом по Европе",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Какую страну называют страной тюльпанов и ветряных мельниц?",
+          "Answer": "Нидерланды",
+          "Options": ["Дания", "Нидерланды", "Бельгия", "Швеция"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Знаменитый ежегодный фестиваль пива в Мюнхене называется...",
+          "Answer": "Октоберфест",
+          "Options": ["Фастнахт", "Карнавал", "Вальпургиева ночь", "Октоберфест"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "В какой стране находится замок Бран, который также называют замком Дракулы?",
+          "Answer": "Румыния",
+          "Options": ["Румыния", "Венгрия", "Болгария", "Сербия"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "В какой стране находится самое большое число озер в Европе?",
+          "Answer": "Финляндия",
+          "Options": ["Швеция", "Финляндия", "Норвегия", "Россия"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "В какой стране Европы есть город, где умирать запрещено законом?",
+          "Answer": "Норвегия",
+          "Options": ["Норвегия", "Франция", "Дания", "Эстония"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "В своей тарелке",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Русский суп из картошки, рыбы, моркови и лука",
+          "Answer": "Уха",
+          "Options": ["Окрошка", "Рассольник", "Уха", "Ботвинья"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Из какого молока делают пармезан?",
+          "Answer": "Коровьего",
+          "Options": ["Козьего", "Овечьего", "Коровьего", "Лошадиного"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 300,
+          "Text": "Напиток, получаемый брожением чайного гриба",
+          "Answer": "Комбуча",
+          "Options": ["Квас", "Комбуча", "Айран", "Мате"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 400,
+          "Text": "Какой орех на самом деле является бобом?",
+          "Answer": "Арахис",
+          "Options": ["Фундук", "Кешью", "Грецкий орех", "Арахис"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "В какой стране придумали круассан?",
+          "Answer": "Австрия",
+          "Options": ["Австрия", "Франция", "Италия", "Швейцария"],
+          "Image": "Content/QuestionImages/placeholder.png"
+        }
+      ]
+    },
+    {
+      "Title": "Факт или миф",
+      "Questions": [
+        {
+          "Points": 100,
+          "Text": "Человек использует только 10% своего мозга",
+          "Answer": "Миф  (практически весь мозг активен в течение дня, даже во сне)",
+          "Image": "Content/QuestionImages/Brain.png"
+        },
+        {
+          "Points": 200,
+          "Text": "Утконос ядовит",
+          "Answer": "Правда (у самцов на задних лапах шпоры, выделяющие яд, который вызывает мучительную боль у человека и может убить мелкое животное)",
+          "Image": "Content/QuestionImages/Platupus.png"
+        },
+        {
+          "Points": 300,
+          "Text": "В Австралии кенгуру больше, чем людей там же",
+          "Answer": "Правда (по разным оценкам, кенгуру около 40-50 миллионов, а людей около 26 миллионов)",
+          "Image": "Content/QuestionImages/Cangaroo.png"
+        },
+        {
+          "Points": 400,
+          "Text": "На Марсе есть времена года",
+          "Answer": "Правда. Смена сезонов на любой планете происходит из-за наклона её оси вращения. Ось Марса наклонена на 25,19°, что очень близко к земным 23,44°. Из-за этого полушария по очереди получают больше солнечного света, формируя привычный нам цикл: когда в северном полушарии лето, в южном - зима, и наоборот.",
+          "Image": "Content/QuestionImages/placeholder.png"
+        },
+        {
+          "Points": 500,
+          "Text": "Если бросить живого лягушонка в кипящую воду, он выпрыгнет, а если нагревать воду медленно - сварится заживо",
+          "Answer": "Миф. Эксперимент, о котором идет речь, проводился в лабораторных условиях над лягушками с удаленным мозгом.",
+          "Image": "Content/QuestionImages/Frog.png"
+        }
+      ]
+    }
+  ]
+}

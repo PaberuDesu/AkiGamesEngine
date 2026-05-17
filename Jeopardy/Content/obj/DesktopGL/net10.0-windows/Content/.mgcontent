@@ -7,12 +7,44 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/EditorFont.spritefont</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/main.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/AwardScreen.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/AwardOptionsScreen.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/GameBoard.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/MainMenu.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/QuestionScreen.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/TeamMenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/WinnerScreen.aki</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Backgrounds/main.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/placeholder.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/anime_totoro.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Barboskiny.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Books.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Brain.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Cangaroo.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/CS.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/DanilStepanov.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Deal.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Doraemon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/DOTA.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Dunk.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Football.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/FootballLeague.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Frog.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Ganvest.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/GTAV.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Hockey.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/ManOnTheMoon.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Mellstroy.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/MinecraftEnchant.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/movie_frame.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Naruto.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Nedzuko.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Platupus.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/PlayOff.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Relic.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Strawberry.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Sun.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/TractorColor.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tractorist.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Crocodilo.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Lirili.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Patapim.png</File>
@@ -30,6 +62,38 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/TeamListRow.aki</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -14,20 +14,27 @@ namespace AkiGames.Scripts
 {
     public class JeopardyGame : GameComponent
     {
+        private const int MaxTeams = 4;
         private const float QuestionDurationSeconds = 60f;
         private const string QuestionsFileName = "questions.json";
+        private const string QuestionsRound2FileName = "questions_1.json";
+        private const string QuestionsRound3FileName = "questions_2.json";
         private const string MainMenuScene = "Content/Scenes/MainMenu";
         private const string TeamMenuScene = "Content/Scenes/TeamMenu";
         private const string GameBoardScene = "Content/Scenes/GameBoard";
         private const string QuestionScene = "Content/Scenes/QuestionScreen";
         private const string AwardScene = "Content/Scenes/AwardScreen";
+        private const string AwardOptionsScene = "Content/Scenes/AwardOptionsScreen";
+        private const string WinnerScene = "Content/Scenes/WinnerScreen";
 
         private readonly List<JeopardyTeam> _teams = new();
         private readonly List<GameObject> _teamRows = new();
         private readonly List<GameObject> _awardTeamButtons = new();
         private readonly List<GameObject> _scoreboardItems = new();
         private readonly List<QuestionCellBinding> _questionCells = new();
+        private readonly List<GameObject> _optionObjects = new();
         private readonly Dictionary<string, GameObject> _objectsByName = new(StringComparer.Ordinal);
+        private readonly OptionVisualState[] _awardOptionStates = new OptionVisualState[4];
 
         private readonly LogoOption[] _logos =
         {
@@ -37,30 +44,41 @@ namespace AkiGames.Scripts
             new("Patapim", "LogoPatapim", "Content/TeamLogos/Patapim.png", new Color(205, 165, 45))
         };
 
-        private JeopardyQuestionSet _questionSet;
+        private readonly List<JeopardyQuestionSet> _questionRounds = new();
         private GameObject _currentScene;
         private GameObject _teamList;
         private GameObject _noTeamsText;
+        private GameObject _addTeamConfirmButton;
         private GameObject _awardButtonsRoot;
         private GameObject _awardNoOneButton;
+        private GameObject _awardTitleObject;
         private GameObject _logoPreviewImageObject;
         private GameObject _scoreboardRoot;
         private GameObject _scoreboardEmptyText;
+        private GameObject _winnerLogoObject;
+        private GameObject _winnerScoresRoot;
         private Text _questionText;
         private Image _questionImage;
         private UITransform _timerFillTransform;
         private Text _timerText;
         private Text _answerText;
+        private Text _awardTitleText;
+        private Text _winnerTitleText;
+        private Text _winnerSummaryText;
         private JeopardyTextInput _teamNameInput;
         private JeopardyQuestion _currentQuestion;
         private JeopardyTheme _currentTheme;
         private float _remainingQuestionTime;
         private int _selectedLogoIndex;
+        private int _currentRoundIndex;
+        private int _pendingOptionSelectionIndex = -1;
         private bool _isQuestionActive;
+        private bool _isMultipleChoiceQuestion;
+        private bool _isMultipleChoiceAnswerConfirmed;
 
         public override void Awake()
         {
-            _questionSet = LoadQuestions();
+            _questionRounds.AddRange(LoadQuestions());
             OpenMainMenu();
         }
 
@@ -73,7 +91,7 @@ namespace AkiGames.Scripts
             {
                 _remainingQuestionTime = 0;
                 _isQuestionActive = false;
-                OpenAwardScreen();
+                BeginAnswerPhase();
             }
 
             UpdateTimerView();
@@ -96,6 +114,7 @@ namespace AkiGames.Scripts
             _logoPreviewImageObject = FindRequired("LogoPreviewImage");
             _teamList = FindRequired("TeamList");
             _noTeamsText = FindRequired("NoTeams");
+            _addTeamConfirmButton = FindRequired("AddTeamConfirm");
 
             BindButton("AddTeamConfirm", AddTeam);
             BindButton("BackToMain", OpenMainMenu);
@@ -112,15 +131,19 @@ namespace AkiGames.Scripts
 
         private void StartGame()
         {
-            foreach (JeopardyTheme theme in _questionSet.Themes)
+            foreach (JeopardyQuestionSet round in _questionRounds)
             {
-                foreach (JeopardyQuestion question in theme.Questions)
-                    question.IsUsed = false;
+                foreach (JeopardyTheme theme in round.Themes)
+                {
+                    foreach (JeopardyQuestion question in theme.Questions)
+                        question.IsUsed = false;
+                }
             }
 
             foreach (JeopardyTeam team in _teams)
                 team.Score = 0;
 
+            _currentRoundIndex = 0;
             OpenBoard();
         }
 
@@ -142,8 +165,9 @@ namespace AkiGames.Scripts
 
             for (int themeIndex = 0; themeIndex < 6; themeIndex++)
             {
-                JeopardyTheme theme = themeIndex < _questionSet.Themes.Count
-                    ? _questionSet.Themes[themeIndex]
+                JeopardyQuestionSet currentRound = GetCurrentRound();
+                JeopardyTheme theme = currentRound != null && themeIndex < currentRound.Themes.Count
+                    ? currentRound.Themes[themeIndex]
                     : null;
 
                 GameObject themeObject = FindRequired($"Theme{themeIndex}");
@@ -189,6 +213,12 @@ namespace AkiGames.Scripts
 
         private void AddTeam()
         {
+            if (_teams.Count >= MaxTeams)
+            {
+                RefreshTeamList();
+                return;
+            }
+
             string teamName = _teamNameInput?.Value?.Trim() ?? "";
             if (string.IsNullOrWhiteSpace(teamName))
                 teamName = $"Team {_teams.Count + 1}";
@@ -213,6 +243,8 @@ namespace AkiGames.Scripts
 
             RemoveDynamicObjects(_teamRows);
             _noTeamsText.IsActive = _teams.Count == 0;
+            if (_addTeamConfirmButton != null)
+                _addTeamConfirmButton.IsMouseTargetable = _teams.Count < MaxTeams;
 
             for (int i = 0; i < _teams.Count; i++)
             {
@@ -234,14 +266,22 @@ namespace AkiGames.Scripts
             _currentQuestion = question;
             _remainingQuestionTime = QuestionDurationSeconds;
             _isQuestionActive = true;
+            _pendingOptionSelectionIndex = -1;
+            _isMultipleChoiceQuestion = question.Options?.Count == 4;
+            _isMultipleChoiceAnswerConfirmed = false;
+            ResetAwardOptionStates();
 
             _questionText = RequireComponent<Text>(FindRequired("QuestionText"));
             _questionImage = RequireComponent<Image>(FindRequired("QuestionImage"));
             _timerFillTransform = FindRequired("TimerFill").uiTransform;
             _timerText = RequireComponent<Text>(FindRequired("Timer"));
+            ConfigureQuestionOptions();
 
             BindButton("EscapeQuestion", ReturnQuestionToBoard);
-            BindButton("SkipTimer", OpenAwardScreen);
+            GameObject skipButton = FindRequired("SkipTimer");
+            skipButton.IsActive = !_isMultipleChoiceQuestion;
+            if (!_isMultipleChoiceQuestion)
+                RequireComponent<JeopardyButton>(skipButton).Clicked = BeginAnswerPhase;
 
             SetText(_questionText, question.Text);
             SetImageTexture(_questionImage, question.Image, Color.Black);
@@ -253,28 +293,83 @@ namespace AkiGames.Scripts
             _isQuestionActive = false;
             _currentQuestion = null;
             _currentTheme = null;
+            _pendingOptionSelectionIndex = -1;
+            _isMultipleChoiceQuestion = false;
+            _isMultipleChoiceAnswerConfirmed = false;
+            ResetAwardOptionStates();
             OpenBoard();
         }
 
         private void OpenAwardScreen()
         {
             _isQuestionActive = false;
-            if (!ShowScene(AwardScene)) return;
+            bool isMultipleChoiceQuestion = _currentQuestion?.Options?.Count == 4;
+            string sceneLink = isMultipleChoiceQuestion ? AwardOptionsScene : AwardScene;
+            if (!ShowScene(sceneLink)) return;
+            _isMultipleChoiceQuestion = isMultipleChoiceQuestion;
 
+            _awardTitleObject = FindRequired("AwardTitle");
+            _awardTitleText = RequireComponent<Text>(_awardTitleObject);
             _answerText = RequireComponent<Text>(FindRequired("AnswerText"));
             _awardButtonsRoot = FindRequired("AwardButtons");
             _awardNoOneButton = FindRequired("AwardNoOne");
 
-            BindButton("ShowAnswer", ShowAnswer);
             BindButton("AwardNoOne", () => AwardToTeam(-1));
 
-            SetText(_answerText, "");
+            if (isMultipleChoiceQuestion)
+            {
+                SetText(_awardTitleText, "Выбор победителя");
+                SetText(_awardNoOneButton, "Никто");
+                SetText(_answerText, "Нажмите правильный вариант ответа");
+                ConfigureAwardOptions();
+            }
+            else
+            {
+                SetText(_awardTitleText, "Выбор победителя");
+                SetText(_awardNoOneButton, "Никто");
+                BindButton("ShowAnswer", ShowAnswer);
+                SetText(_answerText, "");
+            }
+
             RebuildAwardButtons();
+            if (isMultipleChoiceQuestion)
+                SetAwardSelectionEnabled(_isMultipleChoiceAnswerConfirmed);
+
+            if (isMultipleChoiceQuestion && _pendingOptionSelectionIndex >= 0)
+            {
+                PrimeAwardOptionsFromPendingSelection();
+                _pendingOptionSelectionIndex = -1;
+            }
+        }
+
+        private void OpenWinnerScene()
+        {
+            if (!ShowScene(WinnerScene)) return;
+
+            _winnerTitleText = RequireComponent<Text>(FindRequired("WinnerTitle"));
+            _winnerSummaryText = RequireComponent<Text>(FindRequired("WinnerSummary"));
+            _winnerLogoObject = FindRequired("WinnerLogo");
+            _winnerScoresRoot = FindRequired("WinnerScores");
+
+            BindButton("WinnerBackToMenu", OpenMainMenu);
+            PopulateWinnerScene();
         }
 
         private void ShowAnswer()
         {
             SetText(_answerText, _currentQuestion?.Answer ?? "");
+        }
+
+        private void BeginAnswerPhase()
+        {
+            _isQuestionActive = false;
+            OpenAwardScreen();
+        }
+
+        private void BeginAnswerPhase(int selectedOptionIndex)
+        {
+            _pendingOptionSelectionIndex = selectedOptionIndex;
+            BeginAnswerPhase();
         }
 
         private void AwardToTeam(int teamIndex)
@@ -289,6 +384,17 @@ namespace AkiGames.Scripts
 
             _currentQuestion = null;
             _currentTheme = null;
+            _pendingOptionSelectionIndex = -1;
+            _isMultipleChoiceQuestion = false;
+            _isMultipleChoiceAnswerConfirmed = false;
+            ResetAwardOptionStates();
+
+            if (IsCurrentRoundComplete())
+            {
+                AdvanceToNextRoundOrFinish();
+                return;
+            }
+
             OpenBoard();
         }
 
@@ -297,12 +403,17 @@ namespace AkiGames.Scripts
             if (_awardButtonsRoot == null || _awardNoOneButton == null) return;
 
             RemoveDynamicObjects(_awardTeamButtons);
+            const int buttonHeight = 62;
+            const int gap = 16;
+            int totalButtonCount = _teams.Count + 1;
+            float contentHeight = totalButtonCount * buttonHeight + Math.Max(0, totalButtonCount - 1) * gap;
+            float startY = Math.Max(18, (_awardButtonsRoot.uiTransform.Height - contentHeight) / 2f);
 
             for (int i = 0; i < _teams.Count; i++)
             {
                 int teamIndex = i;
                 JeopardyTeam team = _teams[i];
-                GameObject buttonObject = InstantiatePrefab("AwardTeamButton", _awardButtonsRoot, $"AwardTeam{i}", TopLeft(90, i * 78, 520, 62));
+                GameObject buttonObject = InstantiatePrefab("AwardTeamButton", _awardButtonsRoot, $"AwardTeam{i}", TopLeft(90, startY + i * (buttonHeight + gap), 520, buttonHeight));
                 if (buttonObject == null) continue;
 
                 SetText(buttonObject, team.Name);
@@ -311,7 +422,7 @@ namespace AkiGames.Scripts
                 _awardTeamButtons.Add(buttonObject);
             }
 
-            ApplyTransform(_awardNoOneButton.uiTransform, TopLeft(90, _teams.Count * 78 + 18, 520, 62));
+            ApplyTransform(_awardNoOneButton.uiTransform, TopLeft(90, startY + _teams.Count * (buttonHeight + gap), 520, buttonHeight));
             _awardNoOneButton.RefreshBounds(_awardButtonsRoot.uiTransform);
         }
 
@@ -409,17 +520,25 @@ namespace AkiGames.Scripts
             _scoreboardItems.Clear();
             _teamList = null;
             _noTeamsText = null;
+            _addTeamConfirmButton = null;
             _awardButtonsRoot = null;
             _awardNoOneButton = null;
+            _awardTitleObject = null;
             _logoPreviewImageObject = null;
             _scoreboardRoot = null;
             _scoreboardEmptyText = null;
+            _winnerLogoObject = null;
+            _winnerScoresRoot = null;
             _questionText = null;
             _questionImage = null;
             _timerFillTransform = null;
             _timerText = null;
             _answerText = null;
+            _awardTitleText = null;
+            _winnerTitleText = null;
+            _winnerSummaryText = null;
             _teamNameInput = null;
+            _optionObjects.Clear();
         }
 
         private GameObject LoadLinkedScene(string sceneLink)
@@ -454,24 +573,47 @@ namespace AkiGames.Scripts
                 IndexObjects(_currentScene);
         }
 
-        private JeopardyQuestionSet LoadQuestions()
+        private List<JeopardyQuestionSet> LoadQuestions()
         {
-            string path = ResolveQuestionsPath();
+            List<JeopardyQuestionSet> rounds = [];
+
+            JeopardyQuestionSet firstRound = LoadQuestionRound(QuestionsFileName);
+            if (firstRound != null)
+                rounds.Add(firstRound);
+
+            JeopardyQuestionSet secondRound = LoadQuestionRound(QuestionsRound2FileName);
+            if (secondRound != null)
+                rounds.Add(secondRound);
+
+            if (secondRound != null)
+            {
+                JeopardyQuestionSet thirdRound = LoadQuestionRound(QuestionsRound3FileName);
+                if (thirdRound != null)
+                    rounds.Add(thirdRound);
+            }
+
+            if (rounds.Count == 0)
+                rounds.Add(CreateFallbackQuestionSet());
+
+            return rounds;
+        }
+
+        private static JeopardyQuestionSet LoadQuestionRound(string fileName)
+        {
+            string path = ResolveQuestionsPath(fileName);
             if (!File.Exists(path))
-                return CreateFallbackQuestionSet();
+                return null;
 
             string json = File.ReadAllText(path);
-            JeopardyQuestionSet questionSet = JsonSerializer.Deserialize<JeopardyQuestionSet>(
+            return JsonSerializer.Deserialize<JeopardyQuestionSet>(
                 json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
             );
-
-            return questionSet ?? CreateFallbackQuestionSet();
         }
 
-        private static string ResolveQuestionsPath()
+        private static string ResolveQuestionsPath(string fileName)
         {
-            foreach (string path in GetQuestionPathCandidates())
+            foreach (string path in GetQuestionPathCandidates(fileName))
             {
                 if (File.Exists(path))
                     return path;
@@ -480,20 +622,20 @@ namespace AkiGames.Scripts
             return "";
         }
 
-        private static IEnumerable<string> GetQuestionPathCandidates()
+        private static IEnumerable<string> GetQuestionPathCandidates(string fileName)
         {
             foreach (string contentRoot in GetContentRoots())
             {
                 if (string.IsNullOrWhiteSpace(contentRoot)) continue;
 
-                yield return Path.Combine(contentRoot, QuestionsFileName);
-                yield return Path.Combine(contentRoot, "Content", QuestionsFileName);
+                yield return Path.Combine(contentRoot, fileName);
+                yield return Path.Combine(contentRoot, "Content", fileName);
             }
 
-            yield return Path.Combine(AppContext.BaseDirectory, QuestionsFileName);
-            yield return Path.Combine(AppContext.BaseDirectory, "Content", QuestionsFileName);
-            yield return Path.Combine(Directory.GetCurrentDirectory(), QuestionsFileName);
-            yield return Path.Combine(Directory.GetCurrentDirectory(), "Content", QuestionsFileName);
+            yield return Path.Combine(AppContext.BaseDirectory, fileName);
+            yield return Path.Combine(AppContext.BaseDirectory, "Content", fileName);
+            yield return Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            yield return Path.Combine(Directory.GetCurrentDirectory(), "Content", fileName);
         }
 
         private static IEnumerable<string> GetContentRoots()
@@ -507,6 +649,40 @@ namespace AkiGames.Scripts
             typeof(Game1)
                 .GetProperty(propertyName, BindingFlags.Public | BindingFlags.Static)?
                 .GetValue(null) as string ?? "";
+
+        private JeopardyQuestionSet GetCurrentRound() =>
+            _currentRoundIndex >= 0 && _currentRoundIndex < _questionRounds.Count ?
+                _questionRounds[_currentRoundIndex] :
+                null;
+
+        private bool IsCurrentRoundComplete()
+        {
+            JeopardyQuestionSet currentRound = GetCurrentRound();
+            if (currentRound == null) return true;
+
+            foreach (JeopardyTheme theme in currentRound.Themes)
+            {
+                foreach (JeopardyQuestion question in theme.Questions)
+                {
+                    if (!question.IsUsed)
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void AdvanceToNextRoundOrFinish()
+        {
+            if (_currentRoundIndex + 1 < _questionRounds.Count)
+            {
+                _currentRoundIndex++;
+                OpenBoard();
+                return;
+            }
+
+            OpenWinnerScene();
+        }
 
         private static JeopardyQuestionSet CreateFallbackQuestionSet()
         {
@@ -650,6 +826,192 @@ namespace AkiGames.Scripts
                 text.text = value ?? "";
         }
 
+        private void ConfigureQuestionOptions()
+        {
+            _optionObjects.Clear();
+
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject optionObject = FindChildByName(_currentScene, $"Option{i}");
+                if (optionObject == null) continue;
+
+                _optionObjects.Add(optionObject);
+                optionObject.IsActive = _isMultipleChoiceQuestion;
+                optionObject.IsMouseTargetable = _isMultipleChoiceQuestion;
+
+                JeopardyButton button = optionObject.GetComponent<JeopardyButton>();
+                if (button != null)
+                {
+                    if (_isMultipleChoiceQuestion)
+                    {
+                        int optionIndex = i;
+                        button.Clicked = () => BeginAnswerPhase(optionIndex);
+                    }
+                    else
+                    {
+                        button.Clicked = null;
+                    }
+                }
+
+                Image optionImage = optionObject.GetComponent<Image>();
+                if (optionImage != null)
+                    optionImage.fillColor = new Color(30, 66, 155);
+
+                Text optionText = optionObject.GetComponent<Text>();
+                if (optionText != null)
+                {
+                    string value = _isMultipleChoiceQuestion ? _currentQuestion.Options[i] : "";
+                    optionText.text = value;
+                }
+            }
+        }
+
+        private void ConfigureAwardOptions()
+        {
+            _optionObjects.Clear();
+
+            for (int i = 0; i < 4; i++)
+            {
+                GameObject optionObject = FindRequired($"Option{i}");
+                SetText(optionObject, _currentQuestion?.Options?[i] ?? "");
+                optionObject.IsActive = true;
+                optionObject.IsMouseTargetable = true;
+
+                JeopardyButton button = optionObject.GetComponent<JeopardyButton>();
+                if (button != null)
+                {
+                    int optionIndex = i;
+                    button.Clicked = () => HandleAwardOptionClicked(optionIndex);
+                }
+
+                ApplyOptionVisualState(optionObject, _awardOptionStates[i]);
+                _optionObjects.Add(optionObject);
+            }
+        }
+
+        private void HandleAwardOptionClicked(int selectedIndex)
+        {
+            int correctIndex = GetCorrectOptionIndex();
+            if (selectedIndex < 0 || selectedIndex >= _optionObjects.Count)
+                return;
+
+            GameObject optionObject = _optionObjects[selectedIndex];
+            if (selectedIndex == correctIndex)
+            {
+                _awardOptionStates[selectedIndex] = OptionVisualState.Correct;
+                ApplyOptionVisualState(optionObject, _awardOptionStates[selectedIndex]);
+                _isMultipleChoiceAnswerConfirmed = true;
+                SetText(_answerText, BuildMultipleChoiceAnswerText());
+                SetAwardSelectionEnabled(true);
+            }
+            else
+            {
+                _awardOptionStates[selectedIndex] = OptionVisualState.Wrong;
+                ApplyOptionVisualState(optionObject, _awardOptionStates[selectedIndex]);
+            }
+        }
+
+        private int GetCorrectOptionIndex()
+        {
+            if (_currentQuestion?.Options == null)
+                return -1;
+
+            string answer = _currentQuestion.Answer?.Trim() ?? "";
+            for (int i = 0; i < _currentQuestion.Options.Count; i++)
+            {
+                if (string.Equals(_currentQuestion.Options[i]?.Trim(), answer, StringComparison.OrdinalIgnoreCase))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private string BuildMultipleChoiceAnswerText()
+        {
+            int correctIndex = GetCorrectOptionIndex();
+            if (correctIndex >= 0 && correctIndex < _currentQuestion.Options.Count)
+                return $"Правильный ответ: {_currentQuestion.Options[correctIndex]}";
+
+            return $"Правильный ответ: {_currentQuestion?.Answer ?? ""}";
+        }
+
+        private void SetAwardSelectionEnabled(bool isEnabled)
+        {
+            if (_awardTitleObject != null)
+                _awardTitleObject.IsActive = isEnabled;
+
+            if (_awardButtonsRoot != null)
+                _awardButtonsRoot.IsActive = isEnabled;
+
+            if (_awardNoOneButton != null)
+                _awardNoOneButton.IsMouseTargetable = isEnabled;
+
+            foreach (GameObject buttonObject in _awardTeamButtons)
+                buttonObject.IsMouseTargetable = isEnabled;
+        }
+
+        private void ResetAwardOptionStates()
+        {
+            for (int i = 0; i < _awardOptionStates.Length; i++)
+                _awardOptionStates[i] = OptionVisualState.Neutral;
+        }
+
+        private void PrimeAwardOptionsFromPendingSelection()
+        {
+            int pendingIndex = _pendingOptionSelectionIndex;
+            if (pendingIndex < 0 || pendingIndex >= _awardOptionStates.Length)
+                return;
+
+            int correctIndex = GetCorrectOptionIndex();
+            _awardOptionStates[pendingIndex] = pendingIndex == correctIndex
+                ? OptionVisualState.Correct
+                : OptionVisualState.Wrong;
+
+            ConfigureAwardOptions();
+
+            if (pendingIndex == correctIndex)
+            {
+                _isMultipleChoiceAnswerConfirmed = true;
+                SetText(_answerText, BuildMultipleChoiceAnswerText());
+                SetAwardSelectionEnabled(true);
+            }
+        }
+
+        private static void ApplyOptionVisualState(GameObject optionObject, OptionVisualState state)
+        {
+            Image image = optionObject?.GetComponent<Image>();
+            JeopardyButton button = optionObject?.GetComponent<JeopardyButton>();
+            if (image == null || button == null) return;
+
+            Color color = state switch
+            {
+                OptionVisualState.Wrong => new Color(176, 56, 56),
+                OptionVisualState.Correct => new Color(44, 150, 84),
+                _ => new Color(30, 66, 155)
+            };
+
+            bool isLocked = state != OptionVisualState.Neutral;
+            button.LockVisualState = isLocked;
+            button.ApplyColors(
+                color,
+                isLocked ? color : new Color(45, 94, 205),
+                isLocked ? color : new Color(18, 43, 105)
+            );
+            image.fillColor = color;
+        }
+
+        private static void ApplyOptionVisualState(Image image, OptionVisualState state)
+        {
+            if (image == null) return;
+
+            image.fillColor = state switch
+            {
+                OptionVisualState.Wrong => new Color(176, 56, 56),
+                OptionVisualState.Correct => new Color(44, 150, 84),
+                _ => new Color(30, 66, 155)
+            };
+        }
+
         private static void SetObjectImage(GameObject target, string textureLink, Color fallbackColor)
         {
             Image image = target?.GetComponent<Image>();
@@ -668,8 +1030,87 @@ namespace AkiGames.Scripts
         private Color GetLogoFallbackColor(string logoName) =>
             _logos.FirstOrDefault(logo => logo.Name == logoName)?.FallbackColor ?? Color.White;
 
+        private void PopulateWinnerScene()
+        {
+            List<JeopardyTeam> rankedTeams = _teams
+                .OrderByDescending(team => team.Score)
+                .ThenBy(team => team.Name, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (rankedTeams.Count == 0)
+            {
+                SetText(_winnerTitleText, "Game Over");
+                SetText(_winnerSummaryText, "No teams participated.");
+                if (_winnerLogoObject != null)
+                    _winnerLogoObject.IsActive = false;
+                RebuildWinnerScores(rankedTeams);
+                return;
+            }
+
+            int bestScore = rankedTeams[0].Score;
+            List<JeopardyTeam> winners = rankedTeams
+                .Where(team => team.Score == bestScore)
+                .ToList();
+
+            if (winners.Count == 1)
+            {
+                JeopardyTeam winner = winners[0];
+                SetText(_winnerTitleText, "Winner");
+                SetText(_winnerSummaryText, $"{winner.Name} wins with {winner.Score} points!");
+                if (_winnerLogoObject != null)
+                {
+                    _winnerLogoObject.IsActive = true;
+                    SetObjectImage(_winnerLogoObject, winner.LogoImage, GetLogoFallbackColor(winner.Logo));
+                }
+            }
+            else
+            {
+                string winnerNames = string.Join(", ", winners.Select(team => team.Name));
+                SetText(_winnerTitleText, "Tie");
+                SetText(_winnerSummaryText, $"{winnerNames} tie with {bestScore} points!");
+                if (_winnerLogoObject != null)
+                    _winnerLogoObject.IsActive = false;
+            }
+
+            RebuildWinnerScores(rankedTeams);
+        }
+
+        private void RebuildWinnerScores(List<JeopardyTeam> rankedTeams)
+        {
+            if (_winnerScoresRoot == null) return;
+
+            RemoveDynamicObjects(_scoreboardItems);
+
+            const int itemWidth = 420;
+            const int itemHeight = 48;
+            const int gap = 14;
+
+            for (int i = 0; i < rankedTeams.Count; i++)
+            {
+                JeopardyTeam team = rankedTeams[i];
+                GameObject item = InstantiatePrefab(
+                    "ScoreboardTeam",
+                    _winnerScoresRoot,
+                    $"WinnerScore{i}",
+                    TopLeft(0, i * (itemHeight + gap), itemWidth, itemHeight)
+                );
+                if (item == null) continue;
+
+                SetChildText(item, "TeamText", $"{i + 1}. {team.Name} - {team.Score}");
+                SetObjectImage(FindChildByName(item, "Logo"), team.LogoImage, GetLogoFallbackColor(team.Logo));
+                _scoreboardItems.Add(item);
+            }
+        }
+
         private sealed record LogoOption(string Name, string ButtonObjectName, string TextureLink, Color FallbackColor);
 
         private sealed record QuestionCellBinding(JeopardyQuestion Question, GameObject ButtonObject, Text Text, Image Image);
+
+        private enum OptionVisualState
+        {
+            Neutral,
+            Wrong,
+            Correct
+        }
     }
 }

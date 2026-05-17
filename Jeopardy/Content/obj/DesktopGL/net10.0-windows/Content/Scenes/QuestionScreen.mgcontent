@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Scenes/QuestionScreen.aki</SourceFile>
-  <SourceTime>2026-05-15T20:36:09.9938635+03:00</SourceTime>
+  <SourceTime>2026-05-15T22:38:07.2658138+03:00</SourceTime>
   <DestFile>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/bin/DesktopGL/Content/Scenes/QuestionScreen.xnb</DestFile>
-  <DestTime>2026-05-15T20:39:12.7891764+03:00</DestTime>
+  <DestTime>2026-05-15T22:57:17.077632+03:00</DestTime>
   <Importer>AkiImporter</Importer>
   <ImporterTime>2026-05-08T16:46:49.3337419+03:00</ImporterTime>
   <Processor>AkiProcessor</Processor>

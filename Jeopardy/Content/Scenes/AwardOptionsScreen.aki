@@ -1,0 +1,200 @@
+{
+  "Link": "Content/Prefabs/JeopardyScreen",
+  "ObjectName": "AwardOptionsScreen",
+  "ObjectID": 1,
+  "Children": [
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "AwardTitle",
+      "ObjectID": 2,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -345
+          },
+          "Width": 980,
+          "Height": 72
+        },
+        {
+          "type": "Text",
+          "text": "Award Title"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "AnswerText",
+      "ObjectID": 3,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -245
+          },
+          "Width": 980,
+          "Height": 72
+        },
+        {
+          "type": "Text",
+          "HorizontalWrap": "NewLineControlsHeigth"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option0",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -285,
+            "y": 340
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 1"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option1",
+      "ObjectID": 5,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 285,
+            "y": 340
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 2"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option2",
+      "ObjectID": 6,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -285,
+            "y": 418
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 3"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option3",
+      "ObjectID": 7,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 285,
+            "y": 418
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 4"
+        }
+      ]
+    },
+    {
+      "ObjectName": "AwardButtons",
+      "ObjectID": 8,
+      "IsActive": true,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 120
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 700,
+          "Height": 390,
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "anchorLeftTop": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": [
+        {
+          "Link": "Content/Prefabs/JeopardyButton",
+          "ObjectName": "AwardNoOne",
+          "ObjectID": 9,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 90,
+                "y": 18
+              },
+              "Width": 520,
+              "Height": 62,
+              "HorizontalAlignment": "Left",
+              "VerticalAlignment": "Top",
+              "anchorLeftTop": {
+                "x": 0,
+                "y": 0
+              },
+              "anchorRightBottom": {
+                "x": 0,
+                "y": 0
+              },
+              "origin": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "Text",
+              "text": "No one"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

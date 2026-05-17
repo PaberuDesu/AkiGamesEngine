@@ -1,0 +1,122 @@
+{
+  "Link": "Content/Prefabs/JeopardyScreen",
+  "ObjectName": "WinnerScreen",
+  "ObjectID": 1,
+  "Children": [
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "WinnerTitle",
+      "ObjectID": 2,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -330
+          },
+          "Width": 980,
+          "Height": 72
+        },
+        {
+          "type": "Text",
+          "text": "Winner"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyText",
+      "ObjectName": "WinnerSummary",
+      "ObjectID": 3,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -245
+          },
+          "Width": 980,
+          "Height": 70
+        },
+        {
+          "type": "Text",
+          "HorizontalWrap": "NewLineControlsHeigth",
+          "text": "Winner summary"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyImage",
+      "ObjectName": "WinnerLogo",
+      "ObjectID": 4,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": -105
+          },
+          "Width": 150,
+          "Height": 150
+        }
+      ]
+    },
+    {
+      "ObjectName": "WinnerScores",
+      "ObjectID": 5,
+      "IsActive": true,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -210,
+            "y": 70
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 420,
+          "Height": 320,
+          "HorizontalAlignment": "Center",
+          "VerticalAlignment": "Middle",
+          "anchorLeftTop": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "anchorRightBottom": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "WinnerBackToMenu",
+      "ObjectID": 6,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 335
+          },
+          "Width": 320,
+          "Height": 70
+        },
+        {
+          "type": "Text",
+          "text": "Back to menu"
+        }
+      ]
+    }
+  ]
+}

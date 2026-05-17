@@ -112,6 +112,90 @@
       ]
     },
     {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option0",
+      "ObjectID": 9,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -285,
+            "y": 340
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 1"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option1",
+      "ObjectID": 10,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 285,
+            "y": 340
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 2"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option2",
+      "ObjectID": 11,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": -285,
+            "y": 418
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 3"
+        }
+      ]
+    },
+    {
+      "Link": "Content/Prefabs/JeopardyButton",
+      "ObjectName": "Option3",
+      "ObjectID": 12,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 285,
+            "y": 418
+          },
+          "Width": 330,
+          "Height": 62
+        },
+        {
+          "type": "Text",
+          "text": "Option 4"
+        }
+      ]
+    },
+    {
       "Link": "Content/Prefabs/JeopardyImage",
       "ObjectName": "TimerTrack",
       "ObjectID": 6,

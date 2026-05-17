@@ -366,7 +366,7 @@
         {
           "type": "UITransform",
           "OffsetMin": {
-            "x": 465,
+            "x": 540,
             "y": 0
           },
           "OffsetMax": {

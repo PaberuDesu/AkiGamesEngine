@@ -182,12 +182,12 @@ namespace AkiGames.Events
 
         private static GameObject FindTarget(GameObject root)
         {
-            (GameObject obj, int zIndex) bestCandidate = (null, int.MinValue);
+            (GameObject obj, int topLevelOrder, int zIndex) bestCandidate = (null, int.MinValue, int.MinValue);
             FindTargetInHierarchy(root, ref bestCandidate);
             return bestCandidate.obj;
         }
         
-        private static void FindTargetInHierarchy(GameObject parent, ref (GameObject obj, int zIndex) bestCandidate)
+        private static void FindTargetInHierarchy(GameObject parent, ref (GameObject obj, int topLevelOrder, int zIndex) bestCandidate)
         {
             if (parent == null) return;
             if (!parent.IsActive) return;
@@ -196,15 +196,16 @@ namespace AkiGames.Events
             // Проверяем родителя
             if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
             {
+                int topLevelOrder = parent.GetTopLevelDrawOrder();
                 Image image = parent.GetComponent<Image>();
-                if (image != null && image.Enabled && !image.IsMask && image.zIndex >= bestCandidate.zIndex)
+                if (image != null && image.Enabled && !image.IsMask && IsBetterCandidate(topLevelOrder, image.zIndex, bestCandidate))
                 {
-                    bestCandidate = (parent, image.zIndex);
+                    bestCandidate = (parent, topLevelOrder, image.zIndex);
                 }
                 Text text = parent.GetComponent<Text>();
-                if (text != null && text.Enabled && text.zIndex >= bestCandidate.zIndex)
+                if (text != null && text.Enabled && IsBetterCandidate(topLevelOrder, text.zIndex, bestCandidate))
                 {
-                    bestCandidate = (parent, text.zIndex);
+                    bestCandidate = (parent, topLevelOrder, text.zIndex);
                 }
             }
             
@@ -217,6 +218,14 @@ namespace AkiGames.Events
                 }
             }
         }
+
+        private static bool IsBetterCandidate(
+            int topLevelOrder,
+            int zIndex,
+            (GameObject obj, int topLevelOrder, int zIndex) bestCandidate
+        ) =>
+            topLevelOrder > bestCandidate.topLevelOrder ||
+            (topLevelOrder == bestCandidate.topLevelOrder && zIndex >= bestCandidate.zIndex);
 
         private static bool IsInsideParentMasks(GameObject gameObject)
         {

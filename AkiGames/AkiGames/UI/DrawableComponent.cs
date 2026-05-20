@@ -71,28 +71,35 @@ namespace AkiGames.UI
             );
         }
 
-        private static Dictionary<int,List<DrawableComponent>> layerDrawComponents = [];
+        private readonly record struct DrawEntry(DrawableComponent Component, int TopLevelOrder, int ZIndex, int Sequence);
+
+        private static List<DrawEntry> layerDrawComponents = [];
+        private static int _nextSequence;
+
         public void AddToLayer()
         {
-            if (!layerDrawComponents.TryGetValue(zIndex, out List<DrawableComponent> list))
-            {
-                list = [];
-                layerDrawComponents[zIndex] = list;
-            }
-
-            list.Add(this);
+            layerDrawComponents.Add(new DrawEntry(
+                this,
+                gameObject?.GetTopLevelDrawOrder() ?? int.MinValue,
+                zIndex,
+                _nextSequence++
+            ));
         }
 
         public static void DrawLayers(SpriteBatch spriteBatch)
         {
             IEnumerable<DrawableComponent> componentsToDraw = layerDrawComponents
-                .OrderBy(kvp => kvp.Key).SelectMany(kvp => kvp.Value);
+                .OrderBy(entry => entry.TopLevelOrder)
+                .ThenBy(entry => entry.ZIndex)
+                .ThenBy(entry => entry.Sequence)
+                .Select(entry => entry.Component);
 
             foreach (var component in componentsToDraw)
             {
                 component.Draw(spriteBatch);
             }
             layerDrawComponents = [];
+            _nextSequence = 0;
         }
         public abstract void Draw(SpriteBatch spriteBatch);
     }

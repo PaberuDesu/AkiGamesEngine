@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using AkiGames.Core.Serialization;
 using static AkiGames.Events.Input;
 using AkiGames.Scripts;
+using AkiGames.Scripts.Window;
 using AkiGames.UI;
 
 namespace AkiGames.Core.GameStructures
@@ -298,6 +299,28 @@ namespace AkiGames.Core.GameStructures
             // Разворачиваем список для порядка [корень -> ... -> текущий]
             lineage.Reverse();
             return lineage;
+        }
+
+        public int GetTopLevelDrawOrder()
+        {
+            GameObject current = this;
+            while (current != null)
+            {
+                if (current.GetComponent<WindowController>() != null)
+                    return current.Parent?.Children.IndexOf(current) ?? int.MinValue;
+
+                current = current.Parent;
+            }
+
+            if (Parent == null) return int.MinValue;
+
+            current = this;
+            while (current.Parent?.Parent != null)
+            {
+                current = current.Parent;
+            }
+
+            return current.Parent?.Children.IndexOf(current) ?? int.MinValue;
         }
 
         private void HandleMouseEvent(Action<GameComponent> eventHandler)

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/EditorFont.spritefont</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/grass.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/stone.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/cave.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/water.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/sand.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/stone_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/iron_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/copper_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Ground/coal_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Entities/player.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Entities/rabbit.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Entities/fish.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/rock.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/high_grass.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/tree_sapling.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/tree_young.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/tree.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/ladder.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/boat.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/furnace.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/solid_fuel_drill.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/stone_wall.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/wood_wall.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/wood_door_closed.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/wood_door_open.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/snare.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/snare_caught.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Objects/wood_floor.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/stone.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/wood.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/stick.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/rope.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/sand.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/iron.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/copper.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/iron_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/copper_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/coal_ore.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/fishing_rod.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Textures/Items/rabbit_meat.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/main.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Scenes/GameScene.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Prefabs/DropDownSubmenu.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Prefabs/DropDownSubmenuItem.aki</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Prefabs/ScrollableList.aki</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

@@ -1,0 +1,604 @@
+{
+  "ObjectName": "RootObject",
+  "ObjectID": 1,
+  "IsActive": true,
+  "IsMouseTargetable": true,
+  "Components": [
+    {
+      "type": "UITransform",
+      "OffsetMin": {
+        "x": 0,
+        "y": 0
+      },
+      "OffsetMax": {
+        "x": 0,
+        "y": 0
+      },
+      "Width": 0,
+      "Height": 0,
+      "HorizontalAlignment": "Stretch",
+      "VerticalAlignment": "Stretch",
+      "anchorLeftTop": {
+        "x": 0,
+        "y": 0
+      },
+      "anchorRightBottom": {
+        "x": 1,
+        "y": 1
+      },
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "LocalRotation": 0,
+      "Enabled": true
+    },
+    {
+      "type": "FactoryApp",
+      "GameSceneAsset": "Content/Scenes/GameScene",
+      "SaveFileName": "savegame.json",
+      "Enabled": true
+    }
+  ],
+  "Children": [
+    {
+      "ObjectName": "SceneHost",
+      "ObjectID": 2,
+      "IsActive": true,
+      "IsMouseTargetable": false,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 0,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        }
+      ],
+      "Children": []
+    },
+    {
+      "ObjectName": "MainMenuPanel",
+      "ObjectID": 3,
+      "IsActive": true,
+      "IsMouseTargetable": true,
+      "Components": [
+        {
+          "type": "UITransform",
+          "OffsetMin": {
+            "x": 0,
+            "y": 0
+          },
+          "OffsetMax": {
+            "x": 0,
+            "y": 0
+          },
+          "Width": 0,
+          "Height": 0,
+          "HorizontalAlignment": "Stretch",
+          "VerticalAlignment": "Stretch",
+          "anchorLeftTop": {
+            "x": 0,
+            "y": 0
+          },
+          "anchorRightBottom": {
+            "x": 1,
+            "y": 1
+          },
+          "origin": {
+            "x": 0,
+            "y": 0
+          },
+          "LocalRotation": 0,
+          "Enabled": true
+        },
+        {
+          "type": "Image",
+          "IsMask": false,
+          "texture": "",
+          "fillColor": 4279966749,
+          "imageMode": "Stretch",
+          "zIndex": 60,
+          "Enabled": true
+        }
+      ],
+      "Children": [
+        {
+          "ObjectName": "MainMenuCard",
+          "ObjectID": 4,
+          "IsActive": true,
+          "IsMouseTargetable": false,
+          "Components": [
+            {
+              "type": "UITransform",
+              "OffsetMin": {
+                "x": 0,
+                "y": 0
+              },
+              "OffsetMax": {
+                "x": 0,
+                "y": -26
+              },
+              "Width": 420,
+              "Height": 412,
+              "HorizontalAlignment": "Center",
+              "VerticalAlignment": "Middle",
+              "anchorLeftTop": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "anchorRightBottom": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "origin": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "LocalRotation": 0,
+              "Enabled": true
+            },
+            {
+              "type": "Image",
+              "IsMask": false,
+              "texture": "",
+              "fillColor": 4281545523,
+              "imageMode": "Stretch",
+              "zIndex": 61,
+              "Enabled": true
+            }
+          ],
+          "Children": [
+            {
+              "ObjectName": "MainMenuTitle",
+              "ObjectID": 5,
+              "IsActive": true,
+              "IsMouseTargetable": false,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 0,
+                    "y": 26
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 420,
+                  "Height": 42,
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0.5,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0.5,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0.5,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "Factory",
+                  "TextColor": 4294967295,
+                  "HorizontalWrap": "None",
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 64,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuSubtitle",
+              "ObjectID": 6,
+              "IsActive": true,
+              "IsMouseTargetable": false,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 40,
+                    "y": 74
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 340,
+                  "Height": 26,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "New game, load save, or exit.",
+                  "TextColor": 4292204380,
+                  "HorizontalWrap": "DotsAfter",
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 63,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuSeedLabel",
+              "ObjectID": 11,
+              "IsActive": true,
+              "IsMouseTargetable": false,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 90,
+                    "y": 114
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 240,
+                  "Height": 20,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "Generation Seed",
+                  "TextColor": 4292204380,
+                  "HorizontalWrap": "None",
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 63,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuSeedInput",
+              "ObjectID": 12,
+              "IsActive": true,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 90,
+                    "y": 138
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 240,
+                  "Height": 42,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "texture": "",
+                  "fillColor": 4280163875,
+                  "imageMode": "Stretch",
+                  "zIndex": 62,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "",
+                  "TextColor": 4294967295,
+                  "HorizontalWrap": "DotsAfter",
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 64,
+                  "Enabled": true
+                },
+                {
+                  "type": "FactorySeedInput",
+                  "Placeholder": "Seed (blank = random)",
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuNewGameButton",
+              "ObjectID": 7,
+              "IsActive": true,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 90,
+                    "y": 196
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 240,
+                  "Height": 52,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "texture": "",
+                  "fillColor": 4281944388,
+                  "imageMode": "Stretch",
+                  "zIndex": 62,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "New Game",
+                  "TextColor": 4294967295,
+                  "HorizontalWrap": "None",
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 64,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuLoadGameButton",
+              "ObjectID": 8,
+              "IsActive": true,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 90,
+                    "y": 260
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 240,
+                  "Height": 52,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "texture": "",
+                  "fillColor": 4281944388,
+                  "imageMode": "Stretch",
+                  "zIndex": 62,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "Load Game",
+                  "TextColor": 4294967295,
+                  "HorizontalWrap": "None",
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 64,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuExitButton",
+              "ObjectID": 9,
+              "IsActive": true,
+              "IsMouseTargetable": true,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 90,
+                    "y": 324
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 240,
+                  "Height": 52,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Image",
+                  "IsMask": false,
+                  "texture": "",
+                  "fillColor": 4280820263,
+                  "imageMode": "Stretch",
+                  "zIndex": 62,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "Exit",
+                  "TextColor": 4294967295,
+                  "HorizontalWrap": "None",
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 64,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            },
+            {
+              "ObjectName": "MainMenuStatusText",
+              "ObjectID": 10,
+              "IsActive": true,
+              "IsMouseTargetable": false,
+              "Components": [
+                {
+                  "type": "UITransform",
+                  "OffsetMin": {
+                    "x": 40,
+                    "y": 388
+                  },
+                  "OffsetMax": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "Width": 340,
+                  "Height": 20,
+                  "HorizontalAlignment": "Left",
+                  "VerticalAlignment": "Top",
+                  "anchorLeftTop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "anchorRightBottom": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "origin": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "LocalRotation": 0,
+                  "Enabled": true
+                },
+                {
+                  "type": "Text",
+                  "text": "Start a new shift.",
+                  "TextColor": 4290362556,
+                  "HorizontalWrap": "DotsAfter",
+                  "HorizontalAlignment": "Center",
+                  "VerticalAlignment": "Middle",
+                  "zIndex": 63,
+                  "Enabled": true
+                }
+              ],
+              "Children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -24,7 +24,7 @@
       "HorizontalWrap": "DotsAfter",
       "HorizontalAlignment": "Center",
       "VerticalAlignment": "Middle",
-      "zIndex": 2,
+      "zIndex": 0,
       "Enabled": true
     }
   ],

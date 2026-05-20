@@ -45,7 +45,7 @@
           "VerticalAlignment": "Middle",
           "text": "\u0421\u0412\u041E\u042F \u0418\u0413\u0420\u0410",
           "TextColor": 4294967295,
-          "zIndex": 2,
+          "zIndex": 0,
           "Enabled": true
         }
       ],

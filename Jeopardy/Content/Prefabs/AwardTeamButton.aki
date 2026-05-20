@@ -16,7 +16,8 @@
       "LocalRotation": 0,
       "Enabled": true
     },
-    { "type": "Text", "text": "Team" }
+    { "type": "Image", "zIndex": 0 },
+    { "type": "Text", "text": "Team", "zIndex": 0 }
   ],
   "Children": [
     {
@@ -38,7 +39,7 @@
           "LocalRotation": 0,
           "Enabled": true
         },
-        { "type": "Image", "zIndex": 3 }
+        { "type": "Image", "zIndex": 0 }
       ]
     }
   ]

@@ -38,7 +38,7 @@
           "LocalRotation": 0,
           "Enabled": true
         },
-        { "type": "Image", "zIndex": 3 }
+        { "type": "Image", "zIndex": 0 }
       ]
     },
     {
@@ -63,7 +63,7 @@
           "type": "Text",
           "HorizontalAlignment": "Left",
           "HorizontalWrap": "DotsAfter",
-          "zIndex": 3
+          "zIndex": 0
         }
       ]
     }

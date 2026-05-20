@@ -241,7 +241,7 @@
             },
             {
               "type": "Image",
-              "zIndex": 2
+              "zIndex": 0
             }
           ]
         }

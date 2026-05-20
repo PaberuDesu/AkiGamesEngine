@@ -1,1 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/main.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/bin/DesktopGL/Content/main.xnb","AkiProcessor","string",17169,17234,0,0906435
+"C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/Scenes/GameScene.aki","C:/Users/wintake/GameEngine/AkiGamesEngine/Factory/Content/bin/DesktopGL/Content/Scenes/GameScene.xnb","AkiProcessor","string",1642543,1642608,0,0124924

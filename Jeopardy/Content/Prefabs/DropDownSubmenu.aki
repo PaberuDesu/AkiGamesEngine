@@ -39,7 +39,7 @@
       "texture": "",
       "fillColor": 4281808695,
       "imageMode": "Stretch",
-      "zIndex": 1,
+      "zIndex": 0,
       "Enabled": true
     },
     {

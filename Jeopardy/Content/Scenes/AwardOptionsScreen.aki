@@ -19,7 +19,8 @@
         },
         {
           "type": "Text",
-          "text": "Award Title"
+          "text": "Award Title",
+          "zIndex": 0
         }
       ]
     },
@@ -39,6 +40,7 @@
         },
         {
           "type": "Text",
+          "zIndex": 0,
           "HorizontalWrap": "NewLineControlsHeigth"
         }
       ]
@@ -59,7 +61,12 @@
         },
         {
           "type": "Text",
-          "text": "Option 1"
+          "text": "Option 1",
+          "zIndex": 0
+        },
+        {
+          "type": "Image",
+          "zIndex": 0
         }
       ]
     },
@@ -79,7 +86,12 @@
         },
         {
           "type": "Text",
-          "text": "Option 2"
+          "text": "Option 2",
+          "zIndex": 0
+        },
+        {
+          "type": "Image",
+          "zIndex": 0
         }
       ]
     },
@@ -99,7 +111,12 @@
         },
         {
           "type": "Text",
-          "text": "Option 3"
+          "text": "Option 3",
+          "zIndex": 0
+        },
+        {
+          "type": "Image",
+          "zIndex": 0
         }
       ]
     },
@@ -119,7 +136,12 @@
         },
         {
           "type": "Text",
-          "text": "Option 4"
+          "text": "Option 4",
+          "zIndex": 0
+        },
+        {
+          "type": "Image",
+          "zIndex": 0
         }
       ]
     },
@@ -189,8 +211,13 @@
               }
             },
             {
+              "type": "Image",
+              "zIndex": 0
+            },
+            {
               "type": "Text",
-              "text": "No one"
+              "text": "No one",
+              "zIndex": 0
             }
           ]
         }

@@ -7,6 +7,7 @@ namespace AkiGames.UI
 {
     public abstract class DrawableComponent : GameComponent
     {
+        public const int PopupZIndex = 1000;
         public int zIndex = 0;
         private static readonly RasterizerState ScissorRasterizerState = new()
         {
@@ -30,7 +31,7 @@ namespace AkiGames.UI
             spriteBatch.Begin(
                 SpriteSortMode.Immediate,
                 BlendState.AlphaBlend,
-                SamplerState.PointClamp,
+                SamplerState.LinearClamp,
                 DepthStencilState.None,
                 ScissorRasterizerState
             );
@@ -47,6 +48,12 @@ namespace AkiGames.UI
                 Image potentialMask = currentParent.GetComponent<Image>();
                 if (potentialMask != null && potentialMask.Enabled && potentialMask.IsMask)
                 {
+                    if (zIndex >= PopupZIndex && potentialMask.zIndex < PopupZIndex)
+                    {
+                        currentParent = currentParent.Parent;
+                        continue;
+                    }
+
                     maskBounds = maskBounds.HasValue ?
                         Rectangle.Intersect(maskBounds.Value, potentialMask.uiTransform.Bounds) :
                         potentialMask.uiTransform.Bounds;
@@ -65,34 +72,56 @@ namespace AkiGames.UI
             spriteBatch.Begin(
                 SpriteSortMode.Deferred,
                 BlendState.AlphaBlend,
-                SamplerState.PointClamp,
+                SamplerState.LinearClamp,
                 DepthStencilState.None,
                 RasterizerState.CullNone
             );
         }
 
-        private static Dictionary<int,List<DrawableComponent>> layerDrawComponents = [];
+        private readonly record struct DrawEntry(DrawableComponent Component, int ZIndex, int TopLevelOrder, int Sequence);
+
+        private static List<DrawEntry> layerDrawComponents = [];
+        private static int _nextSequence;
+
         public void AddToLayer()
         {
-            if (!layerDrawComponents.TryGetValue(zIndex, out List<DrawableComponent> list))
+            layerDrawComponents.Add(new DrawEntry(
+                this,
+                zIndex,
+                gameObject?.GetTopLevelDrawOrder() ?? int.MinValue,
+                _nextSequence++
+            ));
+        }
+
+        public static void MoveSubtreeToPopupLayer(GameObject root)
+        {
+            if (root == null) return;
+
+            foreach (DrawableComponent drawable in root.Components.OfType<DrawableComponent>())
             {
-                list = [];
-                layerDrawComponents[zIndex] = list;
+                if (drawable.zIndex < PopupZIndex)
+                    drawable.zIndex = PopupZIndex;
             }
 
-            list.Add(this);
+            foreach (GameObject child in root.Children)
+                MoveSubtreeToPopupLayer(child);
         }
 
         public static void DrawLayers(SpriteBatch spriteBatch)
         {
+            // zIndex is global; top-level order only breaks ties inside the same zIndex.
             IEnumerable<DrawableComponent> componentsToDraw = layerDrawComponents
-                .OrderBy(kvp => kvp.Key).SelectMany(kvp => kvp.Value);
+                .OrderBy(entry => entry.ZIndex)
+                .ThenBy(entry => entry.TopLevelOrder)
+                .ThenBy(entry => entry.Sequence)
+                .Select(entry => entry.Component);
 
             foreach (var component in componentsToDraw)
             {
                 component.Draw(spriteBatch);
             }
             layerDrawComponents = [];
+            _nextSequence = 0;
         }
         public abstract void Draw(SpriteBatch spriteBatch);
     }

@@ -73,6 +73,7 @@ namespace AkiGames.Scripts.Inspector
             _menuItemPrefab ??= Game1.Prefabs["DropDownSubmenuItem"];
 
             _menu = _menuPrefab.Copy();
+            DrawableComponent.MoveSubtreeToPopupLayer(_menu);
             _menu.uiTransform.HorizontalAlignment = UITransform.AlignmentH.Right;
             _menu.uiTransform.VerticalAlignment = UITransform.AlignmentV.Bottom;
             _menu.uiTransform.origin = new Vector2(1, 0);
@@ -119,6 +120,7 @@ namespace AkiGames.Scripts.Inspector
             GameObject item = _menuItemPrefab.Copy();
             item.ObjectName = text;
             item.IsMouseTargetable = isEnabled;
+            DrawableComponent.MoveSubtreeToPopupLayer(item);
 
             Text textComponent = item.GetComponent<Text>();
             if (textComponent != null)

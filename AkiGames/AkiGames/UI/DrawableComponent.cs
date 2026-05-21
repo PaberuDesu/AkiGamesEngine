@@ -7,6 +7,7 @@ namespace AkiGames.UI
 {
     public abstract class DrawableComponent : GameComponent
     {
+        public const int PopupZIndex = 1000;
         public int zIndex = 0;
         private static readonly RasterizerState ScissorRasterizerState = new()
         {
@@ -47,6 +48,12 @@ namespace AkiGames.UI
                 Image potentialMask = currentParent.GetComponent<Image>();
                 if (potentialMask != null && potentialMask.Enabled && potentialMask.IsMask)
                 {
+                    if (zIndex >= PopupZIndex && potentialMask.zIndex < PopupZIndex)
+                    {
+                        currentParent = currentParent.Parent;
+                        continue;
+                    }
+
                     maskBounds = maskBounds.HasValue ?
                         Rectangle.Intersect(maskBounds.Value, potentialMask.uiTransform.Bounds) :
                         potentialMask.uiTransform.Bounds;
@@ -71,7 +78,7 @@ namespace AkiGames.UI
             );
         }
 
-        private readonly record struct DrawEntry(DrawableComponent Component, int TopLevelOrder, int ZIndex, int Sequence);
+        private readonly record struct DrawEntry(DrawableComponent Component, int ZIndex, int TopLevelOrder, int Sequence);
 
         private static List<DrawEntry> layerDrawComponents = [];
         private static int _nextSequence;
@@ -80,17 +87,32 @@ namespace AkiGames.UI
         {
             layerDrawComponents.Add(new DrawEntry(
                 this,
-                gameObject?.GetTopLevelDrawOrder() ?? int.MinValue,
                 zIndex,
+                gameObject?.GetTopLevelDrawOrder() ?? int.MinValue,
                 _nextSequence++
             ));
         }
 
+        public static void MoveSubtreeToPopupLayer(GameObject root)
+        {
+            if (root == null) return;
+
+            foreach (DrawableComponent drawable in root.Components.OfType<DrawableComponent>())
+            {
+                if (drawable.zIndex < PopupZIndex)
+                    drawable.zIndex = PopupZIndex;
+            }
+
+            foreach (GameObject child in root.Children)
+                MoveSubtreeToPopupLayer(child);
+        }
+
         public static void DrawLayers(SpriteBatch spriteBatch)
         {
+            // zIndex is global; window/top-level order only breaks ties inside the same zIndex.
             IEnumerable<DrawableComponent> componentsToDraw = layerDrawComponents
-                .OrderBy(entry => entry.TopLevelOrder)
-                .ThenBy(entry => entry.ZIndex)
+                .OrderBy(entry => entry.ZIndex)
+                .ThenBy(entry => entry.TopLevelOrder)
                 .ThenBy(entry => entry.Sequence)
                 .Select(entry => entry.Component);
 

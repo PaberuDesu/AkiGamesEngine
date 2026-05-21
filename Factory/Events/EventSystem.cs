@@ -118,29 +118,29 @@ namespace AkiGames.Events
 
         private static GameObject FindTarget(GameObject root)
         {
-            (GameObject obj, int zIndex) bestCandidate = (null, int.MinValue);
+            (GameObject obj, int topLevelOrder, int zIndex) bestCandidate = (null, int.MinValue, int.MinValue);
             FindTargetInHierarchy(root, ref bestCandidate);
             return bestCandidate.obj;
         }
         
-        private static void FindTargetInHierarchy(GameObject parent, ref (GameObject obj, int zIndex) bestCandidate)
+        private static void FindTargetInHierarchy(GameObject parent, ref (GameObject obj, int topLevelOrder, int zIndex) bestCandidate)
         {
             if (parent == null) return;
             if (!parent.IsActive) return;
-            if (!IsInsideParentMasks(parent)) return;
             
             // Проверяем родителя
             if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
             {
+                int topLevelOrder = parent.GetTopLevelDrawOrder();
                 Image image = parent.GetComponent<Image>();
-                if (image != null && image.Enabled && !image.IsMask && image.zIndex >= bestCandidate.zIndex)
+                if (image != null && image.Enabled && !image.IsMask && IsInsideParentMasks(parent, image.zIndex) && IsBetterCandidate(topLevelOrder, image.zIndex, bestCandidate))
                 {
-                    bestCandidate = (parent, image.zIndex);
+                    bestCandidate = (parent, topLevelOrder, image.zIndex);
                 }
                 Text text = parent.GetComponent<Text>();
-                if (text != null && text.Enabled && text.zIndex >= bestCandidate.zIndex)
+                if (text != null && text.Enabled && IsInsideParentMasks(parent, text.zIndex) && IsBetterCandidate(topLevelOrder, text.zIndex, bestCandidate))
                 {
-                    bestCandidate = (parent, text.zIndex);
+                    bestCandidate = (parent, topLevelOrder, text.zIndex);
                 }
             }
             
@@ -154,7 +154,15 @@ namespace AkiGames.Events
             }
         }
 
-        private static bool IsInsideParentMasks(GameObject gameObject)
+        private static bool IsBetterCandidate(
+            int topLevelOrder,
+            int zIndex,
+            (GameObject obj, int topLevelOrder, int zIndex) bestCandidate
+        ) =>
+            zIndex > bestCandidate.zIndex ||
+            (zIndex == bestCandidate.zIndex && topLevelOrder >= bestCandidate.topLevelOrder);
+
+        private static bool IsInsideParentMasks(GameObject gameObject, int zIndex)
         {
             GameObject currentParent = gameObject.Parent;
             while (currentParent != null)
@@ -163,11 +171,17 @@ namespace AkiGames.Events
                 if (
                     mask != null &&
                     mask.Enabled &&
-                    mask.IsMask &&
-                    !mask.uiTransform.Contains(Input.mousePosition)
+                    mask.IsMask
                 )
                 {
-                    return false;
+                    if (zIndex >= DrawableComponent.PopupZIndex && mask.zIndex < DrawableComponent.PopupZIndex)
+                    {
+                        currentParent = currentParent.Parent;
+                        continue;
+                    }
+
+                    if (!mask.uiTransform.Contains(Input.mousePosition))
+                        return false;
                 }
 
                 currentParent = currentParent.Parent;

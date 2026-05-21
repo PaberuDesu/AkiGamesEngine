@@ -48,6 +48,7 @@ namespace AkiGames.Scripts
             if (gameObject.Parent != Game1.MainObject)
                 Game1.MainObject.AddChild(gameObject);
 
+            DrawableComponent.MoveSubtreeToPopupLayer(gameObject);
             gameObject.Children = [];
             uiTransform.OffsetMin = screenPosition;
             uiTransform.Width = 180;
@@ -65,6 +66,7 @@ namespace AkiGames.Scripts
         private void AddMenuItem(string text, Action action)
         {
             GameObject item = _contextMenuItemPrefab.Copy();
+            DrawableComponent.MoveSubtreeToPopupLayer(item);
 
             Text textComp = item.GetComponent<Text>();
             textComp?.text = text;

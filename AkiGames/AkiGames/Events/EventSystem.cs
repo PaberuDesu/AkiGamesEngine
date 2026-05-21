@@ -191,19 +191,18 @@ namespace AkiGames.Events
         {
             if (parent == null) return;
             if (!parent.IsActive) return;
-            if (!IsInsideParentMasks(parent)) return;
             
             // Проверяем родителя
             if (parent.IsMouseTargetable && parent.uiTransform.Contains(Input.mousePosition))
             {
                 int topLevelOrder = parent.GetTopLevelDrawOrder();
                 Image image = parent.GetComponent<Image>();
-                if (image != null && image.Enabled && !image.IsMask && IsBetterCandidate(topLevelOrder, image.zIndex, bestCandidate))
+                if (image != null && image.Enabled && !image.IsMask && IsInsideParentMasks(parent, image.zIndex) && IsBetterCandidate(topLevelOrder, image.zIndex, bestCandidate))
                 {
                     bestCandidate = (parent, topLevelOrder, image.zIndex);
                 }
                 Text text = parent.GetComponent<Text>();
-                if (text != null && text.Enabled && IsBetterCandidate(topLevelOrder, text.zIndex, bestCandidate))
+                if (text != null && text.Enabled && IsInsideParentMasks(parent, text.zIndex) && IsBetterCandidate(topLevelOrder, text.zIndex, bestCandidate))
                 {
                     bestCandidate = (parent, topLevelOrder, text.zIndex);
                 }
@@ -224,10 +223,10 @@ namespace AkiGames.Events
             int zIndex,
             (GameObject obj, int topLevelOrder, int zIndex) bestCandidate
         ) =>
-            topLevelOrder > bestCandidate.topLevelOrder ||
-            (topLevelOrder == bestCandidate.topLevelOrder && zIndex >= bestCandidate.zIndex);
+            zIndex > bestCandidate.zIndex ||
+            (zIndex == bestCandidate.zIndex && topLevelOrder >= bestCandidate.topLevelOrder);
 
-        private static bool IsInsideParentMasks(GameObject gameObject)
+        private static bool IsInsideParentMasks(GameObject gameObject, int zIndex)
         {
             GameObject currentParent = gameObject.Parent;
             while (currentParent != null)
@@ -236,11 +235,17 @@ namespace AkiGames.Events
                 if (
                     mask != null &&
                     mask.Enabled &&
-                    mask.IsMask &&
-                    !mask.uiTransform.Contains(Input.mousePosition)
+                    mask.IsMask
                 )
                 {
-                    return false;
+                    if (zIndex >= DrawableComponent.PopupZIndex && mask.zIndex < DrawableComponent.PopupZIndex)
+                    {
+                        currentParent = currentParent.Parent;
+                        continue;
+                    }
+
+                    if (!mask.uiTransform.Contains(Input.mousePosition))
+                        return false;
                 }
 
                 currentParent = currentParent.Parent;

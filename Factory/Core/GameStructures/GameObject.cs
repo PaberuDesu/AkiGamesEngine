@@ -225,6 +225,19 @@ namespace AkiGames.Core.GameStructures
             return lineage;
         }
 
+        public int GetTopLevelDrawOrder()
+        {
+            if (Parent == null) return int.MinValue;
+
+            GameObject current = this;
+            while (current.Parent?.Parent != null)
+            {
+                current = current.Parent;
+            }
+
+            return current.Parent?.Children.IndexOf(current) ?? int.MinValue;
+        }
+
         private void HandleMouseEvent(Action<GameComponent> eventHandler)
         {
             foreach (GameComponent component in Components) eventHandler?.Invoke(component);

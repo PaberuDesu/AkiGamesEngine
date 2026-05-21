@@ -23,6 +23,7 @@ namespace AkiGames.UI.DropDown
                         GameObject submenuItem = _submenuItemPrefab.Copy();
                         submenuItem.ObjectName = itemName;
                         submenuItem.GetComponent<Text>().text = itemName;
+                        DrawableComponent.MoveSubtreeToPopupLayer(submenuItem);
 
                         Events.EventHandler eventHandler = submenuItem.GetComponent<Events.EventHandler>();
                         if (eventHandler != null)
@@ -53,6 +54,7 @@ namespace AkiGames.UI.DropDown
             }
 
             submenu = _submenuPrefab.Copy();
+            DrawableComponent.MoveSubtreeToPopupLayer(submenu);
             submenuColumn = submenu.GetComponent<Column>();
             gameObject.AddChild(submenu);
             image = gameObject.GetComponent<Image>();
@@ -72,6 +74,8 @@ namespace AkiGames.UI.DropDown
             // Открываем или закрываем меню
             submenu.IsActive = !submenu.IsActive;
             isRedacting = !isRedacting;
+            if (submenu.IsActive)
+                DrawableComponent.MoveSubtreeToPopupLayer(submenu);
             image.fillColor = submenu.IsActive ? onOpenedColor : onHoverColor;
         }
         public override void Deactivate()

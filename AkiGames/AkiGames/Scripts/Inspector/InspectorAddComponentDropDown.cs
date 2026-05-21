@@ -71,6 +71,7 @@ namespace AkiGames.Scripts.Inspector
         {
             _submenuPrefab ??= Game1.Prefabs["ScrollableList"];
             submenu = _submenuPrefab.Copy();
+            DrawableComponent.MoveSubtreeToPopupLayer(submenu);
             submenu.IsActive = false;
             ConfigureSubmenuTransform();
             submenu.GetComponent<Image>().fillColor = new Color(55, 55, 55);
@@ -126,6 +127,7 @@ namespace AkiGames.Scripts.Inspector
             {
                 GameObject item = _submenuItemPrefab.Copy();
                 item.ObjectName = menuName;
+                DrawableComponent.MoveSubtreeToPopupLayer(item);
                 ConfigureMenuItemText(item, menuName);
 
                 Events.EventHandler eventHandler = item.GetComponent<Events.EventHandler>();

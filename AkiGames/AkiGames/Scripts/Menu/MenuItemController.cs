@@ -7,6 +7,7 @@ namespace AkiGames.Scripts.Menu
         public override void Awake()
         {
             submenu = gameObject.Children[0];
+            DrawableComponent.MoveSubtreeToPopupLayer(submenu);
             image = gameObject.GetComponent<Image>();
             idleColor = new(45, 45, 45);
             onHoverColor = new(65, 65, 65);

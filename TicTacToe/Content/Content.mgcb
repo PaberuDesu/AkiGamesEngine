@@ -91,6 +91,21 @@
 /processor:AkiProcessor
 /build:main.aki
 
+#begin Prefabs/DropDownSubmenu.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/DropDownSubmenu.aki
+
+#begin Prefabs/DropDownSubmenuItem.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/DropDownSubmenuItem.aki
+
+#begin Prefabs/ScrollableList.aki
+/importer:AkiImporter
+/processor:AkiProcessor
+/build:Prefabs/ScrollableList.aki
+
 #begin retry.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -37,10 +37,20 @@ dotnet build
 dotnet run
 ```
 
+## Tests
+
+Run the headless engine coverage from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Tests\run-tests.ps1
+```
+
+The test runner covers core `GameObject`/`GameComponent` behavior, JSON scene and prefab-link serialization, MGCB content registration, and smoke checks over real project `.aki` content without launching the MonoGame editor window.
+
 ## Notes
 
 - The main project targets `net10.0-windows`.
 - Windows Forms is enabled for DPI handling.
 - MonoGame content build tooling is restored as part of the project setup.
 - Breaking `.aki` or component API changes can require manual project migration or staying on the previous compatible editor version.
-- Automated test coverage is a known need across the engine; manual editor validation is still important for now.
+- Automated coverage now exists for core headless behavior, but manual editor validation is still important for graphics/input workflows.

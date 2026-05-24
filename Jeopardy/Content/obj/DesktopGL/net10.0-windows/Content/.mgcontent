@@ -45,6 +45,11 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/Sun.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/TractorColor.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tractorist.png</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tachki_back_to_future_delorean.jpg</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tachki_knight_rider_kitt.jpg</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tachki_starsky_hutch_gran_torino.jpg</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tachki_supernatural_impala.jpg</File>
+    <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/QuestionImages/tachki_transformers_bumblebee.jpg</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Crocodilo.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Lirili.png</File>
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/TeamLogos/Patapim.png</File>
@@ -62,6 +67,11 @@
     <File>C:/Users/wintake/GameEngine/AkiGamesEngine/Jeopardy/Content/Prefabs/TeamListRow.aki</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

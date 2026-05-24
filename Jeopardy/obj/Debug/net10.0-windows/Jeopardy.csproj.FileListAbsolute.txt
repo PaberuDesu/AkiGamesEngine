@@ -88,3 +88,8 @@ C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Co
 C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\Sun.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\TractorColor.xnb
 C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\tractorist.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\tachki_back_to_future_delorean.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\tachki_knight_rider_kitt.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\tachki_starsky_hutch_gran_torino.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\tachki_supernatural_impala.xnb
+C:\Users\wintake\GameEngine\AkiGamesEngine\Jeopardy\bin\Debug\net10.0-windows\Content\QuestionImages\tachki_transformers_bumblebee.xnb
